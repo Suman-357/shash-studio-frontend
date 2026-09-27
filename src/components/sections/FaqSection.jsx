@@ -17,7 +17,7 @@ export const FaqSection = () => {
           <span className="text-[12px] font-bold text-[#2D4A37] uppercase tracking-[0.2em] block">
             {t("faqTag")}
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl text-[#1C3325] tracking-tight">
+          <h2 className="font-sans text-3xl sm:text-4xl font-extrabold text-[#1C3325] tracking-tight">
             {t("faqTitle")}
           </h2>
           <p className="text-[14px] text-[#5B635E]">
@@ -36,7 +36,7 @@ export const FaqSection = () => {
               >
                 <button
                   onClick={() => toggleFaq(idx)}
-                  className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 font-serif text-lg sm:text-xl text-[#1C3325] hover:text-[#2D4A37] transition-colors"
+                  className="w-full text-left p-5 sm:p-6 flex items-center justify-between gap-4 font-sans font-bold text-base sm:text-lg text-[#1C3325] hover:text-[#2D4A37] transition-colors"
                   type="button"
                 >
                   <span>

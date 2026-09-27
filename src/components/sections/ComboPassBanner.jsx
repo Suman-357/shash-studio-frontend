@@ -20,10 +20,10 @@ export const ComboPassBanner = () => {
             </div>
 
             <div className="space-y-1">
-              <h3 className="font-serif text-3xl sm:text-4xl text-[#FDFBF7] font-normal">
+              <h3 className="font-sans text-3xl sm:text-4xl font-extrabold tracking-tight text-[#FDFBF7]">
                 {COMBO_PASS.title}
               </h3>
-              <p className="font-serif text-xl text-[#BEE8DC]">
+              <p className="font-sans text-lg sm:text-xl font-bold text-[#BEE8DC]">
                 {COMBO_PASS.titleKn}
               </p>
             </div>

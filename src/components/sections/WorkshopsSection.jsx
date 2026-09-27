@@ -42,7 +42,7 @@ const WorkshopCardItem = ({ workshop, sectionObj, isKn, t, onRegister }) => {
               ✦ {workshop.badge}
             </span>
           )}
-          <h3 className="font-serif text-xl sm:text-2xl font-normal text-[#1C3325] leading-snug">
+          <h3 className="font-sans text-xl sm:text-2xl font-bold text-[#1C3325] leading-snug">
             {isKn ? workshop.titleKn : workshop.title}
           </h3>
           <p className="text-[12px] text-[#5B635E] font-medium">
@@ -152,7 +152,7 @@ export const WorkshopsSection = () => {
               </span>
             )}
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#1C3325] tracking-tight">
+          <h2 className="font-sans text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1C3325] tracking-tight">
             {t("chooseWorkshop")}
           </h2>
           <p className="text-[15px] text-[#5B635E] leading-relaxed">

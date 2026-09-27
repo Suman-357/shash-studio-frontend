@@ -53,7 +53,7 @@ export const ContactSection = () => {
               <span className="text-[12px] font-bold text-[#2D4A37] uppercase tracking-[0.2em] block">
                 {t("contactTag")}
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl text-[#1C3325] tracking-tight">
+              <h2 className="font-sans text-3xl sm:text-4xl font-extrabold text-[#1C3325] tracking-tight">
                 {t("contactTitle")}
               </h2>
               <p className="text-[15px] text-[#5B635E] leading-relaxed">
@@ -123,7 +123,7 @@ export const ContactSection = () => {
           <div className="lg:col-span-7">
             <div className="rounded-3xl bg-[#FDFBF7] border border-[#2D4A37]/10 p-6 md:p-8 shadow-lg space-y-6">
               <div>
-                <h3 className="font-serif text-2xl font-bold text-[#1C3325]">
+                <h3 className="font-sans text-2xl font-bold text-[#1C3325]">
                   {t("dropMessage")}
                 </h3>
                 <p className="text-[13px] text-[#5B635E] mt-1">

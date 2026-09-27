@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 import { useBooking } from "../../context/BookingContext";
 import { AnnouncementBar } from "./AnnouncementBar";
 import logo from "../../assets/logo.png";
-import { IconArrowRight, IconClose, IconMenu } from "../ui/Icons";
+import { IconArrowRight, IconClose, IconMenu, IconShoppingCart } from "../ui/Icons";
 
 export const Navbar = () => {
   const { lang, setLang, t } = useLanguage();
+  const isKn = lang === "kn";
   const { openBookingModal } = useBooking();
+  const location = useLocation();
+  const isShop = location.pathname === "/shop";
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -27,11 +31,11 @@ export const Navbar = () => {
       {/* Main Navigation Bar */}
       <div className="max-w-[1280px] mx-auto px-4 md:px-8 h-20 flex items-center justify-between gap-4">
         {/* Left Brand Emblem */}
-        <a href="#" className="flex items-center gap-3 py-1 flex-shrink-0 group">
+        <Link to="/" className="flex items-center gap-3 py-1 flex-shrink-0 group">
           <div className="flex items-center gap-2">
             <img src={logo} alt="SHASH Studios Logo" className="h-13 w-13 object-contain" />
             <div className="flex flex-col">
-              <span className="font-serif text-xl md:text-2xl font-bold tracking-tight text-[#1C3325] leading-none">
+              <span className="font-sans text-xl md:text-2xl font-black tracking-tight text-[#1C3325] leading-none">
                 SHASH Studios
               </span>
               <span className="text-[10px] tracking-widest text-[#52796F] font-semibold uppercase mt-0.5">
@@ -39,50 +43,67 @@ export const Navbar = () => {
               </span>
             </div>
           </div>
-        </a>
+        </Link>
 
         {/* Center Floating Pill Navbar (Desktop) */}
         <nav className="hidden lg:flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-[#2D4A37]/10 shadow-xs">
           <a
-            href="#workshops"
+            href="/#workshops"
             className="px-3.5 py-1.5 rounded-full text-[#1A1F1C] hover:text-[#1C3325] hover:bg-[#EDE8DE] text-[13px] font-semibold transition-colors"
           >
             {t("navWorkshops")}
           </a>
           <a
-            href="#combo-pass"
+            href="/#combo-pass"
             className="px-3.5 py-1.5 rounded-full text-[#5B635E] hover:text-[#1C3325] hover:bg-[#EDE8DE] text-[13px] font-medium transition-colors"
           >
             {t("navPrograms")}
           </a>
           <a
-            href="#teacher"
+            href="/#teacher"
             className="px-3.5 py-1.5 rounded-full text-[#5B635E] hover:text-[#1C3325] hover:bg-[#EDE8DE] text-[13px] font-medium transition-colors"
           >
             {t("navTeacher")}
           </a>
           <a
-            href="#social-hub"
+            href="/#social-hub"
             className="px-3.5 py-1.5 rounded-full text-[#5B635E] hover:text-[#1C3325] hover:bg-[#EDE8DE] text-[13px] font-medium transition-colors"
           >
             {t("navSocial")}
           </a>
           <a
-            href="#faqs"
+            href="/#faqs"
             className="px-3.5 py-1.5 rounded-full text-[#5B635E] hover:text-[#1C3325] hover:bg-[#EDE8DE] text-[13px] font-medium transition-colors"
           >
             {t("navFaqs")}
           </a>
           <a
-            href="#contact"
+            href="/#contact"
             className="px-3.5 py-1.5 rounded-full text-[#5B635E] hover:text-[#1C3325] hover:bg-[#EDE8DE] text-[13px] font-medium transition-colors"
           >
             {t("navContact")}
           </a>
         </nav>
 
-        {/* Right Actions: Language Switcher + CTA */}
-        <div className="flex items-center gap-3 flex-shrink-0">
+        {/* Right Actions: Shopping Cart Icon + Language Switcher + CTA */}
+        <div className="flex items-center gap-2.5 sm:gap-3 flex-shrink-0">
+          {/* Dedicated Shopping Cart Icon Button */}
+          <Link
+            to="/shop"
+            className={`relative flex h-10 w-10 items-center justify-center rounded-full border transition-all cursor-pointer ${
+              isShop
+                ? "bg-[#1C3325] text-white border-[#1C3325] shadow-sm"
+                : "bg-white text-[#1C3325] border-[#2D4A37]/15 hover:bg-[#EDE8DE]"
+            }`}
+            title={isKn ? "ಯೋಗ ಚಾಪೆಗಳ ಮಳಿಗೆ (Shop)" : "Sanctuary Yoga Mats Store"}
+            aria-label="Yoga Mats Cart"
+          >
+            <IconShoppingCart className="w-[19px] h-[19px]" />
+            <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#D48C46] text-[9.5px] font-bold text-white shadow-xs">
+              3
+            </span>
+          </Link>
+
           {/* Bilingual Toggle Button */}
           <div className="inline-flex items-center p-0.5 rounded-full bg-[#EDE8DE]/90 shadow-inner">
             <button
@@ -126,42 +147,57 @@ export const Navbar = () => {
         <div className="lg:hidden bg-[#FCF9F3]/95 backdrop-blur-2xl border-b border-[#2D4A37]/10 px-6 py-6 shadow-xl space-y-4">
           <div className="flex flex-col space-y-3 text-[15px] font-medium">
             <a
-              href="#workshops"
+              href="/#workshops"
               onClick={() => setMobileMenuOpen(false)}
               className="text-[#1A1F1C] hover:text-[#1C3325] py-1 border-b border-neutral-200/50"
             >
               {t("navWorkshops")}
             </a>
             <a
-              href="#combo-pass"
+              href="/#combo-pass"
               onClick={() => setMobileMenuOpen(false)}
               className="text-[#1A1F1C] hover:text-[#1C3325] py-1 border-b border-neutral-200/50"
             >
               {t("navPrograms")}
             </a>
+            <Link
+              to="/shop"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`py-2 px-3 rounded-xl font-semibold flex items-center justify-between transition-colors border-b border-neutral-200/50 ${
+                isShop ? "bg-[#1C3325] text-white" : "text-[#1C3325] hover:bg-[#EDE8DE]"
+              }`}
+            >
+              <div className="flex items-center gap-2.5">
+                <IconShoppingCart className="w-5 h-5 text-[#D48C46]" />
+                <span>{isKn ? "ಯೋಗ ಚಾಪೆಗಳ ಮಳಿಗೆ" : "Sanctuary Yoga Mats Store"}</span>
+              </div>
+              <span className="px-2 py-0.5 rounded-full bg-[#D48C46] text-white text-[10px] font-bold">
+                Shop ✦
+              </span>
+            </Link>
             <a
-              href="#teacher"
+              href="/#teacher"
               onClick={() => setMobileMenuOpen(false)}
               className="text-[#1A1F1C] hover:text-[#1C3325] py-1 border-b border-neutral-200/50"
             >
               {t("navTeacher")}
             </a>
             <a
-              href="#social-hub"
+              href="/#social-hub"
               onClick={() => setMobileMenuOpen(false)}
               className="text-[#1A1F1C] hover:text-[#1C3325] py-1 border-b border-neutral-200/50"
             >
               {t("navSocial")}
             </a>
             <a
-              href="#faqs"
+              href="/#faqs"
               onClick={() => setMobileMenuOpen(false)}
               className="text-[#1A1F1C] hover:text-[#1C3325] py-1 border-b border-neutral-200/50"
             >
               {t("navFaqs")}
             </a>
             <a
-              href="#contact"
+              href="/#contact"
               onClick={() => setMobileMenuOpen(false)}
               className="text-[#1A1F1C] hover:text-[#1C3325] py-1"
             >

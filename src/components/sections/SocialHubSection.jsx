@@ -14,7 +14,7 @@ export const SocialHubSection = () => {
             <span className="text-[12px] font-bold text-[#2D4A37] uppercase tracking-[0.2em] block mb-1">
               {t("socialTag")}
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl text-[#1C3325] tracking-tight">
+            <h2 className="font-sans text-3xl sm:text-4xl font-extrabold text-[#1C3325] tracking-tight">
               {t("socialTitle")}
             </h2>
           </div>
@@ -33,7 +33,7 @@ export const SocialHubSection = () => {
                   <span className="material-symbols-outlined text-[22px]">photo_camera</span>
                 </span>
                 <div>
-                  <h3 className="font-serif text-xl font-bold text-[#1C3325]">
+                  <h3 className="font-sans text-xl font-bold text-[#1C3325]">
                     {t("instaTitle")}
                   </h3>
                   <p className="text-[12px] text-[#5B635E]">
@@ -99,7 +99,7 @@ export const SocialHubSection = () => {
                   <span className="material-symbols-outlined text-[22px]">smart_display</span>
                 </span>
                 <div>
-                  <h3 className="font-serif text-xl font-bold text-[#1C3325]">
+                  <h3 className="font-sans text-xl font-bold text-[#1C3325]">
                     {t("youtubeTitle")}
                   </h3>
                   <p className="text-[12px] text-[#5B635E]">
@@ -145,7 +145,7 @@ export const SocialHubSection = () => {
                     </span>
                   </div>
                   <div className="space-y-1 min-w-0">
-                    <h4 className="font-serif text-[15px] font-bold text-[#1C3325] group-hover:text-[#D48C46] transition-colors line-clamp-1">
+                    <h4 className="font-sans text-[15px] font-bold text-[#1C3325] group-hover:text-[#D48C46] transition-colors line-clamp-1">
                       {lang === "kn" ? vid.titleKn : vid.title}
                     </h4>
                     <p className="text-[12px] text-[#5B635E]">

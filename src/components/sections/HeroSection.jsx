@@ -35,20 +35,20 @@ export const HeroSection = () => {
 
             {/* Dual Script Grand Headline */}
             <div className="space-y-2">
-              <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-[#1C3325] font-normal tracking-tight leading-[1.15]">
+              <h1 className="font-sans text-4xl sm:text-5xl lg:text-6xl text-[#1C3325] font-extrabold tracking-tight leading-[1.12]">
                 {lang === "kn" ? (
                   <>
-                    ಉಸಿರಾಡಿ. ಚಲಿಸಿ.<br />
-                    <span className="italic text-[#2D4A37] font-serif">ಗುಣಮುಖರಾಗಿ.</span>
+                    <span className="text-[#1C3325]">ಉಸಿರಾಡಿ. ಚಲಿಸಿ.</span><br />
+                    <span className="text-[#2D4A37]">ಗುಣಮುಖರಾಗಿ.</span>
                   </>
                 ) : (
                   <>
-                    <span className="italic text-[#2D4A37] font-serif">Breathe. Move.</span><br />
-                    <span className="italic text-[#2D4A37] font-serif">Heal.</span>
+                    <span className="text-[#1C3325]">Breathe. Move.</span><br />
+                    <span className="text-[#2D4A37]">Heal.</span>
                   </>
                 )}
               </h1>
-              <p className="font-serif text-xl sm:text-2xl text-[#D48C46] tracking-wide font-normal">
+              <p className="font-sans text-lg sm:text-xl text-[#C26D38] font-bold tracking-normal">
                 {lang === "kn" ? "Breathe. Move. Heal. Live from Mysuru." : "Live from Mysuru Shala, Karnataka."}
               </p>
             </div>
@@ -92,15 +92,15 @@ export const HeroSection = () => {
             {/* Proof Metrics */}
             <div className="pt-4 grid grid-cols-3 gap-3 max-w-lg">
               <div className="p-3.5 rounded-2xl bg-white/70 backdrop-blur-md border border-[#2D4A37]/10 shadow-xs">
-                <span className="font-serif text-xl sm:text-2xl font-bold text-[#1C3325] block">10,000+</span>
+                <span className="font-sans text-xl sm:text-2xl font-black text-[#1C3325] block tabular-nums">10,000+</span>
                 <span className="text-[12px] text-[#5B635E]">{t("statSeekers")}</span>
               </div>
               <div className="p-3.5 rounded-2xl bg-white/70 backdrop-blur-md border border-[#2D4A37]/10 shadow-xs">
-                <span className="font-serif text-lg sm:text-xl font-bold text-[#1C3325] block">ಕನ್ನಡ + EN</span>
+                <span className="font-sans text-lg sm:text-xl font-bold text-[#1C3325] block">ಕನ್ನಡ + EN</span>
                 <span className="text-[12px] text-[#5B635E]">{t("statBilingual")}</span>
               </div>
               <div className="p-3.5 rounded-2xl bg-white/70 backdrop-blur-md border border-[#2D4A37]/10 shadow-xs">
-                <span className="font-serif text-lg sm:text-xl font-bold text-[#1C3325] block">Mysuru</span>
+                <span className="font-sans text-lg sm:text-xl font-bold text-[#1C3325] block">Mysuru</span>
                 <span className="text-[12px] text-[#5B635E]">{t("statTradition")}</span>
               </div>
             </div>

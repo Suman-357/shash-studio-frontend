@@ -132,7 +132,7 @@ export const BookingModal = () => {
               <IconLotus className="w-5 h-5 text-[#1C3325]" />
             </span>
             <div>
-              <span className="font-serif text-base sm:text-lg font-bold text-[#1C3325] block leading-tight">
+              <span className="font-sans text-base sm:text-lg font-extrabold text-[#1C3325] block leading-tight">
                 {m.modalTitle}
               </span>
               <span className="text-[11px] text-[#52796F] font-semibold uppercase tracking-wider">
@@ -181,7 +181,7 @@ export const BookingModal = () => {
                 <IconCheck className="w-8 h-8 text-[#1C3325]" />
               </div>
               <div className="space-y-1.5">
-                <h3 className="font-serif text-2xl sm:text-3xl text-[#1C3325] font-bold">
+                <h3 className="font-sans text-2xl sm:text-3xl text-[#1C3325] font-extrabold tracking-tight">
                   {m.successTitle}
                 </h3>
                 <p className="text-[14px] text-[#5B635E] max-w-md mx-auto leading-relaxed">
@@ -301,7 +301,7 @@ export const BookingModal = () => {
                           <span className="text-[12px] text-[#5B635E] line-through">₹{COMBO_PASS.originalPrice}</span>
                         </div>
                       </div>
-                      <h4 className="font-serif text-lg font-bold text-[#1C3325]">
+                      <h4 className="font-sans text-lg font-bold text-[#1C3325]">
                         {isKn ? COMBO_PASS.titleKn : COMBO_PASS.title}
                       </h4>
                       <p className="text-[13px] text-[#5B635E] leading-relaxed">

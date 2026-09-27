@@ -47,7 +47,7 @@ export const TeacherSection = () => {
               <span className="text-[12px] font-bold text-[#2D4A37] uppercase tracking-[0.2em] block mb-2">
                 {t("teacherTag")}
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#1C3325] tracking-tight font-normal">
+              <h2 className="font-sans text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1C3325] tracking-tight">
                 {isKn ? "ಯೋಗ ಶಿಕ್ಷಕಿ ಶಶಿರೇಖಾ (Sushii)" : "Meet Shashirekha C (Sushii)"}
               </h2>
               <p className="text-[15px] text-[#5B635E] font-medium mt-1">
@@ -78,7 +78,7 @@ export const TeacherSection = () => {
 
             {/* Highlighted Quote Card */}
             <div className="p-6 rounded-2xl bg-[#FDFBF7] border border-[#2D4A37]/10 shadow-xs space-y-3">
-              <p className="font-serif text-lg sm:text-xl text-[#1C3325] italic leading-snug">
+              <p className="font-sans text-base sm:text-lg text-[#1C3325] font-medium leading-relaxed">
                 “ನಾನು ಹುಟ್ಟಿ ಬೆಳೆದದ್ದು ಸಾಂಪ್ರದಾಯಿಕ ಯೋಗದ ನಗರಿ ಮೈಸೂರಿನಲ್ಲಿ. ನಮ್ಮದೇ ಭಾಷೆಯಾದ ಕನ್ನಡದಲ್ಲಿ ಯೋಗ ಮತ್ತು ಆರೋಗ್ಯ ಶೈಲಿಯನ್ನು ಸರಳವಾಗಿ ತಿಳಿಸಿಕೊಡುವುದೇ ನನ್ನ ಗುರಿ.”
               </p>
               <p className="text-[14px] text-[#5B635E] italic border-l-2 pl-4 border-[#84A98C]">
@@ -132,7 +132,7 @@ export const TeacherSection = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center pb-3 border-b border-neutral-100">
-              <span className="font-serif font-bold text-[#1C3325] text-[15px]">
+              <span className="font-sans font-bold text-[#1C3325] text-[15px]">
                 Shashirekha C · SHASH Studios
               </span>
               <button

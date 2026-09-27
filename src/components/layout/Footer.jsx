@@ -14,11 +14,11 @@ export const Footer = () => {
           <div className="lg:col-span-4 space-y-4">
             <div className="flex items-center gap-3">
               <span className="text-3xl">🪷</span>
-              <span className="font-serif text-2xl font-bold text-[#1C3325] tracking-tight">
+              <span className="font-sans text-2xl font-black text-[#1C3325] tracking-tight">
                 SHASH Studios
               </span>
             </div>
-            <p className="font-serif text-lg text-[#2D4A37] italic tracking-wide">
+            <p className="font-sans text-base font-bold text-[#2D4A37] tracking-normal">
               “ಉಸಿರಾಡಿ. ಚಲಿಸಿ. ಗುಣಮುಖರಾಗಿ.”
             </p>
             <p className="text-[14px] text-[#5B635E] leading-relaxed max-w-sm">
