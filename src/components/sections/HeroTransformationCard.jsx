@@ -45,7 +45,7 @@ export const HeroTransformationCard = () => {
 
       {/* Main Interactive Showcase Card */}
       <div className="relative overflow-hidden rounded-[2rem] bg-[#FDFBF7] shadow-2xl border border-white/80">
-        <div className="relative h-[440px] sm:h-[490px] w-full bg-neutral-900 overflow-hidden">
+        <div className="relative h-[440px] sm:h-[490px] w-full bg-[#EDE8DE] overflow-hidden">
           {/* Framer Motion Cross-fading Slide Images */}
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.div

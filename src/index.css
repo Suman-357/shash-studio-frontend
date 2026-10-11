@@ -33,6 +33,9 @@
 }
 
 html, body {
+  color-scheme: light;
+  background-color: #FCF9F3;
+  color: #1A1F1C;
   overflow-x: hidden;
   max-width: 100vw;
   width: 100%;
