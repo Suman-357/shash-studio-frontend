@@ -1,17 +1,26 @@
 import React from "react";
 import { useLanguage } from "../../context/LanguageContext";
 import { useBooking } from "../../context/BookingContext";
+import {
+  IconInstagram,
+  IconYouTube,
+  IconWhatsApp,
+  IconPhone,
+  IconMail,
+  IconClock,
+  IconMapPin
+} from "../ui/Icons";
 
 export const Footer = () => {
   const { lang, t } = useLanguage();
-  const { openBookingModal } = useBooking();
+  const { openBookingModal, workshops = [] } = useBooking();
 
   return (
     <footer className="w-full bg-[#F6F3ED] text-[#1A1F1C] pt-16 pb-12 mt-20 border-t border-[#2D4A37]/10">
       <div className="max-w-[1280px] mx-auto px-6 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 pb-12">
           {/* Brand & Lineage */}
-          <div className="lg:col-span-4 space-y-4">
+          <div className="space-y-4">
             <div className="flex items-center gap-3">
               <span className="text-3xl">🪷</span>
               <span className="font-sans text-2xl font-black text-[#1C3325] tracking-tight">
@@ -26,79 +35,40 @@ export const Footer = () => {
             </p>
             <div className="pt-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EDE8DE] text-[#1C3325] text-[12px] font-semibold">
-                <span className="material-symbols-outlined text-[14px] text-[#D48C46]">location_on</span>
-                Mysuru, Karnataka, India
+                <IconMapPin className="w-3.5 h-3.5 text-[#D48C46]" />
+                <span>Mysuru, Karnataka, India</span>
               </span>
             </div>
           </div>
 
           {/* Holistic Workshops Quick Links */}
-          <div className="lg:col-span-3 space-y-3">
+          <div className="space-y-3">
             <h3 className="text-[15px] font-bold text-[#1C3325] uppercase tracking-wider">
               {lang === "kn" ? "ಕಾರ್ಯಕ್ರಮಗಳು" : "Holistic Workshops"}
             </h3>
             <ul className="space-y-2 text-[14px] text-[#424843]">
-              <li>
-                <button
-                  onClick={() => openBookingModal("21day")}
-                  className="hover:text-[#1C3325] transition-colors text-left"
-                >
-                  {lang === "kn" ? "21 ದಿನಗಳ ಸಂಪೂರ್ಣ ಸವಾಲು" : "21-Day Holistic Challenge"}
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => openBookingModal("sushii_nights")}
-                  className="hover:text-[#1C3325] transition-colors text-left"
-                >
-                  {lang === "kn" ? "ಸುಶಿ ನೈಟ್ಸ್ (₹49)" : "Sushii Nights (₹49)"}
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => openBookingModal("ladies")}
-                  className="hover:text-[#1C3325] transition-colors text-left"
-                >
-                  {lang === "kn" ? "ಮಹಿಳೆಯರ ವಿಶೇಷ ಯೋಗ (₹179)" : "Ladies Yoga & Hormone Balance"}
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => openBookingModal("strength")}
-                  className="hover:text-[#1C3325] transition-colors text-left"
-                >
-                  {lang === "kn" ? "ಶಕ್ತಿ ತರಬೇತಿ ಮತ್ತು ಕ್ಯಾಲಿಸ್ತೆನಿಕ್ಸ್" : "Strength Training for Yogis"}
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => openBookingModal("kids")}
-                  className="hover:text-[#1C3325] transition-colors text-left"
-                >
-                  {lang === "kn" ? "ಮಕ್ಕಳ ಯೋಗ (6 - 14 ವರ್ಷ)" : "Kids Yoga & Mindfulness"}
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => openBookingModal("ashtanga")}
-                  className="hover:text-[#1C3325] transition-colors text-left"
-                >
-                  {lang === "kn" ? "ಮೈಸೂರು ಅಷ್ಟಾಂಗ ಪ್ರೈಮರಿ ಸೀರೀಸ್" : "Mysore Ashtanga Primary Series"}
-                </button>
-              </li>
-              <li className="pt-1">
-                <button
-                  onClick={() => openBookingModal("combo")}
-                  className="text-[#D48C46] font-bold hover:underline"
-                >
-                  {lang === "kn" ? "✦ ಸಂಪೂರ್ಣ ಆರೋಗ್ಯ ಕಾಂಬೋ ಪಾಸ್ (₹599)" : "✦ All-Access Combo Pass (₹599)"}
-                </button>
-              </li>
+              {workshops.slice(0, 7).map((w) => (
+                <li key={w.id || w._id}>
+                  <button
+                    onClick={() => openBookingModal(w.id || w.slug)}
+                    className="hover:text-[#1C3325] transition-colors text-left cursor-pointer"
+                  >
+                    {lang === "kn" ? (w.titleKn || w.title) : w.title}
+                  </button>
+                </li>
+              ))}
+              {workshops.length === 0 && (
+                <li>
+                  <a href="/#workshops" className="text-[#5B635E] hover:text-[#1C3325] text-[13px]">
+                    {lang === "kn" ? "ಕಾರ್ಯಕ್ರಮಗಳನ್ನು ವೀಕ್ಷಿಸಿ" : "Explore Offerings"}
+                  </a>
+                </li>
+              )}
             </ul>
           </div>
 
           {/* Teacher Channels */}
-          <div className="lg:col-span-2 space-y-3">
+          <div className="space-y-3">
             <h3 className="text-[15px] font-bold text-[#1C3325] uppercase tracking-wider">
               {lang === "kn" ? "ಗುರುಗಳ ಚಾನೆಲ್" : "Teacher Channels"}
             </h3>
@@ -110,8 +80,8 @@ export const Footer = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 hover:text-[#1C3325] transition-colors"
                 >
-                  <span className="material-symbols-outlined text-[16px]">photo_camera</span>
-                  @sushiidays
+                  <IconInstagram className="w-4 h-4 text-[#C26D38] shrink-0" />
+                  <span>@sushiidays</span>
                 </a>
               </li>
               <li>
@@ -121,8 +91,8 @@ export const Footer = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 hover:text-[#1C3325] transition-colors"
                 >
-                  <span className="material-symbols-outlined text-[16px]">photo_camera</span>
-                  @shash.studios
+                  <IconInstagram className="w-4 h-4 text-[#C26D38] shrink-0" />
+                  <span>@shash.studios</span>
                 </a>
               </li>
               <li>
@@ -132,8 +102,8 @@ export const Footer = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 hover:text-[#1C3325] transition-colors"
                 >
-                  <span className="material-symbols-outlined text-[16px] text-red-600">smart_display</span>
-                  YouTube Channel
+                  <IconYouTube className="w-4 h-4 text-red-600 shrink-0" />
+                  <span>YouTube Channel</span>
                 </a>
               </li>
               <li>
@@ -143,15 +113,15 @@ export const Footer = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 hover:text-[#1C3325] transition-colors"
                 >
-                  <span className="material-symbols-outlined text-[16px] text-green-600">chat</span>
-                  WhatsApp Desk
+                  <IconWhatsApp className="w-4 h-4 text-[#25D366] shrink-0" />
+                  <span>WhatsApp Desk</span>
                 </a>
               </li>
             </ul>
           </div>
 
           {/* Shala Support Desk */}
-          <div className="lg:col-span-3 space-y-3">
+          <div className="space-y-3">
             <h3 className="text-[15px] font-bold text-[#1C3325] uppercase tracking-wider">
               {lang === "kn" ? "ಸಹಾಯ ಮತ್ತು ಸಂಪರ್ಕ" : "Sanctuary Support"}
             </h3>
@@ -162,15 +132,15 @@ export const Footer = () => {
             </p>
             <div className="space-y-2 pt-1 text-[13px] text-[#1A1F1C]">
               <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[16px] text-[#84A98C]">call</span>
+                <IconPhone className="w-4 h-4 text-[#84A98C] shrink-0" />
                 <span className="font-semibold">+91 76764 05895</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[16px] text-[#84A98C]">mail</span>
+                <IconMail className="w-4 h-4 text-[#84A98C] shrink-0" />
                 <span>shashstudios@gmail.com</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[16px] text-[#84A98C]">schedule</span>
+                <IconClock className="w-4 h-4 text-[#84A98C] shrink-0" />
                 <span>Mon – Sat: 5:30 AM – 7:30 PM IST</span>
               </div>
             </div>
@@ -181,7 +151,7 @@ export const Footer = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-[#1C3325] hover:bg-[#EDE8DE] transition-colors text-[12px] font-bold shadow-xs border border-[#2D4A37]/15"
               >
-                <span className="material-symbols-outlined text-[16px] text-[#25D366]">forum</span>
+                <IconWhatsApp className="w-4 h-4 text-[#25D366] shrink-0" />
                 <span>{lang === "kn" ? "ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಮಾತನಾಡಿ" : "Message on WhatsApp"}</span>
               </a>
             </div>

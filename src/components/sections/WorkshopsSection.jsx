@@ -3,8 +3,7 @@ import { CardSpotlight } from "../ui/CardSpotlight";
 import { useLanguage } from "../../context/LanguageContext";
 import { useBooking } from "../../context/BookingContext";
 import { useWorkshopsQuery, useSectionsQuery } from "../../hooks/useWorkshopsQuery";
-import { SECTIONS, WORKSHOPS } from "../../data/workshops";
-import { IconArrowRight, IconClock } from "../ui/Icons";
+import { IconArrowRight, IconClock, IconWhatsApp } from "../ui/Icons";
 
 const WorkshopCardItem = ({ workshop, sectionObj, isKn, t, onRegister }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -24,10 +23,10 @@ const WorkshopCardItem = ({ workshop, sectionObj, isKn, t, onRegister }) => {
             style={{ objectPosition: workshop.objectPosition || "center" }}
             loading="lazy"
           />
-          {/* Top Badges (Category & Spots) */}
+          {/* Top Badges (Batch Schedule & Spots) */}
           <div className="absolute top-3 inset-x-3 flex items-center justify-between z-10 pointer-events-none">
             <span className="px-2.5 py-1 rounded-full bg-[#FDFBF7]/95 backdrop-blur-md text-[10.5px] font-bold text-[#1C3325] shadow-xs">
-              {isKn && sectionObj ? sectionObj.nameKn : workshop.categoryLabel}
+              {workshop.batchSchedule || (isKn && sectionObj ? sectionObj.nameKn : workshop.categoryLabel)}
             </span>
             <span className="px-2.5 py-1 rounded-full bg-[#1C3325]/85 backdrop-blur-md text-white text-[10px] font-semibold shadow-xs">
               {workshop.spotsLeft} spots left
@@ -124,14 +123,15 @@ export const WorkshopsSection = () => {
 
   const { data: workshopsData, isFetching } = useWorkshopsQuery("all");
   const { data: sectionsData } = useSectionsQuery();
-  const workshops = workshopsData || WORKSHOPS;
-  const sections = sectionsData || SECTIONS;
+  const workshops = workshopsData || [];
+  const sections = sectionsData || [];
   const isKn = lang === "kn";
 
-  const filteredWorkshops =
+  const filteredWorkshops = (
     activeSection === "all"
       ? workshops
-      : workshops.filter((w) => w.section === activeSection);
+      : workshops.filter((w) => w.section === activeSection)
+  ).slice().sort((a, b) => (a.order || 0) - (b.order || 0));
 
   const activeSectionObj = sections.find((s) => (s.slug || s.id) === activeSection);
 
@@ -209,21 +209,48 @@ export const WorkshopsSection = () => {
         )}
 
         {/* 3-Column Luxury Workshop Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {filteredWorkshops.map((workshop) => {
-            const sectionObj = SECTIONS.find((s) => s.id === workshop.section);
-            return (
-              <WorkshopCardItem
-                key={workshop.id}
-                workshop={workshop}
-                sectionObj={sectionObj}
-                isKn={isKn}
-                t={t}
-                onRegister={() => openBookingModal(workshop.id, workshop.section)}
-              />
-            );
-          })}
-        </div>
+        {filteredWorkshops.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {filteredWorkshops.map((workshop) => {
+              const sectionObj = sections.find((s) => (s.slug || s.id) === workshop.section);
+              return (
+                <WorkshopCardItem
+                  key={workshop.id}
+                  workshop={workshop}
+                  sectionObj={sectionObj}
+                  isKn={isKn}
+                  t={t}
+                  onRegister={() => openBookingModal(workshop.id, workshop.section)}
+                />
+              );
+            })}
+          </div>
+        ) : (
+          <div className="p-8 sm:p-12 rounded-3xl bg-[#FDFBF7] border border-[#2D4A37]/15 text-center max-w-xl mx-auto space-y-4 shadow-xs">
+            <div className="w-14 h-14 rounded-full bg-[#EDE8DE] flex items-center justify-center mx-auto text-3xl">
+              🌿
+            </div>
+            <div className="space-y-1.5">
+              <h3 className="font-sans text-xl font-bold text-[#1C3325]">
+                {isKn ? "ಹೊಸ ಬ್ಯಾಚ್‌ಗಳು ಶೀಘ್ರದಲ್ಲೇ ತೆರೆಯಲಿವೆ" : "New Batches Opening Soon"}
+              </h3>
+              <p className="text-[14px] text-[#5B635E] leading-relaxed">
+                {isKn
+                  ? "ಈ ವಿಭಾಗದ ತರಗತಿಗಳ ವೇಳಾಪಟ್ಟಿ ಶೀಘ್ರದಲ್ಲೇ ಪ್ರಕಟವಾಗಲಿದೆ. ಮುಂಚಿತ ನೋಂದಣಿ ಅಥವಾ ವೈಯಕ್ತಿಕ ತರಬೇತಿಗಾಗಿ WhatsApp ಮೂಲಕ ಸಂಪರ್ಕಿಸಿ."
+                  : "We are actively scheduling upcoming batches for this discipline. Reach out via WhatsApp for early registration or private sessions."}
+              </p>
+            </div>
+            <a
+              href="https://wa.me/917676405895?text=Namaskara%20Shashirekha%2C%20I%20am%20interested%20in%20upcoming%20classes."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#1C3325] text-white text-[13px] font-semibold hover:bg-[#2D4A37] transition-all shadow-xs"
+            >
+              <IconWhatsApp className="w-4 h-4 text-[#25D366]" />
+              <span>{isKn ? "WhatsApp ನಲ್ಲಿ ಮಾಹಿತಿ ಪಡೆಯಿರಿ" : "Inquire on WhatsApp"}</span>
+            </a>
+          </div>
+        )}
 
       </div>
     </section>

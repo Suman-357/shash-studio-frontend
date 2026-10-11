@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from "react";
-import { WORKSHOPS, COMBO_PASS, BATCH_SLOTS, SECTIONS } from "../../data/workshops";
 import { useBooking } from "../../context/BookingContext";
 import { useLanguage } from "../../context/LanguageContext";
 import {
@@ -24,6 +23,7 @@ export const BookingModal = () => {
     setSelectedSection,
     selectedWorkshop,
     setSelectedWorkshop,
+    selectComboPass,
     selectedSlot,
     setSelectedSlot,
     currentStep,
@@ -32,7 +32,11 @@ export const BookingModal = () => {
     handleFieldChange,
     isSubmitting,
     bookingSuccess,
-    completeBooking
+    bookingError,
+    completeBooking,
+    workshops = [],
+    sections = [],
+    availableSlots = []
   } = useBooking();
 
   // Scroll to top whenever step changes
@@ -119,7 +123,18 @@ export const BookingModal = () => {
       : "Please agree to studio guidelines to proceed with booking."
   };
 
-  const currentSectionWorkshops = WORKSHOPS.filter((w) => w.section === selectedSection);
+  const comboPass = workshops.find(
+    (w) =>
+      w.slug === "combo-pass" ||
+      w.id === "combo-pass" ||
+      w.slug === "combo" ||
+      w.category === "combo"
+  ) || (workshops.length > 0 ? workshops[0] : null);
+
+  const currentSectionWorkshops = workshops
+    .filter((w) => w.section === selectedSection)
+    .slice()
+    .sort((a, b) => (a.order || 0) - (b.order || 0));
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden bg-black/65 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200">
@@ -249,47 +264,51 @@ export const BookingModal = () => {
                     </div>
 
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                      {SECTIONS.map((sec) => {
-                        const isSecSelected = selectedSection === sec.id && selectedWorkshop?.id !== COMBO_PASS.id;
+                      {sections.map((sec) => {
+                        const secKey = sec.slug || sec.id;
+                        const isComboSelected = selectedSection === "combo" || (comboPass && selectedWorkshop?.id === comboPass.id);
+                        const isSecSelected = !isComboSelected && selectedSection === secKey;
                         return (
                           <button
-                            key={sec.id}
+                            key={secKey}
                             type="button"
-                            onClick={() => setSelectedSection(sec.id)}
+                            onClick={() => setSelectedSection(secKey)}
                             className={`p-2.5 rounded-2xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-1 ${
                               isSecSelected
                                 ? "bg-[#1C3325] text-white border-[#1C3325] shadow-xs"
                                 : "bg-white text-[#1C3325] border-[#2D4A37]/15 hover:border-[#1C3325]/40 hover:bg-[#FAF8F5]"
                             }`}
                           >
-                            <span className="text-xl">{sec.emoji}</span>
+                            <span className="text-xl">{sec.emoji || "✨"}</span>
                             <span className="font-semibold text-[12px] leading-tight text-center">
-                              {isKn ? sec.nameKn : sec.name}
+                              {isKn ? (sec.nameKn || sec.name) : sec.name}
                             </span>
                           </button>
                         );
                       })}
 
                       {/* Combo Pass Tab */}
-                      <button
-                        type="button"
-                        onClick={() => setSelectedWorkshop(COMBO_PASS)}
-                        className={`p-2.5 rounded-2xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-1 ${
-                          selectedWorkshop?.id === COMBO_PASS.id
-                            ? "bg-[#1C3325] text-white border-[#1C3325] shadow-xs"
-                            : "bg-white text-[#1C3325] border-[#2D4A37]/15 hover:border-[#1C3325]/40 hover:bg-[#FAF8F5]"
-                        }`}
-                      >
-                        <span className="text-xl">🪷</span>
-                        <span className="font-semibold text-[12px] leading-tight text-center">
-                          {isKn ? "ಕಾಂಬೋ ಪಾಸ್" : "Combo Pass"}
-                        </span>
-                      </button>
+                      {comboPass && (
+                        <button
+                          type="button"
+                          onClick={() => selectComboPass ? selectComboPass(comboPass) : setSelectedWorkshop(comboPass)}
+                          className={`p-2.5 rounded-2xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-1 ${
+                            (selectedSection === "combo" || (comboPass && selectedWorkshop?.id === comboPass.id))
+                              ? "bg-[#1C3325] text-white border-[#1C3325] shadow-xs"
+                              : "bg-white text-[#1C3325] border-[#2D4A37]/15 hover:border-[#1C3325]/40 hover:bg-[#FAF8F5]"
+                          }`}
+                        >
+                          <span className="text-xl">🪷</span>
+                          <span className="font-semibold text-[12px] leading-tight text-center">
+                            {isKn ? "ಕಾಂಬೋ ಪಾಸ್" : "Combo Pass"}
+                          </span>
+                        </button>
+                      )}
                     </div>
                   </div>
 
                   {/* Class Selection List */}
-                  {selectedWorkshop?.id === COMBO_PASS.id ? (
+                  {(comboPass && (selectedSection === "combo" || selectedWorkshop?.id === comboPass.id)) ? (
                     /* Featured Combo Pass Details */
                     <div className="p-4 rounded-2xl bg-[#E8F3EE] border border-[#1C3325]/20 space-y-2">
                       <div className="flex items-center justify-between">
@@ -297,15 +316,15 @@ export const BookingModal = () => {
                           {m.bestValue}
                         </span>
                         <div className="flex items-baseline gap-1.5 whitespace-nowrap">
-                          <span className="text-2xl font-bold text-[#1C3325]">₹{COMBO_PASS.price}</span>
-                          <span className="text-[12px] text-[#5B635E] line-through">₹{COMBO_PASS.originalPrice}</span>
+                          <span className="text-2xl font-bold text-[#1C3325]">₹{comboPass.price}</span>
+                          <span className="text-[12px] text-[#5B635E] line-through">₹{comboPass.originalPrice}</span>
                         </div>
                       </div>
                       <h4 className="font-sans text-lg font-bold text-[#1C3325]">
-                        {isKn ? COMBO_PASS.titleKn : COMBO_PASS.title}
+                        {isKn ? comboPass.titleKn : comboPass.title}
                       </h4>
                       <p className="text-[13px] text-[#5B635E] leading-relaxed">
-                        {isKn ? COMBO_PASS.descriptionKn : COMBO_PASS.description}
+                        {isKn ? comboPass.descriptionKn : comboPass.description}
                       </p>
                     </div>
                   ) : (
@@ -315,64 +334,92 @@ export const BookingModal = () => {
                         <label className="text-[12px] font-bold text-[#1C3325] uppercase tracking-wider">
                           2. {isKn ? "ತರಗತಿ ಆಯ್ಕೆಮಾಡಿ" : "Choose Class Offering"}
                         </label>
-                        <span className="text-[11px] text-[#5B635E]">
+                        <span className="text-[11px] text-[#52796F] font-medium">
                           {currentSectionWorkshops.length} options available
                         </span>
                       </div>
 
-                      <div className="space-y-2">
-                        {currentSectionWorkshops.map((w) => {
-                          const isSelected = selectedWorkshop?.id === w.id;
-                          return (
-                            <div
-                              key={w.id}
-                              onClick={() => setSelectedWorkshop(w)}
-                              className={`p-3.5 rounded-2xl border transition-all cursor-pointer ${
-                                isSelected
-                                  ? "bg-[#E8F3EE] border-[#1C3325] ring-1 ring-[#1C3325] shadow-xs"
-                                  : "bg-white border-[#2D4A37]/15 hover:border-[#1C3325]/40 hover:bg-[#FAF8F5]"
-                              }`}
-                            >
-                              <div className="flex items-center justify-between gap-3">
-                                <div className="flex items-center gap-3 min-w-0">
-                                  <div
-                                    className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${
-                                      isSelected ? "border-[#1C3325] bg-[#1C3325]" : "border-neutral-300"
-                                    }`}
-                                  >
-                                    {isSelected && <IconCheck className="w-3 h-3 text-white" />}
-                                  </div>
-                                  <div className="min-w-0">
-                                    <div className="flex items-center gap-2 flex-wrap">
-                                      <span className="font-bold text-[14px] text-[#1C3325]">
-                                        {isKn ? w.titleKn : w.title}
-                                      </span>
-                                      {w.badge && (
-                                        <span className="px-2 py-0.5 rounded-full bg-[#EDE8DE] text-[#1C3325] text-[10px] font-semibold shrink-0">
-                                          {w.badge}
-                                        </span>
-                                      )}
+                      {currentSectionWorkshops.length > 0 ? (
+                        <div className="space-y-2">
+                          {currentSectionWorkshops.map((w) => {
+                            const isSelected = selectedWorkshop?.id === w.id;
+                            return (
+                              <div
+                                key={w.id}
+                                onClick={() => setSelectedWorkshop(w)}
+                                className={`p-3.5 rounded-2xl border transition-all cursor-pointer ${
+                                  isSelected
+                                    ? "bg-[#E8F3EE] border-[#1C3325] ring-1 ring-[#1C3325] shadow-xs"
+                                    : "bg-white border-[#2D4A37]/15 hover:border-[#1C3325]/40 hover:bg-[#FAF8F5]"
+                                }`}
+                              >
+                                <div className="flex items-center justify-between gap-3">
+                                  <div className="flex items-center gap-3 min-w-0">
+                                    <div
+                                      className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${
+                                        isSelected ? "border-[#1C3325] bg-[#1C3325]" : "border-neutral-300"
+                                      }`}
+                                    >
+                                      {isSelected && <IconCheck className="w-3 h-3 text-white" />}
                                     </div>
-                                    <p className="text-[12px] text-[#5B635E] truncate">
-                                      {isKn ? w.title : w.titleKn} · {w.duration}
-                                    </p>
+                                    <div className="min-w-0">
+                                      <div className="flex items-center gap-2 flex-wrap">
+                                        <span className="font-bold text-[14px] text-[#1C3325]">
+                                          {isKn ? w.titleKn : w.title}
+                                        </span>
+                                        {w.badge && (
+                                          <span className="px-2 py-0.5 rounded-full bg-[#EDE8DE] text-[#1C3325] text-[10px] font-semibold shrink-0">
+                                            {w.badge}
+                                          </span>
+                                        )}
+                                      </div>
+                                      <p className="text-[12px] text-[#5B635E] truncate">
+                                        {isKn ? w.title : w.titleKn} · {w.duration}
+                                      </p>
+                                    </div>
                                   </div>
-                                </div>
-                                <div className="text-right shrink-0 whitespace-nowrap">
-                                  <span className="font-bold text-[15px] text-[#1C3325] block whitespace-nowrap">
-                                    ₹{w.price}
-                                  </span>
-                                  {w.originalPrice > w.price && (
-                                    <span className="text-[11px] text-[#5B635E] line-through block whitespace-nowrap">
-                                      ₹{w.originalPrice}
+                                  <div className="text-right shrink-0 whitespace-nowrap">
+                                    <span className="font-bold text-[15px] text-[#1C3325] block whitespace-nowrap">
+                                      ₹{w.price}
                                     </span>
-                                  )}
+                                    {w.originalPrice > w.price && (
+                                      <span className="text-[11px] text-[#5B635E] line-through block whitespace-nowrap">
+                                        ₹{w.originalPrice}
+                                      </span>
+                                    )}
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          );
-                        })}
-                      </div>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        /* P1: Friendly, Decent Empty State Message to Customers */
+                        <div className="p-6 rounded-2xl bg-white border border-[#2D4A37]/15 text-center space-y-3.5 shadow-xs">
+                          <div className="w-12 h-12 rounded-full bg-[#EDE8DE] flex items-center justify-center mx-auto text-2xl">
+                            🌿
+                          </div>
+                          <div className="space-y-1">
+                            <h5 className="font-sans text-base font-bold text-[#1C3325]">
+                              {isKn ? "ಹೊಸ ಬ್ಯಾಚ್‌ಗಳು ಶೀಘ್ರದಲ್ಲೇ ಆರಂಭವಾಗಲಿವೆ" : "New Batches Opening Soon"}
+                            </h5>
+                            <p className="text-[13px] text-[#5B635E] max-w-md mx-auto leading-relaxed">
+                              {isKn
+                                ? "ಈ ವಿಭಾಗಕ್ಕೆ ಮುಂಬರುವ ಬ್ಯಾಚ್‌ಗಳು ಶೀಘ್ರದಲ್ಲೇ ವೇಳಾಪಟ್ಟಿಯಾಗಲಿವೆ. ವೈಯಕ್ತಿಕ ತರಬೇತಿ ಅಥವಾ ವಿಶೇಷ ಸಮಯಕ್ಕಾಗಿ ನಮ್ಮನ್ನು WhatsApp ನಲ್ಲಿ ಸಂಪರ್ಕಿಸಿ."
+                                : "Upcoming sessions for this discipline are being scheduled. Inquire for 1-on-1 private mentoring or request a custom timing slot."}
+                            </p>
+                          </div>
+                          <a
+                            href="https://wa.me/917676405895?text=Namaskara%20Shashirekha%2C%20I%20am%20interested%20in%20joining%20upcoming%20classes%20for%20this%20discipline."
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#1C3325] text-white text-[12px] font-semibold hover:bg-[#2D4A37] transition-all shadow-xs"
+                          >
+                            <IconWhatsApp className="w-4 h-4 text-[#25D366]" />
+                            <span>{isKn ? "WhatsApp ನಲ್ಲಿ ವಿಚಾರಿಸಿ" : "Inquire via WhatsApp"}</span>
+                          </a>
+                        </div>
+                      )}
                     </div>
                   )}
 
@@ -385,60 +432,114 @@ export const BookingModal = () => {
                       <span className="text-[11px] text-[#52796F] font-semibold">{m.allTimingsIst}</span>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                      {(selectedWorkshop?.slots && selectedWorkshop.slots.length > 0
-                        ? selectedWorkshop.slots
-                        : BATCH_SLOTS
-                      ).map((slot) => {
-                        const isSlotSelected = selectedSlot?.id === slot.id || selectedSlot?.time === slot.time;
-                        return (
-                          <div
-                            key={slot.id}
-                            onClick={() => setSelectedSlot(slot)}
-                            className={`p-3 rounded-2xl border transition-all cursor-pointer text-left ${
-                              isSlotSelected
-                                ? "bg-[#E8F3EE] border-[#1C3325] ring-1 ring-[#1C3325] shadow-xs"
-                                : "bg-white border-[#2D4A37]/15 hover:border-[#1C3325]/40 hover:bg-[#FAF8F5]"
-                            }`}
-                          >
-                            <div className="flex items-center justify-between">
-                              <span className="text-[10px] font-bold uppercase tracking-wider text-[#52796F]">
-                                {isKn ? slot.label : slot.period}
-                              </span>
-                              <span className={`w-2 h-2 rounded-full ${isSlotSelected ? "bg-[#1C3325]" : "bg-green-600"}`} />
-                            </div>
-                            <span className="text-[13.5px] font-bold text-[#1C3325] block mt-1">
-                              {slot.time}
-                            </span>
-                            <span className="text-[11px] text-[#5B635E] block mt-0.5">
-                              {slot.spots || 5} {m.spotsLeft}
-                            </span>
-                          </div>
-                        );
-                      })}
-                    </div>
+                    {selectedWorkshop ? (
+                      availableSlots.length > 0 ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                          {availableSlots.map((slot) => {
+                            const isSlotSelected = selectedSlot?.id === slot.id || selectedSlot?.time === slot.time;
+                            return (
+                              <div
+                                key={slot.id || slot.time}
+                                onClick={() => setSelectedSlot(slot)}
+                                className={`p-3 rounded-2xl border transition-all cursor-pointer text-left ${
+                                  isSlotSelected
+                                    ? "bg-[#E8F3EE] border-[#1C3325] ring-1 ring-[#1C3325] shadow-xs"
+                                    : "bg-white border-[#2D4A37]/15 hover:border-[#1C3325]/40 hover:bg-[#FAF8F5]"
+                                }`}
+                              >
+                                <div className="flex items-center justify-between">
+                                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#52796F]">
+                                    {isKn ? (slot.labelKn || slot.label) : (slot.label || slot.period)}
+                                  </span>
+                                  <span className={`w-2 h-2 rounded-full ${isSlotSelected ? "bg-[#1C3325]" : "bg-green-600"}`} />
+                                </div>
+                                <span className="text-[13.5px] font-bold text-[#1C3325] block mt-1">
+                                  {slot.time}
+                                </span>
+                                <span className="text-[11px] text-[#5B635E] block mt-0.5">
+                                  {slot.spots ?? 5} {m.spotsLeft}
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <div className="p-3.5 rounded-xl bg-[#EDE8DE]/40 border border-[#2D4A37]/10 text-center">
+                          <p className="text-[12px] text-[#5B635E]">
+                            {isKn
+                              ? "ಈ ತರಗತಿಗೆ ಮುಂಬರುವ ಬ್ಯಾಚ್‌ಗಳು ಶೀಘ್ರದಲ್ಲೇ ಆರಂಭವಾಗಲಿವೆ."
+                              : "No upcoming batches currently scheduled for this offering."}
+                          </p>
+                        </div>
+                      )
+                    ) : (
+                      <div className="p-3.5 rounded-xl bg-[#EDE8DE]/40 border border-[#2D4A37]/10 text-center">
+                        <p className="text-[12px] text-[#5B635E]">
+                          {isKn
+                            ? "ಬ್ಯಾಚ್ ಸಮಯವನ್ನು ವೀಕ್ಷಿಸಲು ದಯವಿಟ್ಟು ಮೊದಲು ಮೇಲಿನ ತರಗತಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ."
+                            : "Please select a class offering above to view available batch timing slots."}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
 
               {/* STEP 2: PARTICIPANT DETAILS & CHECKOUT */}
               {currentStep === 2 && (
-                <div className="space-y-5">
-                  {/* Student Details Form */}
-                  <div className="space-y-4 bg-white p-5 rounded-2xl border border-[#2D4A37]/10 shadow-xs">
-                    <div className="flex items-center justify-between pb-2 border-b border-neutral-100">
-                      <h4 className="font-bold text-[#1C3325] text-[14px] flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-[#1C3325]" />
-                        <span>{m.studentDetails}</span>
-                      </h4>
+                <div className="space-y-4">
+
+                  {/* ── Compact Order Summary (Top of Step 2) ── */}
+                  <div className="bg-white p-4 rounded-2xl border border-[#2D4A37]/15 shadow-xs">
+                    <div className="flex items-center justify-between pb-2 mb-2.5 border-b border-neutral-100">
+                      <span className="text-[13px] font-bold text-[#1C3325] flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#C26D38]" />
+                        {m.orderSummary}
+                      </span>
                       <button
                         onClick={() => setCurrentStep(1)}
-                        className="text-[12px] text-[#C26D38] font-bold hover:underline cursor-pointer"
+                        className="text-[11px] text-[#C26D38] font-bold hover:underline cursor-pointer"
                         type="button"
                       >
                         ← {m.changeProgram}
                       </button>
                     </div>
+
+                    {/* Workshop + Price Row */}
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className="font-bold text-[14px] text-[#1C3325] truncate">
+                          {isKn && selectedWorkshop?.titleKn ? selectedWorkshop.titleKn : selectedWorkshop?.title}
+                        </p>
+                        <p className="text-[11px] text-[#52796F] mt-0.5">
+                          {m.selectedBatch}{" "}
+                          <span className="font-semibold text-[#1C3325]">
+                            {isKn && selectedSlot?.label ? selectedSlot.label : selectedSlot?.time}
+                          </span>
+                        </p>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <span className="font-sans text-xl font-extrabold text-[#1C3325] tabular-nums">
+                          ₹{selectedWorkshop?.price}
+                        </span>
+                        <span className="text-[10px] text-[#5B635E] font-medium ml-0.5">INR</span>
+                      </div>
+                    </div>
+
+                    {/* Included Perks (compact inline) */}
+                    <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2.5 pt-2 border-t border-neutral-50 text-[11px] text-[#52796F]">
+                      <span>✓ {m.zoomReplays} <b className="text-[#2D4A37]">{m.included}</b></span>
+                      <span>✓ {m.whatsappCohort} <b className="text-[#2D4A37]">{m.lifetimeAccess}</b></span>
+                    </div>
+                    <p className="text-[10px] text-[#5B635E] mt-1.5">{m.taxesIncluded}</p>
+                  </div>
+
+                  {/* ── Student Details Form ── */}
+                  <div className="space-y-3.5 bg-white p-4 sm:p-5 rounded-2xl border border-[#2D4A37]/10 shadow-xs">
+                    <h4 className="font-bold text-[#1C3325] text-[14px] flex items-center gap-2 pb-2 border-b border-neutral-100">
+                      <span className="w-2 h-2 rounded-full bg-[#1C3325]" />
+                      <span>{m.studentDetails}</span>
+                    </h4>
 
                     {/* Name */}
                     <div className="space-y-1">
@@ -461,7 +562,7 @@ export const BookingModal = () => {
                         {m.whatsappLabel}
                       </label>
                       <div className="flex items-center gap-2">
-                        <span className="px-3.5 py-2.5 rounded-xl bg-[#EDE8DE] text-[#1C3325] text-[13px] font-bold shrink-0">
+                        <span className="px-3 py-2.5 rounded-xl bg-[#EDE8DE] text-[#1C3325] text-[13px] font-bold shrink-0">
                           🇮🇳 +91
                         </span>
                         <input
@@ -494,96 +595,52 @@ export const BookingModal = () => {
                       />
                     </div>
 
-                    {/* Language Preference */}
-                    <div className="space-y-1">
-                      <label className="text-[12px] font-semibold text-[#1A1F1C] block">
-                        {m.languagePref}
-                      </label>
-                      <div className="grid grid-cols-3 gap-2">
-                        {["both", "kannada", "english"].map((pref) => (
-                          <button
-                            key={pref}
-                            type="button"
-                            onClick={() => handleFieldChange("languagePref", pref)}
-                            className={`py-2 rounded-xl text-[12px] font-semibold border transition-all cursor-pointer ${
-                              formData.languagePref === pref
-                                ? "bg-[#1C3325] text-white border-[#1C3325] shadow-xs"
-                                : "bg-[#FAF8F5] text-[#5B635E] border-neutral-200 hover:bg-white"
-                            }`}
-                          >
-                            {pref === "both" ? "ಕನ್ನಡ + EN" : pref === "kannada" ? "ಕನ್ನಡ" : "English"}
-                          </button>
-                        ))}
+                    {/* Language Preference & Experience in a 2-col row on desktop */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {/* Language Preference */}
+                      <div className="space-y-1">
+                        <label className="text-[12px] font-semibold text-[#1A1F1C] block">
+                          {m.languagePref}
+                        </label>
+                        <div className="grid grid-cols-3 gap-1.5">
+                          {["both", "kannada", "english"].map((pref) => (
+                            <button
+                              key={pref}
+                              type="button"
+                              onClick={() => handleFieldChange("languagePref", pref)}
+                              className={`py-2 rounded-xl text-[11px] font-semibold border transition-all cursor-pointer ${
+                                formData.languagePref === pref
+                                  ? "bg-[#1C3325] text-white border-[#1C3325] shadow-xs"
+                                  : "bg-[#FAF8F5] text-[#5B635E] border-neutral-200 hover:bg-white"
+                              }`}
+                            >
+                              {pref === "both" ? "ಕನ್ನಡ + EN" : pref === "kannada" ? "ಕನ್ನಡ" : "English"}
+                            </button>
+                          ))}
+                        </div>
                       </div>
-                    </div>
 
-                    {/* Experience Notes */}
-                    <div className="space-y-1">
-                      <label className="text-[12px] font-semibold text-[#1A1F1C] block">
-                        {m.experienceLabel}
-                      </label>
-                      <select
-                        value={formData.healthNotes}
-                        onChange={(e) => handleFieldChange("healthNotes", e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#FAF8F5] border border-[#2D4A37]/15 text-[13px] text-[#1A1F1C] focus:outline-none focus:ring-2 focus:ring-[#1C3325]/30 focus:bg-white transition-all cursor-pointer"
-                      >
-                        <option value="beginner">{m.expBeginner}</option>
-                        <option value="intermediate">{m.expIntermediate}</option>
-                        <option value="back_pain">{m.expBackPain}</option>
-                        <option value="prenatal">{m.expPrenatal}</option>
-                        <option value="stress_sleep">{m.expStress}</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  {/* Order Summary Box */}
-                  <div className="bg-white p-5 rounded-2xl border border-[#2D4A37]/15 space-y-3 shadow-xs">
-                    <div className="flex items-center justify-between pb-1.5 border-b border-neutral-100">
-                      <span className="text-[13px] font-bold text-[#1C3325]">
-                        {m.orderSummary}
-                      </span>
-                      <span className="px-2.5 py-0.5 rounded-full bg-[#EDE8DE] text-[#1C3325] text-[10px] font-semibold">
-                        {m.batchMonth}
-                      </span>
-                    </div>
-
-                    <div className="space-y-2 text-[13px]">
-                      <div className="flex justify-between">
-                        <span className="text-[#5B635E]">
-                          {isKn && selectedWorkshop?.titleKn ? selectedWorkshop.titleKn : selectedWorkshop?.title}
-                        </span>
-                        <span className="font-bold text-[#1C3325] whitespace-nowrap">₹{selectedWorkshop?.price}</span>
-                      </div>
-                      <div className="flex justify-between text-[12px]">
-                        <span className="text-[#5B635E]">{m.selectedBatch}</span>
-                        <span className="text-[#1C3325] font-medium">
-                          {isKn && selectedSlot?.label ? selectedSlot.label : selectedSlot?.time}
-                        </span>
-                      </div>
-                      <div className="flex justify-between text-[12px]">
-                        <span className="text-[#5B635E]">{m.zoomReplays}</span>
-                        <span className="text-[#2D4A37] font-semibold">{m.included}</span>
-                      </div>
-                      <div className="flex justify-between text-[12px]">
-                        <span className="text-[#5B635E]">{m.whatsappCohort}</span>
-                        <span className="text-[#2D4A37] font-semibold">{m.lifetimeAccess}</span>
-                      </div>
-                    </div>
-                    <div className="pt-2.5 border-t border-neutral-100 flex items-baseline justify-between">
-                      <div className="flex flex-col">
-                        <span className="font-bold text-[#1C3325] text-[15px]">{m.totalDue}</span>
-                        <span className="text-[11px] text-[#5B635E]">{m.taxesIncluded}</span>
-                      </div>
-                      <div className="flex items-baseline gap-1 whitespace-nowrap">
-                        <span className="font-sans text-2xl font-extrabold text-[#1C3325] whitespace-nowrap tabular-nums tracking-tight">
-                          ₹{selectedWorkshop?.price}
-                        </span>
-                        <span className="text-[11px] text-[#5B635E] font-medium">INR</span>
+                      {/* Experience Notes */}
+                      <div className="space-y-1">
+                        <label className="text-[12px] font-semibold text-[#1A1F1C] block">
+                          {m.experienceLabel}
+                        </label>
+                        <select
+                          value={formData.healthNotes}
+                          onChange={(e) => handleFieldChange("healthNotes", e.target.value)}
+                          className="w-full px-3 py-2.5 rounded-xl bg-[#FAF8F5] border border-[#2D4A37]/15 text-[12px] text-[#1A1F1C] focus:outline-none focus:ring-2 focus:ring-[#1C3325]/30 focus:bg-white transition-all cursor-pointer"
+                        >
+                          <option value="beginner">{m.expBeginner}</option>
+                          <option value="intermediate">{m.expIntermediate}</option>
+                          <option value="back_pain">{m.expBackPain}</option>
+                          <option value="prenatal">{m.expPrenatal}</option>
+                          <option value="stress_sleep">{m.expStress}</option>
+                        </select>
                       </div>
                     </div>
                   </div>
 
-                  {/* User Consent & Privacy Terms Checkbox */}
+                  {/* ── Consent Checkbox ── */}
                   <div className="p-3.5 rounded-2xl bg-[#EDE8DE]/60 border border-[#2D4A37]/15">
                     <label className="flex items-start gap-3 cursor-pointer select-none">
                       <input
@@ -636,21 +693,30 @@ export const BookingModal = () => {
                 <div className="w-full sm:w-auto flex items-center justify-between sm:justify-start gap-3">
                   <div className="text-left">
                     <p className="text-[13px] font-bold text-[#1C3325] truncate max-w-[240px]">
-                      {isKn ? selectedWorkshop?.titleKn : selectedWorkshop?.title}
+                      {selectedWorkshop
+                        ? (isKn ? selectedWorkshop?.titleKn : selectedWorkshop?.title)
+                        : (isKn ? "ದಯವಿಟ್ಟು ತರಗತಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ" : "Select a class offering")}
                     </p>
                     <p className="text-[11px] text-[#52796F] font-medium">
-                      {selectedSlot?.time}
+                      {selectedWorkshop ? selectedSlot?.time : (isKn ? "ಸಮಯ ಲಭ್ಯವಿಲ್ಲ" : "No batch selected")}
                     </p>
                   </div>
-                  <span className="text-xl font-sans font-bold text-[#1C3325] whitespace-nowrap tabular-nums">
-                    ₹{selectedWorkshop?.price}
-                  </span>
+                  {selectedWorkshop && (
+                    <span className="text-xl font-sans font-bold text-[#1C3325] whitespace-nowrap tabular-nums">
+                      ₹{selectedWorkshop?.price}
+                    </span>
+                  )}
                 </div>
 
                 {/* Continue CTA on Right */}
                 <button
                   onClick={() => setCurrentStep(2)}
-                  className="w-full sm:w-auto px-7 py-3 rounded-full bg-[#1C3325] text-white font-semibold text-[14px] shadow-sm hover:bg-[#2D4A37] transition-all flex items-center justify-center gap-2 cursor-pointer shrink-0"
+                  disabled={!selectedWorkshop}
+                  className={`w-full sm:w-auto px-7 py-3 rounded-full font-semibold text-[14px] shadow-sm transition-all flex items-center justify-center gap-2 shrink-0 ${
+                    selectedWorkshop
+                      ? "bg-[#1C3325] text-white hover:bg-[#2D4A37] cursor-pointer"
+                      : "bg-neutral-200 text-neutral-400 cursor-not-allowed"
+                  }`}
                   type="button"
                 >
                   <span>{m.continueToDetails}</span>
@@ -659,28 +725,54 @@ export const BookingModal = () => {
               </div>
             ) : (
               <div className="space-y-2">
-                <button
-                  onClick={completeBooking}
-                  disabled={!isFormValid || isSubmitting}
-                  className={`w-full py-3.5 rounded-full font-bold text-[15px] shadow-lg flex items-center justify-center gap-2 transition-all cursor-pointer ${
-                    isFormValid && !isSubmitting
-                      ? "bg-[#1C3325] text-white hover:bg-[#2D4A37] active:scale-98"
-                      : "bg-neutral-300 text-neutral-500 cursor-not-allowed"
-                  }`}
-                  type="button"
-                >
-                  <IconLock className="w-4 h-4" />
-                  <span>
-                    {isSubmitting ? m.submittingText : m.payButtonText}
-                  </span>
-                </button>
+                {bookingError && (
+                  <div className="p-2.5 rounded-xl bg-red-50 border border-red-200 flex items-start gap-2">
+                    <span className="text-red-500 text-sm shrink-0 mt-0.5">⚠️</span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-red-700 text-[12px] font-semibold leading-tight">{bookingError}</p>
+                      <p className="text-red-500 text-[10px] mt-0.5">Please check your connection and try again.</p>
+                    </div>
+                    <button
+                      onClick={() => setBookingError?.(null)}
+                      className="text-red-400 hover:text-red-600 text-[11px] font-bold shrink-0 cursor-pointer"
+                      type="button"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                )}
+
+                {/* Price + Pay Button Row */}
+                <div className="flex items-center gap-3">
+                  <div className="shrink-0 hidden sm:block">
+                    <span className="font-sans text-xl font-extrabold text-[#1C3325] tabular-nums">
+                      ₹{selectedWorkshop?.price}
+                    </span>
+                    <span className="text-[10px] text-[#5B635E] ml-0.5">INR</span>
+                  </div>
+                  <button
+                    onClick={completeBooking}
+                    disabled={!isFormValid || isSubmitting}
+                    className={`w-full py-3.5 rounded-full font-bold text-[15px] shadow-lg flex items-center justify-center gap-2 transition-all ${
+                      isFormValid && !isSubmitting
+                        ? "bg-[#1C3325] text-white hover:bg-[#2D4A37] active:scale-[0.98] cursor-pointer"
+                        : "bg-neutral-300 text-neutral-500 cursor-not-allowed"
+                    }`}
+                    type="button"
+                  >
+                    <IconLock className="w-4 h-4" />
+                    <span>
+                      {isSubmitting ? m.submittingText : m.payButtonText}
+                    </span>
+                  </button>
+                </div>
 
                 {/* Direct WhatsApp Alternative */}
                 <a
                   href={`https://wa.me/917676405895?text=Namaskara%20Shashirekha%2C%20I%20want%20to%20register%20for%20${encodeURIComponent(selectedWorkshop?.title)}%20and%20need%20UPI%20assistance.`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-2 rounded-full text-[#1C3325] text-[12px] font-medium flex items-center justify-center gap-1.5 hover:underline"
+                  className="w-full py-1.5 rounded-full text-[#1C3325] text-[12px] font-medium flex items-center justify-center gap-1.5 hover:underline"
                 >
                   <IconWhatsApp className="w-3.5 h-3.5 text-[#25D366]" />
                   <span>{m.whatsappDirect}</span>

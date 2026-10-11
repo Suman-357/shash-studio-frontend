@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { YOGA_MAT_PRODUCTS } from "../../data/products";
 import { useLanguage } from "../../context/LanguageContext";
+import { useProductsQuery } from "../../hooks/useWorkshopsQuery";
 import { IconArrowRight } from "../ui/Icons";
 
 export const ShopTeaserBanner = () => {
   const { lang } = useLanguage();
   const isKn = lang === "kn";
+  const { data: products = [] } = useProductsQuery();
 
   return (
     <section className="w-full py-6 sm:py-8 max-w-[1280px] mx-auto px-4 md:px-8">
@@ -61,9 +62,9 @@ export const ShopTeaserBanner = () => {
           {/* Right: Dual Product Previews + View More Button */}
           <div className="lg:col-span-5 flex flex-col justify-between space-y-3">
             <div className="grid grid-cols-2 gap-3.5">
-              {YOGA_MAT_PRODUCTS.slice(0, 2).map((mat) => (
+              {products.slice(0, 2).map((mat) => (
                 <Link
-                  key={mat.id}
+                  key={mat._id || mat.id || mat.slug}
                   to={`/shop?product=${mat.slug}`}
                   className="group relative rounded-2xl overflow-hidden bg-white/10 backdrop-blur-md p-3 border border-white/15 hover:bg-white/15 transition-all flex flex-col justify-between"
                 >
@@ -74,20 +75,22 @@ export const ShopTeaserBanner = () => {
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/60 text-[9.5px] font-bold text-white backdrop-blur-xs">
-                      {mat.tag}
+                      {mat.badge || "Studio Direct"}
                     </span>
                   </div>
                   <div>
                     <h4 className="text-[12.5px] font-bold text-white truncate leading-snug">
-                      {isKn ? mat.titleKn : mat.title}
+                      {isKn ? (mat.titleKn || mat.title) : mat.title}
                     </h4>
                     <div className="flex items-baseline gap-1.5 mt-1">
                       <span className="font-sans font-extrabold text-[14px] text-[#BEE8DC] tabular-nums">
                         ₹{mat.price}
                       </span>
-                      <span className="text-[10px] text-neutral-400 line-through tabular-nums">
-                        ₹{mat.originalPrice}
-                      </span>
+                      {mat.originalPrice > mat.price && (
+                        <span className="text-[10px] text-neutral-400 line-through tabular-nums">
+                          ₹{mat.originalPrice}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </Link>
@@ -101,7 +104,7 @@ export const ShopTeaserBanner = () => {
             >
               <span>{isKn ? "ಎಲ್ಲಾ ಪರಿಕರಗಳನ್ನು ನೋಡಿ (View More)" : "View All Studio Products & Props"}</span>
               <span className="px-2 py-0.5 rounded-full bg-[#D48C46] text-[10px] font-bold text-white">
-                +{YOGA_MAT_PRODUCTS.length - 2} More
+                {products.length > 2 ? `+${products.length - 2} More` : "Browse"}
               </span>
               <IconArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </Link>

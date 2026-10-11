@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 import { useBooking } from "../../context/BookingContext";
+import { useProductsQuery } from "../../hooks/useWorkshopsQuery";
 import { AnnouncementBar } from "./AnnouncementBar";
 import logo from "../../assets/logo.png";
 import { IconArrowRight, IconClose, IconMenu, IconShoppingCart } from "../ui/Icons";
@@ -10,6 +11,7 @@ export const Navbar = () => {
   const { lang, setLang, t } = useLanguage();
   const isKn = lang === "kn";
   const { openBookingModal } = useBooking();
+  const { data: products = [] } = useProductsQuery();
   const location = useLocation();
   const isShop = location.pathname === "/shop";
   const [isScrolled, setIsScrolled] = useState(false);
@@ -29,19 +31,17 @@ export const Navbar = () => {
       <AnnouncementBar />
 
       {/* Main Navigation Bar */}
-      <div className="max-w-[1280px] mx-auto px-4 md:px-8 h-20 flex items-center justify-between gap-4">
+      <div className="max-w-[1280px] mx-auto px-3 sm:px-4 md:px-8 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
         {/* Left Brand Emblem */}
-        <Link to="/" className="flex items-center gap-3 py-1 flex-shrink-0 group">
-          <div className="flex items-center gap-2">
-            <img src={logo} alt="SHASH Studios Logo" className="h-13 w-13 object-contain" />
-            <div className="flex flex-col">
-              <span className="font-sans text-xl md:text-2xl font-black tracking-tight text-[#1C3325] leading-none">
-                SHASH Studios
-              </span>
-              <span className="text-[10px] tracking-widest text-[#52796F] font-semibold uppercase mt-0.5">
-                stay healthy and stay happy
-              </span>
-            </div>
+        <Link to="/" className="flex items-center gap-2 sm:gap-3 py-1 min-w-0 shrink group">
+          <img src={logo} alt="SHASH Studios Logo" className="h-9 w-9 sm:h-12 sm:w-12 object-contain shrink-0" />
+          <div className="flex flex-col min-w-0">
+            <span className="font-sans text-[16px] xs:text-[18px] sm:text-xl md:text-2xl font-black tracking-tight text-[#1C3325] leading-none truncate">
+              SHASH Studios
+            </span>
+            <span className="text-[7.5px] xs:text-[8.5px] sm:text-[9.5px] md:text-[10px] tracking-wider sm:tracking-widest text-[#52796F] font-semibold uppercase mt-0.5 truncate">
+              stay healthy and stay happy
+            </span>
           </div>
         </Link>
 
@@ -85,12 +85,12 @@ export const Navbar = () => {
           </a>
         </nav>
 
-        {/* Right Actions: Shopping Cart Icon + Language Switcher + CTA */}
-        <div className="flex items-center gap-2.5 sm:gap-3 flex-shrink-0">
+        {/* Right Actions: Shopping Cart Icon + Language Switcher + CTA + Mobile Hamburger */}
+        <div className="flex items-center gap-1.5 sm:gap-2.5 md:gap-3 shrink-0">
           {/* Dedicated Shopping Cart Icon Button */}
           <Link
             to="/shop"
-            className={`relative flex h-10 w-10 items-center justify-center rounded-full border transition-all cursor-pointer ${
+            className={`relative flex h-8.5 w-8.5 sm:h-10 sm:w-10 items-center justify-center rounded-full border transition-all cursor-pointer ${
               isShop
                 ? "bg-[#1C3325] text-white border-[#1C3325] shadow-sm"
                 : "bg-white text-[#1C3325] border-[#2D4A37]/15 hover:bg-[#EDE8DE]"
@@ -98,34 +98,43 @@ export const Navbar = () => {
             title={isKn ? "ಯೋಗ ಚಾಪೆಗಳ ಮಳಿಗೆ (Shop)" : "Sanctuary Yoga Mats Store"}
             aria-label="Yoga Mats Cart"
           >
-            <IconShoppingCart className="w-[19px] h-[19px]" />
-            <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#D48C46] text-[9.5px] font-bold text-white shadow-xs">
-              3
-            </span>
+            <IconShoppingCart className="w-4 h-4 sm:w-[19px] sm:h-[19px]" />
+            {products.length > 0 && (
+              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#D48C46] text-[9px] sm:text-[9.5px] font-bold text-white shadow-xs">
+                {products.length}
+              </span>
+            )}
           </Link>
 
-          {/* Bilingual Toggle Button */}
+          {/* Bilingual Toggle Button (Compact on mobile, expanded on sm+) */}
           <div className="inline-flex items-center p-0.5 rounded-full bg-[#EDE8DE]/90 shadow-inner">
             <button
               onClick={() => setLang("kn")}
-              className={`px-3 py-1 rounded-full text-[12px] font-semibold transition-all cursor-pointer ${lang === "kn" ? "bg-white text-[#1C3325] shadow-xs" : "text-[#5B635E] hover:text-[#1C3325]"}`}
+              className={`px-2 sm:px-3 py-1 rounded-full text-[11px] sm:text-[12px] font-semibold transition-all cursor-pointer ${
+                lang === "kn" ? "bg-white text-[#1C3325] shadow-xs" : "text-[#5B635E] hover:text-[#1C3325]"
+              }`}
               type="button"
+              title="Kannada"
             >
-              KN (ಕನ್ನಡ)
+              <span className="sm:hidden">KN</span>
+              <span className="hidden sm:inline">KN (ಕನ್ನಡ)</span>
             </button>
             <button
               onClick={() => setLang("en")}
-              className={`px-3 py-1 rounded-full text-[12px] font-semibold transition-all cursor-pointer ${lang === "en" ? "bg-white text-[#1C3325] shadow-xs" : "text-[#5B635E] hover:text-[#1C3325]"}`}
+              className={`px-2 sm:px-3 py-1 rounded-full text-[11px] sm:text-[12px] font-semibold transition-all cursor-pointer ${
+                lang === "en" ? "bg-white text-[#1C3325] shadow-xs" : "text-[#5B635E] hover:text-[#1C3325]"
+              }`}
               type="button"
+              title="English"
             >
               EN
             </button>
           </div>
 
-          {/* Primary CTA Button */}
+          {/* Primary CTA Button (Tablet / Desktop) */}
           <button
             onClick={() => openBookingModal()}
-            className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#1C3325] text-white hover:bg-[#2D4A37] transition-all shadow-[0_4px_14px_rgba(28,51,37,0.2)] text-[13px] font-semibold group cursor-pointer"
+            className="hidden sm:inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#1C3325] text-white hover:bg-[#2D4A37] transition-all shadow-[0_4px_14px_rgba(28,51,37,0.2)] text-[12.5px] sm:text-[13px] font-semibold group cursor-pointer"
           >
             <span>{t("exploreBatches")}</span>
             <IconArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -134,17 +143,44 @@ export const Navbar = () => {
           {/* Mobile Menu Hamburger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-xl text-[#1C3325] hover:bg-[#EDE8DE] transition-colors cursor-pointer"
+            className="lg:hidden p-1.5 sm:p-2 rounded-xl text-[#1C3325] hover:bg-[#EDE8DE] transition-colors cursor-pointer"
             aria-label="Toggle Navigation Menu"
           >
-            {mobileMenuOpen ? <IconClose className="w-6 h-6" /> : <IconMenu className="w-6 h-6" />}
+            {mobileMenuOpen ? <IconClose className="w-5 h-5 sm:w-6 sm:h-6" /> : <IconMenu className="w-5 h-5 sm:w-6 sm:h-6" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#FCF9F3]/95 backdrop-blur-2xl border-b border-[#2D4A37]/10 px-6 py-6 shadow-xl space-y-4">
+        <div className="lg:hidden bg-[#FCF9F3]/98 backdrop-blur-2xl border-b border-[#2D4A37]/10 px-5 py-5 shadow-2xl space-y-4 animate-in slide-in-from-top-2 duration-200">
+          {/* Mobile Language Switcher */}
+          <div className="flex items-center justify-between p-2.5 rounded-2xl bg-[#EDE8DE]/70 border border-[#2D4A37]/10">
+            <span className="text-[12px] font-bold text-[#1C3325]">
+              {isKn ? "ಭಾಷೆ / Language" : "Language"}
+            </span>
+            <div className="inline-flex items-center p-0.5 rounded-full bg-white shadow-xs">
+              <button
+                onClick={() => setLang("kn")}
+                className={`px-3 py-1 rounded-full text-[11.5px] font-bold transition-all cursor-pointer ${
+                  lang === "kn" ? "bg-[#1C3325] text-white shadow-xs" : "text-[#5B635E] hover:text-[#1C3325]"
+                }`}
+                type="button"
+              >
+                ಕನ್ನಡ (KN)
+              </button>
+              <button
+                onClick={() => setLang("en")}
+                className={`px-3 py-1 rounded-full text-[11.5px] font-bold transition-all cursor-pointer ${
+                  lang === "en" ? "bg-[#1C3325] text-white shadow-xs" : "text-[#5B635E] hover:text-[#1C3325]"
+                }`}
+                type="button"
+              >
+                English (EN)
+              </button>
+            </div>
+          </div>
+
           <div className="flex flex-col space-y-3 text-[15px] font-medium">
             <a
               href="/#workshops"

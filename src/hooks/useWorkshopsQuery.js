@@ -1,20 +1,61 @@
 import { useQuery } from "@tanstack/react-query";
-import { getWorkshops } from "../services/api";
-import { WORKSHOPS, SECTIONS } from "../data/workshops";
+import { getWorkshops, getSections, getProducts, getBatches } from "../services/api";
+import { ASSETS } from "../assets";
 
 /**
- * Custom hook to fetch workshops using TanStack Query
- * Includes automatic cache management and seamless offline fallback to seed data
+ * Authentic Shashirekha yoga images and framing configs
+ */
+const WORKSHOP_IMAGE_MAP = {
+  "strength-training": {
+    image: ASSETS.poseBeachSplit,
+    objectPosition: "center 75%"
+  },
+  "ladies-yoga": {
+    image: ASSETS.poseTempleMeditation,
+    objectPosition: "center 78%"
+  },
+  "ashtanga-yoga": {
+    image: ASSETS.poseAdiyogiSplitPrayer,
+    objectPosition: "center 88%"
+  },
+  "21day": {
+    image: ASSETS.challenge21DayPoster,
+    objectPosition: "center top"
+  },
+  "sushii-nights": {
+    image: ASSETS.studioGuitarsNeon,
+    objectPosition: "center center"
+  },
+  "kids-yoga": {
+    image: ASSETS.poseHimalayaPeakClimb,
+    objectPosition: "center 60%"
+  },
+  "combo-pass": {
+    image: ASSETS.poseAdiyogiGraceStanding || ASSETS.poseAdiyogiNatarajasana,
+    objectPosition: "center 70%"
+  }
+};
+
+/**
+ * Custom hook to fetch workshops directly from backend MongoDB database
  */
 export const useWorkshopsQuery = (category = "all") => {
   return useQuery({
     queryKey: ["workshops", category],
     queryFn: async () => {
-      try {
-        const response = await getWorkshops(category);
-        if (response?.data && Array.isArray(response.data) && response.data.length > 0) {
-          return response.data.map((item) => ({
+      const response = await getWorkshops(category);
+      const list = response?.data || response;
+      if (Array.isArray(list)) {
+        return list.map((item) => {
+          const assetConfig = WORKSHOP_IMAGE_MAP[item.slug] || WORKSHOP_IMAGE_MAP[item.category];
+          const resolvedImage = assetConfig?.image || item.image || ASSETS.poseAdiyogiNatarajasana;
+          const resolvedPosition = assetConfig?.objectPosition || item.objectPosition || "center";
+
+          return {
             id: item.slug || item._id,
+            _id: item._id,
+            slug: item.slug,
+            order: item.order ?? 99,
             section: item.section || "yoga",
             sectionLabel: item.sectionLabel || (item.section === "music" ? "Music & Sound" : item.section === "other" ? "Other Activities" : "Yoga"),
             sectionLabelKn: item.sectionLabelKn || (item.section === "music" ? "ಸಂಗೀತ ಮತ್ತು ನಾದ" : item.section === "other" ? "ಇತರ ಚಟುವಟಿಕೆಗಳು" : "ಯೋಗ"),
@@ -22,6 +63,7 @@ export const useWorkshopsQuery = (category = "all") => {
             titleKn: item.titleKn,
             category: item.category,
             categoryLabel: item.categoryLabel,
+            batchSchedule: item.batchSchedule || item.categoryLabel,
             description: item.description,
             descriptionKn: item.descriptionKn,
             price: item.price,
@@ -30,57 +72,76 @@ export const useWorkshopsQuery = (category = "all") => {
             timingSlot: item.timingSlot,
             timingIcon: item.timingIcon || "alarm",
             badge: item.badge,
-            image: item.image,
+            image: resolvedImage,
+            objectPosition: resolvedPosition,
             features: item.features || [],
-            spotsLeft: item.spotsLeft ?? 5,
-          }));
-        }
-        return WORKSHOPS;
-      } catch (err) {
-        // Backend offline / disconnected: fallback to curated local seed data
-        console.warn("Backend API offline, serving cached Mysore workshop catalog:", err.message);
-        return WORKSHOPS;
+            spotsLeft: item.spotsLeft ?? 0,
+            slots: item.slots || []
+          };
+        }).sort((a, b) => (a.order || 0) - (b.order || 0));
       }
-    },
-    initialData: WORKSHOPS,
+      return [];
+    }
   });
 };
 
 /**
- * Custom hook to fetch dynamic sections collection from backend
+ * Custom hook to fetch dynamic sections collection directly from backend database
  */
 export const useSectionsQuery = () => {
   return useQuery({
     queryKey: ["sections"],
     queryFn: async () => {
-      try {
-        const response = await fetch("/api/v1/sections");
-        if (response.ok) {
-          const resJson = await response.json();
-          if (Array.isArray(resJson.data) && resJson.data.length > 0) {
-            return resJson.data.map((s) => ({
-              id: s.slug || s._id,
-              key: s.slug || s._id,
-              name: s.name,
-              nameKn: s.nameKn,
-              icon: s.icon || "spa",
-              emoji: s.emoji || "✨",
-              tagline: s.tagline || "",
-              taglineKn: s.taglineKn || "",
-              badge: s.badge || "",
-              badgeKn: s.badgeKn || "",
-              accentColor: s.accentColor || "#1C3325",
-              lightBg: s.lightBg || "bg-[#F4F8F5]",
-              borderCol: s.borderCol || "border-[#1C3325]/15",
-            }));
-          }
-        }
-      } catch (err) {
-        console.warn("Backend sections offline, serving default SECTIONS:", err.message);
+      const response = await getSections();
+      const list = response?.data || response;
+      if (Array.isArray(list)) {
+        return list.map((s) => ({
+          id: s.slug || s._id,
+          _id: s._id,
+          slug: s.slug,
+          key: s.slug || s._id,
+          name: s.name,
+          nameKn: s.nameKn,
+          icon: s.icon || "spa",
+          emoji: s.emoji || "✨",
+          tagline: s.tagline || "",
+          taglineKn: s.taglineKn || "",
+          badge: s.badge || "",
+          badgeKn: s.badgeKn || "",
+          accentColor: s.accentColor || "#1C3325",
+          lightBg: s.lightBg || "bg-[#F4F8F5]",
+          borderCol: s.borderCol || "border-[#1C3325]/15",
+        }));
       }
-      return SECTIONS;
-    },
-    initialData: SECTIONS,
+      return [];
+    }
   });
 };
 
+/**
+ * Custom hook to fetch store products directly from backend database
+ */
+export const useProductsQuery = (category = "all") => {
+  return useQuery({
+    queryKey: ["products", category],
+    queryFn: async () => {
+      const response = await getProducts(category);
+      const list = response?.data || response;
+      return Array.isArray(list) ? list : [];
+    }
+  });
+};
+
+/**
+ * Custom hook to fetch batch schedules directly from backend database
+ */
+export const useBatchesQuery = (workshopId = "") => {
+  return useQuery({
+    queryKey: ["batches", workshopId],
+    queryFn: async () => {
+      const response = await getBatches(workshopId);
+      const list = response?.data || response;
+      return Array.isArray(list) ? list : [];
+    }
+  });
+};

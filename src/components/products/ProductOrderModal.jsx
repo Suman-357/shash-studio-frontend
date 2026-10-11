@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useLanguage } from "../../context/LanguageContext";
 import { submitInquiry } from "../../services/api";
 import { IconCheck, IconWhatsApp, IconArrowRight } from "../ui/Icons";
+import { useRazorpay } from "../../hooks/useRazorpay";
+import { axiosInstance } from "../../services/axiosInstance";
 
 export const ProductOrderModal = ({ product, isOpen, onClose }) => {
   const { lang, t } = useLanguage();
   const isKn = lang === "kn";
+  const { pay: launchRazorpay } = useRazorpay();
 
   const [quantity, setQuantity] = useState(1);
   const [formData, setFormData] = useState({
@@ -14,9 +17,10 @@ export const ProductOrderModal = ({ product, isOpen, onClose }) => {
     address: "",
     city: "Bengaluru",
     pincode: "",
-    paymentMethod: "upi"
+    paymentMethod: "razorpay"
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [orderError, setOrderError] = useState(null);
   const [orderSuccess, setOrderSuccess] = useState(null);
 
   // Lock body scroll when modal is open
@@ -55,48 +59,65 @@ export const ProductOrderModal = ({ product, isOpen, onClose }) => {
     }
 
     setIsSubmitting(true);
-    let orderId = `SHASH-MAT-${Math.floor(100000 + Math.random() * 900000)}`;
+    setOrderError(null);
 
     try {
-      const response = await fetch("http://localhost:5000/api/v1/products/orders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          productId: product.slug || product.id,
-          productTitle: product.title,
-          unitPrice: product.price,
-          quantity,
-          customerName: formData.name,
-          phone: formData.whatsapp,
-          shippingAddress: {
-            street: formData.address,
-            city: formData.city || "Mysuru",
-            state: "Karnataka",
-            pincode: formData.pincode
-          },
-          paymentMethod: formData.paymentMethod
-        })
+      // 1. Create order in backend database
+      const response = await axiosInstance.post("/products/orders", {
+        productId: product.slug || product.id,
+        productTitle: product.title,
+        unitPrice: product.price,
+        quantity,
+        customerName: formData.name,
+        phone: formData.whatsapp,
+        shippingAddress: {
+          street: formData.address,
+          city: formData.city || "Mysuru",
+          state: "Karnataka",
+          pincode: formData.pincode
+        },
+        paymentMethod: "razorpay"
       });
 
-      if (response.ok) {
-        const json = await response.json();
-        if (json?.data?.orderId) {
-          orderId = json.data.orderId;
-        }
-      }
-    } catch (err) {
-      console.warn("Backend sync note for product order:", err);
-    } finally {
-      setIsSubmitting(false);
-      setOrderSuccess({
-        orderId,
-        productTitle: product.title,
+      const orderPayload = response?.data || response;
+      const createdOrderId =
+        orderPayload?.orderId || `SHASH-MAT-${Math.floor(100000 + Math.random() * 900000)}`;
+
+      // 2. Launch Razorpay payment modal
+      await launchRazorpay({
+        type: "product",
+        productId: product.slug || product.id,
         quantity,
-        totalPrice,
-        name: formData.name,
-        whatsapp: formData.whatsapp,
-        city: formData.city
+        orderId: createdOrderId,
+        customerName: formData.name,
+        customerPhone: formData.whatsapp,
+        description: `${product.title} (Qty: ${quantity})`,
+        onSuccess: (verifiedData) => {
+          setIsSubmitting(false);
+          setOrderSuccess({
+            orderId: createdOrderId,
+            productTitle: product.title,
+            quantity,
+            totalPrice,
+            name: formData.name,
+            whatsapp: formData.whatsapp,
+            city: formData.city,
+            razorpayPaymentId: verifiedData.razorpay_payment_id || verifiedData.paymentId
+          });
+        },
+        onFailure: (err) => {
+          setIsSubmitting(false);
+          if (err?.cancelled) {
+            setOrderError("Payment was cancelled. You can retry whenever you're ready.");
+          } else {
+            setOrderError(err?.message || "Payment could not be completed. Please try again.");
+          }
+        }
       });
+    } catch (err) {
+      console.error("Product order & payment error:", err);
+      setIsSubmitting(false);
+      setOrderError(err?.message || "Failed to initiate payment. Please try again.");
     }
   };
 
@@ -366,6 +387,19 @@ export const ProductOrderModal = ({ product, isOpen, onClose }) => {
                 <span className="material-symbols-outlined text-[17px] shrink-0">local_shipping</span>
                 <span>Includes free studio carry strap. Dispatched within 24 hours of order.</span>
               </div>
+
+              {orderError && (
+                <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-[12px] font-semibold flex items-center justify-between gap-2">
+                  <span>⚠️ {orderError}</span>
+                  <button
+                    type="button"
+                    onClick={() => setOrderError(null)}
+                    className="text-red-500 hover:text-red-700 font-bold cursor-pointer"
+                  >
+                    ✕
+                  </button>
+                </div>
+              )}
 
               {/* Submit CTA */}
               <div className="pt-2 flex flex-col sm:flex-row gap-2.5">
