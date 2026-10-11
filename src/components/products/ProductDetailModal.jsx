@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useLanguage } from "../../context/LanguageContext";
-import { IconCheck, IconArrowRight, IconWhatsApp } from "../ui/Icons";
+import { Check, ArrowRight } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 
 export const ProductDetailModal = ({ product, isOpen, onClose, onBuyNow }) => {
   const { lang } = useLanguage();
@@ -160,7 +161,7 @@ export const ProductDetailModal = ({ product, isOpen, onClose, onBuyNow }) => {
                 {product.highlights.map((h, i) => (
                   <li key={i} className="flex items-start gap-2">
                     <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#BEE8DC] text-[#1C3325]">
-                      <IconCheck className="w-2.5 h-2.5" />
+                      <Check className="w-2.5 h-2.5" />
                     </span>
                     <span>{h}</span>
                   </li>
@@ -179,7 +180,7 @@ export const ProductDetailModal = ({ product, isOpen, onClose, onBuyNow }) => {
                 className="flex-1 py-3.5 px-6 rounded-full bg-[#1C3325] text-white font-bold text-[14px] shadow-md hover:bg-[#2D4A37] transition-all flex items-center justify-center gap-2 cursor-pointer group"
               >
                 <span>{isKn ? "ಈಗಲೇ ಖರೀದಿಸಿ (Buy Now)" : "Proceed to Buy (₹" + product.price + ")"}</span>
-                <IconArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
 
               <a
@@ -188,7 +189,7 @@ export const ProductDetailModal = ({ product, isOpen, onClose, onBuyNow }) => {
                 rel="noopener noreferrer"
                 className="py-3 px-4 rounded-full border border-[#25D366] text-[#1E7E34] hover:bg-[#25D366]/10 font-bold text-[13px] flex items-center justify-center gap-1.5 transition-colors"
               >
-                <IconWhatsApp className="w-4 h-4 text-[#25D366]" />
+                <FaWhatsapp className="w-4 h-4 text-[#25D366]" />
                 <span>Order on WhatsApp</span>
               </a>
             </div>

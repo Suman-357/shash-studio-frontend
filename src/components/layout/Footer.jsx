@@ -1,15 +1,8 @@
 import React from "react";
 import { useLanguage } from "../../context/LanguageContext";
 import { useBooking } from "../../context/BookingContext";
-import {
-  IconInstagram,
-  IconYouTube,
-  IconWhatsApp,
-  IconPhone,
-  IconMail,
-  IconClock,
-  IconMapPin
-} from "../ui/Icons";
+import { Instagram, Youtube, Phone, Mail, Clock, MapPin } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 
 export const Footer = () => {
   const { lang, t } = useLanguage();
@@ -35,7 +28,7 @@ export const Footer = () => {
             </p>
             <div className="pt-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EDE8DE] text-[#1C3325] text-[12px] font-semibold">
-                <IconMapPin className="w-3.5 h-3.5 text-[#D48C46]" />
+                <MapPin className="w-3.5 h-3.5 text-[#D48C46]" />
                 <span>Mysuru, Karnataka, India</span>
               </span>
             </div>
@@ -80,7 +73,7 @@ export const Footer = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 hover:text-[#1C3325] transition-colors"
                 >
-                  <IconInstagram className="w-4 h-4 text-[#C26D38] shrink-0" />
+                  <Instagram className="w-4 h-4 text-[#C26D38] shrink-0" />
                   <span>@sushiidays</span>
                 </a>
               </li>
@@ -91,7 +84,7 @@ export const Footer = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 hover:text-[#1C3325] transition-colors"
                 >
-                  <IconInstagram className="w-4 h-4 text-[#C26D38] shrink-0" />
+                  <Instagram className="w-4 h-4 text-[#C26D38] shrink-0" />
                   <span>@shash.studios</span>
                 </a>
               </li>
@@ -102,7 +95,7 @@ export const Footer = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 hover:text-[#1C3325] transition-colors"
                 >
-                  <IconYouTube className="w-4 h-4 text-red-600 shrink-0" />
+                  <Youtube className="w-4 h-4 text-red-600 shrink-0" />
                   <span>YouTube Channel</span>
                 </a>
               </li>
@@ -113,7 +106,7 @@ export const Footer = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 hover:text-[#1C3325] transition-colors"
                 >
-                  <IconWhatsApp className="w-4 h-4 text-[#25D366] shrink-0" />
+                  <FaWhatsapp className="w-4 h-4 text-[#25D366] shrink-0" />
                   <span>WhatsApp Desk</span>
                 </a>
               </li>
@@ -132,15 +125,15 @@ export const Footer = () => {
             </p>
             <div className="space-y-2 pt-1 text-[13px] text-[#1A1F1C]">
               <div className="flex items-center gap-2">
-                <IconPhone className="w-4 h-4 text-[#84A98C] shrink-0" />
+                <Phone className="w-4 h-4 text-[#84A98C] shrink-0" />
                 <span className="font-semibold">+91 76764 05895</span>
               </div>
               <div className="flex items-center gap-2">
-                <IconMail className="w-4 h-4 text-[#84A98C] shrink-0" />
+                <Mail className="w-4 h-4 text-[#84A98C] shrink-0" />
                 <span>shashstudios@gmail.com</span>
               </div>
               <div className="flex items-center gap-2">
-                <IconClock className="w-4 h-4 text-[#84A98C] shrink-0" />
+                <Clock className="w-4 h-4 text-[#84A98C] shrink-0" />
                 <span>Mon – Sat: 5:30 AM – 7:30 PM IST</span>
               </div>
             </div>
@@ -151,7 +144,7 @@ export const Footer = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-[#1C3325] hover:bg-[#EDE8DE] transition-colors text-[12px] font-bold shadow-xs border border-[#2D4A37]/15"
               >
-                <IconWhatsApp className="w-4 h-4 text-[#25D366] shrink-0" />
+                <FaWhatsapp className="w-4 h-4 text-[#25D366] shrink-0" />
                 <span>{lang === "kn" ? "ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ಮಾತನಾಡಿ" : "Message on WhatsApp"}</span>
               </a>
             </div>

@@ -3,7 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { getProducts } from "../services/api";
 import { useLanguage } from "../context/LanguageContext";
 import { ProductDetailModal } from "../components/products/ProductDetailModal";
-import { IconArrowRight, IconFilter } from "../components/ui/Icons";
+import { ArrowRight, Filter } from "lucide-react";
 
 export const ShopPage = ({ onBuyProduct }) => {
   const { lang } = useLanguage();
@@ -111,7 +111,7 @@ export const ShopPage = ({ onBuyProduct }) => {
                     : "bg-white text-[#1C3325] border-[#2D4A37]/15 hover:border-[#1C3325] hover:bg-[#FDFBF7]"
                 }`}
               >
-                <IconFilter className={`w-3.5 h-3.5 ${filter !== "all" ? "text-white" : "text-[#2D4A37]"}`} />
+                <Filter className={`w-3.5 h-3.5 ${filter !== "all" ? "text-white" : "text-[#2D4A37]"}`} />
                 <span>
                   {filter === "all"
                     ? (isKn ? "ಫಿಲ್ಟರ್ ಮಾಡಿ (Filter)" : "Filter")
@@ -349,7 +349,7 @@ export const ShopPage = ({ onBuyProduct }) => {
                         className="px-4 py-2 rounded-full bg-[#1C3325] text-white font-bold text-[12.5px] shadow-sm hover:bg-[#2D4A37] transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
                       >
                         <span>Buy Now</span>
-                        <IconArrowRight className="w-3.5 h-3.5" />
+                        <ArrowRight className="w-3.5 h-3.5" />
                       </button>
                     </div>
                   </div>

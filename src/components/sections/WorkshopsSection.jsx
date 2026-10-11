@@ -3,7 +3,8 @@ import { CardSpotlight } from "../ui/CardSpotlight";
 import { useLanguage } from "../../context/LanguageContext";
 import { useBooking } from "../../context/BookingContext";
 import { useWorkshopsQuery, useSectionsQuery } from "../../hooks/useWorkshopsQuery";
-import { IconArrowRight, IconClock, IconWhatsApp } from "../ui/Icons";
+import { ArrowRight, Clock } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 
 const WorkshopCardItem = ({ workshop, sectionObj, isKn, t, onRegister }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -88,7 +89,7 @@ const WorkshopCardItem = ({ workshop, sectionObj, isKn, t, onRegister }) => {
       <div className="pt-4 space-y-3 border-t border-[#2D4A37]/10 mt-4">
         <div className="flex items-center justify-between py-2 px-3 rounded-xl bg-[#F6F3ED] text-[12px]">
           <div className="flex items-center gap-1.5 text-[#5B635E] overflow-hidden text-ellipsis whitespace-nowrap mr-2">
-            <IconClock className="w-3.5 h-3.5 text-[#84A98C] shrink-0" />
+            <Clock className="w-3.5 h-3.5 text-[#84A98C] shrink-0" />
             <span className="font-medium truncate">{workshop.timingSlot}</span>
           </div>
           <div className="flex items-baseline gap-1.5 whitespace-nowrap shrink-0">
@@ -109,7 +110,7 @@ const WorkshopCardItem = ({ workshop, sectionObj, isKn, t, onRegister }) => {
           type="button"
         >
           <span>{t("registerBtn")}</span>
-          <IconArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </button>
       </div>
     </CardSpotlight>
@@ -246,7 +247,7 @@ export const WorkshopsSection = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#1C3325] text-white text-[13px] font-semibold hover:bg-[#2D4A37] transition-all shadow-xs"
             >
-              <IconWhatsApp className="w-4 h-4 text-[#25D366]" />
+              <FaWhatsapp className="w-4 h-4 text-[#25D366]" />
               <span>{isKn ? "WhatsApp ನಲ್ಲಿ ಮಾಹಿತಿ ಪಡೆಯಿರಿ" : "Inquire on WhatsApp"}</span>
             </a>
           </div>

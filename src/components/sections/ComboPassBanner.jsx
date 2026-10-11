@@ -3,7 +3,7 @@ import { AnimatedBorderCard } from "../ui/AnimatedBorderCard";
 import { useLanguage } from "../../context/LanguageContext";
 import { useBooking } from "../../context/BookingContext";
 import { useWorkshopsQuery } from "../../hooks/useWorkshopsQuery";
-import { IconCheck, IconArrowRight } from "../ui/Icons";
+import { Check, ArrowRight } from "lucide-react";
 
 export const ComboPassBanner = () => {
   const { lang, t } = useLanguage();
@@ -45,15 +45,15 @@ export const ComboPassBanner = () => {
 
             <div className="flex items-center gap-6 pt-2 flex-wrap text-[13px] text-[#FDFBF7]/90 font-medium">
               <div className="flex items-center gap-2">
-                <IconCheck className="w-4 h-4 text-[#D48C46]" />
+                <Check className="w-4 h-4 text-[#D48C46]" />
                 <span>All Daily Batches Included</span>
               </div>
               <div className="flex items-center gap-2">
-                <IconCheck className="w-4 h-4 text-[#D48C46]" />
+                <Check className="w-4 h-4 text-[#D48C46]" />
                 <span>24-Hour Zoom Replays</span>
               </div>
               <div className="flex items-center gap-2">
-                <IconCheck className="w-4 h-4 text-[#D48C46]" />
+                <Check className="w-4 h-4 text-[#D48C46]" />
                 <span>Private WhatsApp Cohort</span>
               </div>
             </div>
@@ -84,7 +84,7 @@ export const ComboPassBanner = () => {
               type="button"
             >
               <span>{t("getAllAccess")}</span>
-              <IconArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4" />
             </button>
           </div>
         </div>

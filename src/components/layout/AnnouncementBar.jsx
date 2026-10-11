@@ -1,6 +1,6 @@
 import React from "react";
 import { useLanguage } from "../../context/LanguageContext";
-import { IconWhatsApp } from "../ui/Icons";
+import { FaWhatsapp } from "react-icons/fa6";
 
 export const AnnouncementBar = () => {
   const { lang } = useLanguage();
@@ -49,7 +49,7 @@ export const AnnouncementBar = () => {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 text-[#1C3325] hover:bg-[#1C3325] hover:text-white transition-all shadow-xs text-[11px] font-semibold border border-[#2D4A37]/10"
         >
-          <IconWhatsApp className="w-3.5 h-3.5 text-[#25D366]" />
+          <FaWhatsapp className="w-3.5 h-3.5 text-[#25D366]" />
           <span className="hidden sm:inline">WhatsApp Support</span>
           <span className="sm:hidden">Help</span>
         </a>

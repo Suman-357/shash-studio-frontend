@@ -1,11 +1,24 @@
 import axios from "axios";
 
+const resolveBaseUrl = () => {
+  const rawUrl =
+    import.meta.env.VITE_API_URL ||
+    import.meta.env.VITE_BACKEND_URL ||
+    "http://localhost:5000/api/v1";
+
+  const clean = rawUrl.trim().replace(/\/+$/, "");
+  if (!clean.endsWith("/api/v1") && !clean.endsWith("/api")) {
+    return `${clean}/api/v1`;
+  }
+  return clean;
+};
+
 /**
  * Enterprise Axios Instance
  * Configured with baseURL, timeout, request & response interceptors
  */
 export const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api/v1",
+  baseURL: resolveBaseUrl(),
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",

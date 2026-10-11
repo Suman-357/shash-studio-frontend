@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLanguage } from "../../context/LanguageContext";
 import { submitInquiry } from "../../services/api";
-import { IconCheck, IconWhatsApp, IconArrowRight } from "../ui/Icons";
+import { Check, ArrowRight } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 import { useRazorpay } from "../../hooks/useRazorpay";
 import { axiosInstance } from "../../services/axiosInstance";
 
@@ -163,7 +164,7 @@ export const ProductOrderModal = ({ product, isOpen, onClose }) => {
             /* SUCCESS CONFIRMATION */
             <div className="text-center py-2 space-y-5">
               <div className="w-16 h-16 rounded-full bg-[#BEE8DC] text-[#1C3325] flex items-center justify-center mx-auto shadow-sm">
-                <IconCheck className="w-8 h-8 text-[#1C3325]" />
+                <Check className="w-8 h-8 text-[#1C3325]" />
               </div>
 
               <div className="space-y-1">
@@ -213,7 +214,7 @@ export const ProductOrderModal = ({ product, isOpen, onClose }) => {
                   rel="noopener noreferrer"
                   className="w-full py-3.5 rounded-full bg-[#25D366] text-white font-bold flex items-center justify-center gap-2 shadow-md hover:bg-green-600 transition-colors"
                 >
-                  <IconWhatsApp className="w-5 h-5 text-white" />
+                  <FaWhatsapp className="w-5 h-5 text-white" />
                   <span>{isKn ? "ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ದೃಢೀಕರಿಸಿ" : "Confirm & Track via WhatsApp"}</span>
                 </a>
                 <button
@@ -413,7 +414,7 @@ export const ProductOrderModal = ({ product, isOpen, onClose }) => {
                   ) : (
                     <>
                       <span>Place Order (₹{totalPrice})</span>
-                      <IconArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-4 h-4" />
                     </>
                   )}
                 </button>
@@ -424,7 +425,7 @@ export const ProductOrderModal = ({ product, isOpen, onClose }) => {
                   rel="noopener noreferrer"
                   className="py-3 px-4 rounded-full border border-[#25D366] text-[#1E7E34] hover:bg-[#25D366]/10 font-bold text-[13px] flex items-center justify-center gap-1.5 transition-colors"
                 >
-                  <IconWhatsApp className="w-4 h-4 text-[#25D366]" />
+                  <FaWhatsapp className="w-4 h-4 text-[#25D366]" />
                   <span>Order on WhatsApp</span>
                 </a>
               </div>

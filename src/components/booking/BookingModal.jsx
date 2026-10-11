@@ -2,15 +2,32 @@ import React, { useRef, useEffect } from "react";
 import { useBooking } from "../../context/BookingContext";
 import { useLanguage } from "../../context/LanguageContext";
 import {
-  IconArrowRight,
-  IconClose,
-  IconCheck,
-  IconLock,
-  IconShield,
-  IconWhatsApp,
-  IconClock,
-  IconLotus
-} from "../ui/Icons";
+  ArrowRight,
+  X,
+  Check,
+  Lock,
+  Shield,
+  Clock
+} from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
+
+const LotusIcon = ({ className = "w-5 h-5", ...props }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    {...props}
+  >
+    <path d="M12 2c0 5-4 9-4 14a4 4 0 0 0 8 0c0-5-4-9-4-14z" />
+    <path d="M12 8c-3 3-7 6-7 10a7 7 0 0 0 7 2" />
+    <path d="M12 8c3 3 7 6 7 10a7 7 0 0 1-7 2" />
+    <path d="M3 18c2.5 1.5 5.5 2 9 2s6.5-.5 9-2" />
+  </svg>
+);
 
 export const BookingModal = () => {
   const { lang } = useLanguage();
@@ -144,7 +161,7 @@ export const BookingModal = () => {
         <div className="flex items-center justify-between px-6 py-4 bg-white/85 backdrop-blur-md border-b border-[#2D4A37]/10 shrink-0">
           <div className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1C3325]/10 text-[#1C3325]">
-              <IconLotus className="w-5 h-5 text-[#1C3325]" />
+              <LotusIcon className="w-5 h-5 text-[#1C3325]" />
             </span>
             <div>
               <span className="font-sans text-base sm:text-lg font-extrabold text-[#1C3325] block leading-tight">
@@ -160,7 +177,7 @@ export const BookingModal = () => {
             className="w-8 h-8 rounded-full bg-[#EDE8DE] hover:bg-[#DCDAD4] text-[#1C3325] flex items-center justify-center transition-colors cursor-pointer"
             aria-label="Close Modal"
           >
-            <IconClose className="w-4 h-4" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
@@ -193,7 +210,7 @@ export const BookingModal = () => {
             /* SUCCESS CONFIRMATION STATE */
             <div className="text-center py-4 space-y-6">
               <div className="w-16 h-16 rounded-full bg-[#BEE8DC] text-[#1C3325] flex items-center justify-center mx-auto shadow-md">
-                <IconCheck className="w-8 h-8 text-[#1C3325]" />
+                <Check className="w-8 h-8 text-[#1C3325]" />
               </div>
               <div className="space-y-1.5">
                 <h3 className="font-sans text-2xl sm:text-3xl text-[#1C3325] font-extrabold tracking-tight">
@@ -238,7 +255,7 @@ export const BookingModal = () => {
                   rel="noopener noreferrer"
                   className="w-full py-3.5 rounded-full bg-[#25D366] text-white font-bold flex items-center justify-center gap-2 shadow-md hover:bg-green-600 transition-colors"
                 >
-                  <IconWhatsApp className="w-5 h-5 text-white" />
+                  <FaWhatsapp className="w-5 h-5 text-white" />
                   <span>{m.joinWhatsapp}</span>
                 </a>
                 <button
@@ -360,7 +377,7 @@ export const BookingModal = () => {
                                         isSelected ? "border-[#1C3325] bg-[#1C3325]" : "border-neutral-300"
                                       }`}
                                     >
-                                      {isSelected && <IconCheck className="w-3 h-3 text-white" />}
+                                      {isSelected && <Check className="w-3 h-3 text-white" />}
                                     </div>
                                     <div className="min-w-0">
                                       <div className="flex items-center gap-2 flex-wrap">
@@ -415,7 +432,7 @@ export const BookingModal = () => {
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#1C3325] text-white text-[12px] font-semibold hover:bg-[#2D4A37] transition-all shadow-xs"
                           >
-                            <IconWhatsApp className="w-4 h-4 text-[#25D366]" />
+                            <FaWhatsapp className="w-4 h-4 text-[#25D366]" />
                             <span>{isKn ? "WhatsApp ನಲ್ಲಿ ವಿಚಾರಿಸಿ" : "Inquire via WhatsApp"}</span>
                           </a>
                         </div>
@@ -663,17 +680,17 @@ export const BookingModal = () => {
                   {/* Trust Badges */}
                   <div className="grid grid-cols-3 gap-2 text-center text-[10px] text-[#5B635E]">
                     <div className="p-2.5 rounded-xl bg-white border border-[#2D4A37]/10 flex flex-col items-center justify-center gap-0.5">
-                      <IconShield className="w-4 h-4 text-[#1C3325]" />
+                      <Shield className="w-4 h-4 text-[#1C3325]" />
                       <span className="font-bold text-[#1C3325]">{m.secureBadge}</span>
                       <span className="text-[9px] text-[#5B635E]">{m.secureSub}</span>
                     </div>
                     <div className="p-2.5 rounded-xl bg-white border border-[#2D4A37]/10 flex flex-col items-center justify-center gap-0.5">
-                      <IconClock className="w-4 h-4 text-[#1C3325]" />
+                      <Clock className="w-4 h-4 text-[#1C3325]" />
                       <span className="font-bold text-[#1C3325]">{m.replayBadge}</span>
                       <span className="text-[9px] text-[#5B635E]">{m.replaySub}</span>
                     </div>
                     <div className="p-2.5 rounded-xl bg-white border border-[#2D4A37]/10 flex flex-col items-center justify-center gap-0.5">
-                      <IconLotus className="w-4 h-4 text-[#1C3325]" />
+                      <LotusIcon className="w-4 h-4 text-[#1C3325]" />
                       <span className="font-bold text-[#1C3325]">{m.lineageBadge}</span>
                       <span className="text-[9px] text-[#5B635E]">{m.lineageSub}</span>
                     </div>
@@ -720,7 +737,7 @@ export const BookingModal = () => {
                   type="button"
                 >
                   <span>{m.continueToDetails}</span>
-                  <IconArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
             ) : (
@@ -760,7 +777,7 @@ export const BookingModal = () => {
                     }`}
                     type="button"
                   >
-                    <IconLock className="w-4 h-4" />
+                    <Lock className="w-4 h-4" />
                     <span>
                       {isSubmitting ? m.submittingText : m.payButtonText}
                     </span>
@@ -774,7 +791,7 @@ export const BookingModal = () => {
                   rel="noopener noreferrer"
                   className="w-full py-1.5 rounded-full text-[#1C3325] text-[12px] font-medium flex items-center justify-center gap-1.5 hover:underline"
                 >
-                  <IconWhatsApp className="w-3.5 h-3.5 text-[#25D366]" />
+                  <FaWhatsapp className="w-3.5 h-3.5 text-[#25D366]" />
                   <span>{m.whatsappDirect}</span>
                 </a>
               </div>

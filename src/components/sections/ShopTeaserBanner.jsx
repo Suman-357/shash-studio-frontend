@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 import { useProductsQuery } from "../../hooks/useWorkshopsQuery";
-import { IconArrowRight } from "../ui/Icons";
+import { ArrowRight } from "lucide-react";
 
 export const ShopTeaserBanner = () => {
   const { lang } = useLanguage();
@@ -54,7 +54,7 @@ export const ShopTeaserBanner = () => {
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#D48C46] text-[#FDFBF7] font-bold text-[14px] shadow-lg hover:bg-[#C26D38] hover:scale-[1.02] active:scale-95 transition-all group"
               >
                 <span>{isKn ? "ಯೋಗ ಮಳಿಗೆಗೆ ಭೇಟಿ ನೀಡಿ" : "Visit Yoga Mat Store"}</span>
-                <IconArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
           </div>
@@ -106,7 +106,7 @@ export const ShopTeaserBanner = () => {
               <span className="px-2 py-0.5 rounded-full bg-[#D48C46] text-[10px] font-bold text-white">
                 {products.length > 2 ? `+${products.length - 2} More` : "Browse"}
               </span>
-              <IconArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>

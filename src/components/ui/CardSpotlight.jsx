@@ -1,9 +1,9 @@
-import React, { useRef, useState } from "react";
+import React from "react";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 
 /**
- * Aceternity-style Spotlight Card
- * Features a gentle radiant light following pointer cursor on desktop,
- * and elegant static glow on mobile devices with 0fps drop.
+ * Aceternity Spotlight Card powered by Framer Motion
+ * Smooth 60-120 FPS cursor spotlight with spring hover elevation
  */
 export const CardSpotlight = ({
   children,
@@ -11,55 +11,29 @@ export const CardSpotlight = ({
   spotlightColor = "rgba(132, 169, 140, 0.18)",
   ...props
 }) => {
-  const divRef = useRef(null);
-  const [isFocused, setIsFocused] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [opacity, setOpacity] = useState(0);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
-  const handleMouseMove = (e) => {
-    if (!divRef.current) return;
-    const div = divRef.current;
-    const rect = div.getBoundingClientRect();
-    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  const handleMouseMove = ({ currentTarget, clientX, clientY }) => {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
   };
 
-  const handleFocus = () => {
-    setIsFocused(true);
-    setOpacity(1);
-  };
-
-  const handleBlur = () => {
-    setIsFocused(false);
-    setOpacity(0);
-  };
-
-  const handleMouseEnter = () => {
-    setOpacity(1);
-  };
-
-  const handleMouseLeave = () => {
-    setOpacity(0);
-  };
+  const background = useMotionTemplate`radial-gradient(600px circle at ${mouseX}px ${mouseY}px, ${spotlightColor}, transparent 40%)`;
 
   return (
-    <div
-      ref={divRef}
+    <motion.div
       onMouseMove={handleMouseMove}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      className={`relative overflow-hidden rounded-2xl bg-[#FDFBF7] border border-[#2D4A37]/10 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${className}`}
+      whileHover={{ y: -4, transition: { duration: 0.25, ease: "easeOut" } }}
+      className={`group relative overflow-hidden rounded-2xl bg-[#FDFBF7] border border-[#2D4A37]/10 transition-shadow duration-300 hover:shadow-xl ${className}`}
       {...props}
     >
-      <div
-        className="pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-300 hidden md:block"
-        style={{
-          opacity,
-          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 40%)`,
-        }}
+      <motion.div
+        className="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:block"
+        style={{ background }}
       />
-      {children}
-    </div>
+      <div className="relative z-10">{children}</div>
+    </motion.div>
   );
 };

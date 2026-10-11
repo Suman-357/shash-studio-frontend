@@ -1,7 +1,7 @@
 import React from "react";
 import { useLanguage } from "../../context/LanguageContext";
 import { useBooking } from "../../context/BookingContext";
-import { IconArrowRight, IconCalendar } from "../ui/Icons";
+import { ArrowRight, Calendar } from "lucide-react";
 import { HeroTransformationCard } from "./HeroTransformationCard";
 
 export const HeroSection = () => {
@@ -65,7 +65,7 @@ export const HeroSection = () => {
                 className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-[#1C3325] text-white font-semibold text-[15px] shadow-lg hover:bg-[#2D4A37] transition-all duration-300 group cursor-pointer"
               >
                 <span>{t("heroCta")}</span>
-                <IconArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
 
               {/* Batch Pill Alert / Scroll to Batches */}
@@ -75,7 +75,7 @@ export const HeroSection = () => {
                 type="button"
               >
                 <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#D48C46]/15 text-[#D48C46]">
-                  <IconCalendar className="w-5 h-5" />
+                  <Calendar className="w-5 h-5" />
                 </span>
                 <div className="leading-tight">
                   <p className="text-[13px] text-[#1C3325] font-bold flex items-center gap-1.5">

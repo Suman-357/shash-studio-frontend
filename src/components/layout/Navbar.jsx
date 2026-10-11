@@ -5,7 +5,7 @@ import { useBooking } from "../../context/BookingContext";
 import { useProductsQuery } from "../../hooks/useWorkshopsQuery";
 import { AnnouncementBar } from "./AnnouncementBar";
 import logo from "../../assets/logo.png";
-import { IconArrowRight, IconClose, IconMenu, IconShoppingCart } from "../ui/Icons";
+import { ArrowRight, X, Menu, ShoppingCart } from "lucide-react";
 
 export const Navbar = () => {
   const { lang, setLang, t } = useLanguage();
@@ -98,7 +98,7 @@ export const Navbar = () => {
             title={isKn ? "ಯೋಗ ಚಾಪೆಗಳ ಮಳಿಗೆ (Shop)" : "Sanctuary Yoga Mats Store"}
             aria-label="Yoga Mats Cart"
           >
-            <IconShoppingCart className="w-4 h-4 sm:w-[19px] sm:h-[19px]" />
+            <ShoppingCart className="w-4 h-4 sm:w-[19px] sm:h-[19px]" />
             {products.length > 0 && (
               <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#D48C46] text-[9px] sm:text-[9.5px] font-bold text-white shadow-xs">
                 {products.length}
@@ -137,7 +137,7 @@ export const Navbar = () => {
             className="hidden sm:inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#1C3325] text-white hover:bg-[#2D4A37] transition-all shadow-[0_4px_14px_rgba(28,51,37,0.2)] text-[12.5px] sm:text-[13px] font-semibold group cursor-pointer"
           >
             <span>{t("exploreBatches")}</span>
-            <IconArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
 
           {/* Mobile Menu Hamburger */}
@@ -146,7 +146,7 @@ export const Navbar = () => {
             className="lg:hidden p-1.5 sm:p-2 rounded-xl text-[#1C3325] hover:bg-[#EDE8DE] transition-colors cursor-pointer"
             aria-label="Toggle Navigation Menu"
           >
-            {mobileMenuOpen ? <IconClose className="w-5 h-5 sm:w-6 sm:h-6" /> : <IconMenu className="w-5 h-5 sm:w-6 sm:h-6" />}
+            {mobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
           </button>
         </div>
       </div>
@@ -204,7 +204,7 @@ export const Navbar = () => {
               }`}
             >
               <div className="flex items-center gap-2.5">
-                <IconShoppingCart className="w-5 h-5 text-[#D48C46]" />
+                <ShoppingCart className="w-5 h-5 text-[#D48C46]" />
                 <span>{isKn ? "ಯೋಗ ಚಾಪೆಗಳ ಮಳಿಗೆ" : "Sanctuary Yoga Mats Store"}</span>
               </div>
               <span className="px-2 py-0.5 rounded-full bg-[#D48C46] text-white text-[10px] font-bold">
@@ -248,7 +248,7 @@ export const Navbar = () => {
             className="w-full py-3.5 rounded-full bg-[#1C3325] text-white font-semibold text-center shadow-md flex items-center justify-center gap-2"
           >
             <span>{t("exploreBatches")}</span>
-            <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+            <ArrowRight className="w-4.5 h-4.5" />
           </button>
         </div>
       )}

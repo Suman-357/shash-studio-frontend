@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useLanguage } from "../../context/LanguageContext";
 import { ASSETS } from "../../assets";
-import { IconWhatsApp, IconLotus } from "../ui/Icons";
+import { X } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa6";
 
 export const TeacherSection = () => {
   const { lang, t } = useLanguage();
@@ -94,7 +95,7 @@ export const TeacherSection = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#25D366] text-white hover:bg-green-600 transition-all text-[13px] font-bold shadow-xs cursor-pointer"
               >
-                <IconWhatsApp className="w-4 h-4 text-white" />
+                <FaWhatsapp className="w-4 h-4 text-white" />
                 <span>WhatsApp: +91 76764 05895</span>
               </a>
 
@@ -137,9 +138,9 @@ export const TeacherSection = () => {
               </span>
               <button
                 onClick={() => setShowVisitingCard(false)}
-                className="w-7 h-7 rounded-full bg-[#EDE8DE] text-[#1C3325] flex items-center justify-center font-bold"
+                className="w-7 h-7 rounded-full bg-[#EDE8DE] text-[#1C3325] flex items-center justify-center font-bold hover:bg-[#DCDAD4] transition-colors cursor-pointer"
               >
-                ✕
+                <X className="w-4 h-4" />
               </button>
             </div>
             <div className="pt-3">
