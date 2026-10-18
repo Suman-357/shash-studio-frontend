@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useLanguage } from "../../context/LanguageContext";
-import { Check, ArrowRight } from "lucide-react";
+import { Check, ArrowRight, X, Truck, Leaf, Gift, Star } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 
 export const ProductDetailModal = ({ product, isOpen, onClose, onBuyNow }) => {
@@ -46,7 +46,7 @@ export const ProductDetailModal = ({ product, isOpen, onClose, onBuyNow }) => {
             onClick={onClose}
             className="w-8 h-8 rounded-full border border-[#2D4A37]/15 flex items-center justify-center text-[#1C3325] hover:bg-[#EDE8DE] transition-colors cursor-pointer"
           >
-            <span className="material-symbols-outlined text-[18px]">close</span>
+            <X className="w-4 h-4" />
           </button>
         </div>
 
@@ -64,7 +64,7 @@ export const ProductDetailModal = ({ product, isOpen, onClose, onBuyNow }) => {
                 ✦ {isKn ? product.badgeKn : product.badge}
               </span>
               <span className="absolute bottom-3 left-3 px-2.5 py-1 rounded-full bg-black/60 text-white text-[11px] font-semibold backdrop-blur-xs flex items-center gap-1">
-                <span className="text-[#FBBF24]">★</span>
+                <Star className="w-3 h-3 text-[#FBBF24] fill-current" />
                 <span>{product.rating}</span>
                 <span className="text-white/70">({product.reviewsCount} reviews)</span>
               </span>
@@ -73,15 +73,15 @@ export const ProductDetailModal = ({ product, isOpen, onClose, onBuyNow }) => {
             {/* Guarantees Box */}
             <div className="p-3.5 rounded-2xl bg-white border border-[#2D4A37]/10 space-y-2 text-[12px] text-[#1C3325] shadow-2xs">
               <div className="flex items-center gap-2 font-medium">
-                <span className="material-symbols-outlined text-[17px] text-[#0E6848]">local_shipping</span>
+                <Truck className="w-4 h-4 text-[#0E6848] shrink-0" />
                 <span>Free Express All-India Shipping (2–4 Days Delivery)</span>
               </div>
               <div className="flex items-center gap-2 font-medium">
-                <span className="material-symbols-outlined text-[17px] text-[#0E6848]">eco</span>
+                <Leaf className="w-4 h-4 text-[#0E6848] shrink-0" />
                 <span>100% Biodegradable &amp; Plastic-Free Sustainable Packing</span>
               </div>
               <div className="flex items-center gap-2 font-medium">
-                <span className="material-symbols-outlined text-[17px] text-[#0E6848]">featured_seasonal_and_gifts</span>
+                <Gift className="w-4 h-4 text-[#0E6848] shrink-0" />
                 <span>Free Traditional Cotton Carrying Sling Included</span>
               </div>
             </div>

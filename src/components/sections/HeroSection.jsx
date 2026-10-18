@@ -1,7 +1,7 @@
 import React from "react";
 import { useLanguage } from "../../context/LanguageContext";
 import { useBooking } from "../../context/BookingContext";
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight, Calendar, Flower2 } from "lucide-react";
 import { HeroTransformationCard } from "./HeroTransformationCard";
 
 export const HeroSection = () => {
@@ -27,7 +27,7 @@ export const HeroSection = () => {
           <div className="lg:col-span-7 space-y-6">
             {/* Sanctuary Eyebrow Chip */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F6F3ED] border border-[#2D4A37]/10 shadow-xs">
-              <span className="text-base leading-none">🪷</span>
+              <Flower2 className="w-4 h-4 text-[#2D4A37]" />
               <span className="text-[12px] font-bold text-[#1C3325] tracking-wider uppercase">
                 {t("heroTag")}
               </span>

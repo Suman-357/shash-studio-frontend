@@ -3,7 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { getProducts } from "../services/api";
 import { useLanguage } from "../context/LanguageContext";
 import { ProductDetailModal } from "../components/products/ProductDetailModal";
-import { ArrowRight, Filter } from "lucide-react";
+import { ArrowRight, Filter, Home, ChevronDown, Eye, Leaf, Star, Check, X } from "lucide-react";
 
 export const ShopPage = ({ onBuyProduct }) => {
   const { lang } = useLanguage();
@@ -81,7 +81,7 @@ export const ShopPage = ({ onBuyProduct }) => {
           <div>
             <div className="flex items-center gap-2 text-[12px] text-[#5B635E] mb-1">
               <Link to="/" className="hover:text-[#1C3325] transition-colors flex items-center gap-1 font-medium">
-                <span className="material-symbols-outlined text-[15px]">home</span>
+                <Home className="w-3.5 h-3.5" />
                 <span>Home</span>
               </Link>
               <span>/</span>
@@ -121,9 +121,7 @@ export const ShopPage = ({ onBuyProduct }) => {
                     ? "Pro-Grip Rubber"
                     : "Cork Props Duo"}
                 </span>
-                <span className={`material-symbols-outlined text-[18px] transition-transform duration-200 ${filterMenuOpen ? "rotate-180" : ""}`}>
-                  expand_more
-                </span>
+                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${filterMenuOpen ? "rotate-180" : ""}`} />
               </button>
 
               {filter !== "all" && (
@@ -133,7 +131,7 @@ export const ShopPage = ({ onBuyProduct }) => {
                   className="px-2.5 py-1.5 rounded-lg bg-[#EDE8DE] hover:bg-[#DCDAD4] text-[11.5px] font-semibold text-[#1C3325] transition-colors cursor-pointer"
                   title="Clear filter"
                 >
-                  Clear ✕
+                  <span className="flex items-center gap-1">Clear <X className="w-3 h-3" /></span>
                 </button>
               )}
             </div>
@@ -178,7 +176,7 @@ export const ShopPage = ({ onBuyProduct }) => {
                         <span>Organic Cotton &amp; Jute</span>
                         <span className="text-[11px] text-[#5B635E]">₹1,499 • Handloom</span>
                       </div>
-                      {filter === "cotton" && <span className="text-[#0E6848] font-bold">✓</span>}
+                      {filter === "cotton" && <Check className="w-4 h-4 text-[#0E6848]" />}
                     </button>
 
                     <button
@@ -195,7 +193,7 @@ export const ShopPage = ({ onBuyProduct }) => {
                         <span>Pro-Grip Eco-Rubber</span>
                         <span className="text-[11px] text-[#5B635E]">₹2,199 • Alignment</span>
                       </div>
-                      {filter === "progrip" && <span className="text-[#0E6848] font-bold">✓</span>}
+                      {filter === "progrip" && <Check className="w-4 h-4 text-[#0E6848]" />}
                     </button>
 
                     <button
@@ -212,7 +210,7 @@ export const ShopPage = ({ onBuyProduct }) => {
                         <span>Cork Blocks &amp; Strap Duo</span>
                         <span className="text-[11px] text-[#5B635E]">₹899 • Alignment Kit</span>
                       </div>
-                      {filter === "props" && <span className="text-[#0E6848] font-bold">✓</span>}
+                      {filter === "props" && <Check className="w-4 h-4 text-[#0E6848]" />}
                     </button>
                   </div>
                 </div>
@@ -225,7 +223,7 @@ export const ShopPage = ({ onBuyProduct }) => {
         <div className="flex items-center justify-between flex-wrap gap-2 pt-2.5 text-[12px] text-[#5B635E]">
           <div className="flex items-center gap-4 flex-wrap">
             <span className="flex items-center gap-1.5 font-medium">
-              <span className="text-[#0E6848]">✓</span> Free All-India Delivery (2–4 Days)
+              <span className="flex items-center gap-1"><Check className="w-3.5 h-3.5 text-[#0E6848]" /> Free All-India Delivery (2–4 Days)</span>
             </span>
             <span className="hidden sm:inline text-neutral-300">•</span>
             <span className="hidden sm:flex items-center gap-1.5 font-medium">
@@ -272,9 +270,8 @@ export const ShopPage = ({ onBuyProduct }) => {
                       ✦ {isKn ? (mat.badgeKn || mat.badge) : mat.badge}
                     </span>
 
-                    {/* Rating Tag */}
                     <span className="absolute bottom-3 left-3 px-2.5 py-0.5 rounded-full bg-black/60 text-white text-[11px] font-semibold backdrop-blur-xs flex items-center gap-1">
-                      <span className="text-[#FBBF24]">★</span>
+                      <Star className="w-3 h-3 text-[#FBBF24] fill-current" />
                       <span>{mat.rating || "4.9"}</span>
                       <span className="text-white/70">({mat.reviewsCount || 48})</span>
                     </span>
@@ -282,7 +279,7 @@ export const ShopPage = ({ onBuyProduct }) => {
                     {/* Hover "Quick View" Overlay Indicator */}
                     <div className="absolute inset-0 bg-[#1C3325]/20 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
                       <span className="px-4 py-2 rounded-full bg-white text-[#1C3325] text-[12px] font-bold shadow-md flex items-center gap-1.5">
-                        <span className="material-symbols-outlined text-[16px]">visibility</span>
+                        <Eye className="w-4 h-4" />
                         <span>View Specs &amp; Details</span>
                       </span>
                     </div>
@@ -359,8 +356,8 @@ export const ShopPage = ({ onBuyProduct }) => {
           </div>
         ) : (
           <div className="p-8 sm:p-12 rounded-3xl bg-[#FDFBF7] border border-[#2D4A37]/15 text-center max-w-xl mx-auto space-y-4 shadow-xs">
-            <div className="w-14 h-14 rounded-full bg-[#EDE8DE] flex items-center justify-center mx-auto text-3xl">
-              🌿
+            <div className="w-14 h-14 rounded-full bg-[#EDE8DE] flex items-center justify-center mx-auto text-[#2D4A37]">
+              <Leaf className="w-7 h-7" />
             </div>
             <div className="space-y-1.5">
               <h3 className="font-sans text-xl font-bold text-[#1C3325]">
@@ -401,9 +398,7 @@ export const ShopPage = ({ onBuyProduct }) => {
                   className="w-full text-left p-4 sm:p-5 flex items-center justify-between gap-4 font-sans font-bold text-[15px] sm:text-base text-[#1C3325] hover:text-[#2D4A37] transition-colors"
                 >
                   <span>{isKn ? faq.qKn : faq.q}</span>
-                  <span className={`material-symbols-outlined text-[20px] transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}>
-                    expand_more
-                  </span>
+                  <ChevronDown className={`w-5 h-5 text-[#2D4A37] transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
                 </button>
                 {isOpen && (
                   <div className="px-4 pb-4 sm:px-5 sm:pb-5 pt-0 text-[13.5px] text-[#5B635E] leading-relaxed border-t border-neutral-100">

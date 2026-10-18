@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLanguage } from "../../context/LanguageContext";
 import { submitInquiry } from "../../services/api";
-import { Check, ArrowRight } from "lucide-react";
+import { Check, ArrowRight, X, Truck, Sparkles, AlertCircle } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 import { useRazorpay } from "../../hooks/useRazorpay";
 import { axiosInstance } from "../../services/axiosInstance";
@@ -138,7 +138,9 @@ export const ProductOrderModal = ({ product, isOpen, onClose }) => {
         {/* Header */}
         <div className="flex items-center justify-between border-b border-[#2D4A37]/10 px-6 py-4 bg-white/80 backdrop-blur-md">
           <div className="flex items-center gap-2.5">
-            <span className="p-1.5 rounded-xl bg-[#EDE8DE] text-[16px]">🧘</span>
+            <span className="p-1.5 rounded-xl bg-[#EDE8DE] text-[#1C3325]">
+              <Sparkles className="w-4 h-4" />
+            </span>
             <div>
               <h3 className="font-sans text-lg font-extrabold text-[#1C3325] tracking-tight">
                 {orderSuccess
@@ -154,7 +156,7 @@ export const ProductOrderModal = ({ product, isOpen, onClose }) => {
             onClick={onClose}
             className="w-8 h-8 rounded-full border border-[#2D4A37]/15 flex items-center justify-center text-[#1C3325] hover:bg-[#EDE8DE] transition-colors cursor-pointer"
           >
-            <span className="material-symbols-outlined text-[18px]">close</span>
+            <X className="w-4 h-4" />
           </button>
         </div>
 
@@ -385,19 +387,19 @@ export const ProductOrderModal = ({ product, isOpen, onClose }) => {
 
               {/* Quick WhatsApp Support Tip */}
               <div className="flex items-center gap-2 p-2.5 rounded-xl bg-[#E8F3ED] text-[#0E6848] text-[11.5px] font-medium border border-[#0E6848]/20">
-                <span className="material-symbols-outlined text-[17px] shrink-0">local_shipping</span>
+                <Truck className="w-4 h-4 text-[#0E6848] shrink-0" />
                 <span>Includes free studio carry strap. Dispatched within 24 hours of order.</span>
               </div>
 
               {orderError && (
                 <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-[12px] font-semibold flex items-center justify-between gap-2">
-                  <span>⚠️ {orderError}</span>
+                  <span className="flex items-center gap-1.5"><AlertCircle className="w-4 h-4 text-red-600 shrink-0" /> {orderError}</span>
                   <button
                     type="button"
                     onClick={() => setOrderError(null)}
                     className="text-red-500 hover:text-red-700 font-bold cursor-pointer"
                   >
-                    ✕
+                    <X className="w-3.5 h-3.5" />
                   </button>
                 </div>
               )}

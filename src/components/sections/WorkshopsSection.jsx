@@ -3,7 +3,7 @@ import { CardSpotlight } from "../ui/CardSpotlight";
 import { useLanguage } from "../../context/LanguageContext";
 import { useBooking } from "../../context/BookingContext";
 import { useWorkshopsQuery, useSectionsQuery } from "../../hooks/useWorkshopsQuery";
-import { ArrowRight, Clock } from "lucide-react";
+import { ArrowRight, Clock, Sparkles } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 
 const WorkshopCardItem = ({ workshop, sectionObj, isKn, t, onRegister }) => {
@@ -228,8 +228,8 @@ export const WorkshopsSection = () => {
           </div>
         ) : (
           <div className="p-8 sm:p-12 rounded-3xl bg-[#FDFBF7] border border-[#2D4A37]/15 text-center max-w-xl mx-auto space-y-4 shadow-xs">
-            <div className="w-14 h-14 rounded-full bg-[#EDE8DE] flex items-center justify-center mx-auto text-3xl">
-              🌿
+            <div className="w-14 h-14 rounded-full bg-[#EDE8DE] flex items-center justify-center mx-auto text-[#2D4A37]">
+              <Sparkles className="w-7 h-7" />
             </div>
             <div className="space-y-1.5">
               <h3 className="font-sans text-xl font-bold text-[#1C3325]">

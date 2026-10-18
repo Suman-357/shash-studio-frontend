@@ -6,12 +6,12 @@ export const AnnouncementBar = () => {
   const { lang } = useLanguage();
 
   const tickerItems = [
-    "🌿 Welcome to SHASH Studios · Live Online Batches on Zoom",
-    "🧘 New: Handcrafted Mysuru Organic Cotton & Pro-Grip Yoga Mats · Free Delivery Across India!",
-    "✦ Taught in Kannada (ಕನ್ನಡ) & English",
-    "🪷 Mysore Ashtanga, Strength Training & Ladies Yoga",
-    "🌙 Sushii Nights Bedtime Breathwork at 9:30 PM",
-    "✨ August Batches Open · Limited Seats per Shala",
+    "Welcome to SHASH Studios · Live Online Batches on Zoom",
+    "New: Handcrafted Mysuru Organic Cotton & Pro-Grip Yoga Mats · Free Delivery Across India!",
+    "Taught in Kannada (ಕನ್ನಡ) & English",
+    "Mysore Ashtanga, Strength Training & Ladies Yoga",
+    "Sushii Nights Bedtime Breathwork at 9:30 PM",
+    "August Batches Open · Limited Seats per Shala",
     "“ಉಸಿರಾಡಿ. ಚಲಿಸಿ. ಗುಣಮುಖರಾಗಿ.” · Breathe. Move. Heal."
   ];
 

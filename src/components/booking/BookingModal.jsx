@@ -7,27 +7,14 @@ import {
   Check,
   Lock,
   Shield,
-  Clock
+  Clock,
+  Flower2,
+  Sparkles,
+  Activity,
+  Music,
+  AlertCircle
 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
-
-const LotusIcon = ({ className = "w-5 h-5", ...props }) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.8"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-    {...props}
-  >
-    <path d="M12 2c0 5-4 9-4 14a4 4 0 0 0 8 0c0-5-4-9-4-14z" />
-    <path d="M12 8c-3 3-7 6-7 10a7 7 0 0 0 7 2" />
-    <path d="M12 8c3 3 7 6 7 10a7 7 0 0 1-7 2" />
-    <path d="M3 18c2.5 1.5 5.5 2 9 2s6.5-.5 9-2" />
-  </svg>
-);
 
 export const BookingModal = () => {
   const { lang } = useLanguage();
@@ -114,8 +101,8 @@ export const BookingModal = () => {
     totalDue: isKn ? "ಒಟ್ಟು ಪಾವತಿ:" : "Total Due:",
     taxesIncluded: isKn ? "ಎಲ್ಲಾ ತೆರಿಗೆಗಳು ಮತ್ತು ಜೂಮ್ ಲಿಂಕ್‌ಗಳನ್ನು ಒಳಗೊಂಡಿದೆ" : "Includes all taxes and Zoom links",
     payButtonText: isKn
-      ? `₹${selectedWorkshop?.price} ಪಾವತಿಸಿ & ಬ್ಯಾಚ್ ಸೇರಿ`
-      : `Proceed to Pay ₹${selectedWorkshop?.price} & Join Batch`,
+      ? `₹${selectedWorkshop?.price} ಪಾವತಿಸಿ & ಸೇರಿಕೊಳ್ಳಿ`
+      : `Pay ₹${selectedWorkshop?.price} & Join Batch`,
     submittingText: isKn ? "ನೋಂದಾಯಿಸಲಾಗುತ್ತಿದೆ..." : "Confirming Registration...",
     whatsappDirect: isKn
       ? "ವಾಟ್ಸಾಪ್ ಮೂಲಕ ನೋಂದಾಯಿಸಿ (+91 76764 05895)"
@@ -154,17 +141,17 @@ export const BookingModal = () => {
     .sort((a, b) => (a.order || 0) - (b.order || 0));
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden bg-black/65 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200">
-      <div className="relative w-full max-w-2xl bg-[#FCF9F3] rounded-3xl shadow-2xl border border-white/80 flex flex-col max-h-[92vh] overflow-hidden">
+    <div className="fixed inset-0 z-50 overflow-hidden bg-black/65 backdrop-blur-md flex items-center justify-center p-2.5 sm:p-6 animate-in fade-in duration-200">
+      <div className="relative w-full max-w-2xl bg-[#FCF9F3] rounded-2xl sm:rounded-3xl shadow-2xl border border-white/80 flex flex-col max-h-[94vh] sm:max-h-[92vh] overflow-hidden">
         
         {/* Header Bar */}
-        <div className="flex items-center justify-between px-6 py-4 bg-white/85 backdrop-blur-md border-b border-[#2D4A37]/10 shrink-0">
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 bg-white/85 backdrop-blur-md border-b border-[#2D4A37]/10 shrink-0">
           <div className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1C3325]/10 text-[#1C3325]">
-              <LotusIcon className="w-5 h-5 text-[#1C3325]" />
+            <span className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-[#1C3325]/10 text-[#1C3325]">
+              <Flower2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#1C3325]" />
             </span>
             <div>
-              <span className="font-sans text-base sm:text-lg font-extrabold text-[#1C3325] block leading-tight">
+              <span className="font-sans text-sm sm:text-lg font-extrabold text-[#1C3325] block leading-tight">
                 {m.modalTitle}
               </span>
               <span className="text-[11px] text-[#52796F] font-semibold uppercase tracking-wider">
@@ -296,7 +283,13 @@ export const BookingModal = () => {
                                 : "bg-white text-[#1C3325] border-[#2D4A37]/15 hover:border-[#1C3325]/40 hover:bg-[#FAF8F5]"
                             }`}
                           >
-                            <span className="text-xl">{sec.emoji || "✨"}</span>
+                            {sec.slug === "yoga" ? (
+                              <Activity className="w-5 h-5 text-current" />
+                            ) : sec.slug === "music" ? (
+                              <Music className="w-5 h-5 text-current" />
+                            ) : (
+                              <Sparkles className="w-5 h-5 text-current" />
+                            )}
                             <span className="font-semibold text-[12px] leading-tight text-center">
                               {isKn ? (sec.nameKn || sec.name) : sec.name}
                             </span>
@@ -315,7 +308,7 @@ export const BookingModal = () => {
                               : "bg-white text-[#1C3325] border-[#2D4A37]/15 hover:border-[#1C3325]/40 hover:bg-[#FAF8F5]"
                           }`}
                         >
-                          <span className="text-xl">🪷</span>
+                          <Flower2 className={`w-5 h-5 ${(selectedSection === "combo" || (comboPass && selectedWorkshop?.id === comboPass.id)) ? "text-[#FEF3D6]" : "text-[#D48C46]"}`} />
                           <span className="font-semibold text-[12px] leading-tight text-center">
                             {isKn ? "ಕಾಂಬೋ ಪಾಸ್" : "Combo Pass"}
                           </span>
@@ -326,23 +319,38 @@ export const BookingModal = () => {
 
                   {/* Class Selection List */}
                   {(comboPass && (selectedSection === "combo" || selectedWorkshop?.id === comboPass.id)) ? (
-                    /* Featured Combo Pass Details */
-                    <div className="p-4 rounded-2xl bg-[#E8F3EE] border border-[#1C3325]/20 space-y-2">
+                    /* Featured Luxury Combo Pass Details */
+                    <div className="p-4 rounded-2xl bg-gradient-to-br from-[#1C3325] to-[#2D4A37] text-white space-y-3 shadow-md border border-[#D48C46]/35">
                       <div className="flex items-center justify-between">
-                        <span className="px-2.5 py-0.5 rounded-full bg-[#C26D38] text-white text-[10px] font-bold uppercase tracking-wide">
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#D48C46] text-white text-[10px] font-extrabold uppercase tracking-wider shadow-xs">
                           {m.bestValue}
                         </span>
                         <div className="flex items-baseline gap-1.5 whitespace-nowrap">
-                          <span className="text-2xl font-bold text-[#1C3325]">₹{comboPass.price}</span>
-                          <span className="text-[12px] text-[#5B635E] line-through">₹{comboPass.originalPrice}</span>
+                          <span className="text-2xl font-black text-white">₹{comboPass.price}</span>
+                          {comboPass.originalPrice > comboPass.price && (
+                            <span className="text-[12px] text-white/60 line-through">₹{comboPass.originalPrice}</span>
+                          )}
+                          <span className="text-[11.5px] text-[#FFDBC9] font-bold">/mo</span>
                         </div>
                       </div>
-                      <h4 className="font-sans text-lg font-bold text-[#1C3325]">
-                        {isKn ? comboPass.titleKn : comboPass.title}
-                      </h4>
-                      <p className="text-[13px] text-[#5B635E] leading-relaxed">
-                        {isKn ? comboPass.descriptionKn : comboPass.description}
-                      </p>
+                      <div>
+                        <h4 className="font-sans text-base font-bold text-white">
+                          {isKn ? comboPass.titleKn : comboPass.title}
+                        </h4>
+                        <p className="text-[12px] text-white/80 leading-relaxed pt-0.5">
+                          {isKn ? comboPass.descriptionKn : comboPass.description}
+                        </p>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-[11.5px] text-[#BEE8DC]">
+                        <div className="flex items-center gap-1.5">
+                          <Check className="w-3.5 h-3.5 text-[#84A98C] shrink-0" />
+                          <span>All 6 Daily Batches</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <Check className="w-3.5 h-3.5 text-[#84A98C] shrink-0" />
+                          <span>24-Hour Zoom Replays</span>
+                        </div>
+                      </div>
                     </div>
                   ) : (
                     /* Classes for Selected Discipline */
@@ -413,8 +421,8 @@ export const BookingModal = () => {
                       ) : (
                         /* P1: Friendly, Decent Empty State Message to Customers */
                         <div className="p-6 rounded-2xl bg-white border border-[#2D4A37]/15 text-center space-y-3.5 shadow-xs">
-                          <div className="w-12 h-12 rounded-full bg-[#EDE8DE] flex items-center justify-center mx-auto text-2xl">
-                            🌿
+                          <div className="w-12 h-12 rounded-full bg-[#EDE8DE] flex items-center justify-center mx-auto text-[#2D4A37]">
+                            <Sparkles className="w-6 h-6" />
                           </div>
                           <div className="space-y-1">
                             <h5 className="font-sans text-base font-bold text-[#1C3325]">
@@ -545,8 +553,8 @@ export const BookingModal = () => {
 
                     {/* Included Perks (compact inline) */}
                     <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2.5 pt-2 border-t border-neutral-50 text-[11px] text-[#52796F]">
-                      <span>✓ {m.zoomReplays} <b className="text-[#2D4A37]">{m.included}</b></span>
-                      <span>✓ {m.whatsappCohort} <b className="text-[#2D4A37]">{m.lifetimeAccess}</b></span>
+                      <span className="inline-flex items-center gap-1"><Check className="w-3 h-3 text-[#2D4A37]" /> {m.zoomReplays} <b className="text-[#2D4A37]">{m.included}</b></span>
+                      <span className="inline-flex items-center gap-1"><Check className="w-3 h-3 text-[#2D4A37]" /> {m.whatsappCohort} <b className="text-[#2D4A37]">{m.lifetimeAccess}</b></span>
                     </div>
                     <p className="text-[10px] text-[#5B635E] mt-1.5">{m.taxesIncluded}</p>
                   </div>
@@ -580,7 +588,7 @@ export const BookingModal = () => {
                       </label>
                       <div className="flex items-center gap-2">
                         <span className="px-3 py-2.5 rounded-xl bg-[#EDE8DE] text-[#1C3325] text-[13px] font-bold shrink-0">
-                          🇮🇳 +91
+                          +91
                         </span>
                         <input
                           type="tel"
@@ -690,7 +698,7 @@ export const BookingModal = () => {
                       <span className="text-[9px] text-[#5B635E]">{m.replaySub}</span>
                     </div>
                     <div className="p-2.5 rounded-xl bg-white border border-[#2D4A37]/10 flex flex-col items-center justify-center gap-0.5">
-                      <LotusIcon className="w-4 h-4 text-[#1C3325]" />
+                      <Flower2 className="w-4 h-4 text-[#1C3325]" />
                       <span className="font-bold text-[#1C3325]">{m.lineageBadge}</span>
                       <span className="text-[9px] text-[#5B635E]">{m.lineageSub}</span>
                     </div>
@@ -744,17 +752,17 @@ export const BookingModal = () => {
               <div className="space-y-2">
                 {bookingError && (
                   <div className="p-2.5 rounded-xl bg-red-50 border border-red-200 flex items-start gap-2">
-                    <span className="text-red-500 text-sm shrink-0 mt-0.5">⚠️</span>
+                    <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
                     <div className="flex-1 min-w-0">
                       <p className="text-red-700 text-[12px] font-semibold leading-tight">{bookingError}</p>
                       <p className="text-red-500 text-[10px] mt-0.5">Please check your connection and try again.</p>
                     </div>
                     <button
                       onClick={() => setBookingError?.(null)}
-                      className="text-red-400 hover:text-red-600 text-[11px] font-bold shrink-0 cursor-pointer"
+                      className="text-red-400 hover:text-red-600 shrink-0 cursor-pointer p-0.5"
                       type="button"
                     >
-                      ✕
+                      <X className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 )}
@@ -770,15 +778,15 @@ export const BookingModal = () => {
                   <button
                     onClick={completeBooking}
                     disabled={!isFormValid || isSubmitting}
-                    className={`w-full py-3.5 rounded-full font-bold text-[15px] shadow-lg flex items-center justify-center gap-2 transition-all ${
+                    className={`w-full py-3.5 px-6 rounded-full font-bold text-[14px] sm:text-[15px] shadow-lg flex items-center justify-center gap-2 transition-all min-h-[48px] ${
                       isFormValid && !isSubmitting
                         ? "bg-[#1C3325] text-white hover:bg-[#2D4A37] active:scale-[0.98] cursor-pointer"
                         : "bg-neutral-300 text-neutral-500 cursor-not-allowed"
                     }`}
                     type="button"
                   >
-                    <Lock className="w-4 h-4" />
-                    <span>
+                    <Lock className="w-4 h-4 shrink-0" />
+                    <span className="text-center truncate">
                       {isSubmitting ? m.submittingText : m.payButtonText}
                     </span>
                   </button>

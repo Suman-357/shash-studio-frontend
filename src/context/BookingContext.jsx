@@ -139,37 +139,16 @@ export const BookingProvider = ({ children }) => {
     setBookingError(null);
     setBookingSuccess(null);
 
-    const aliasMap = {
-      combo: "combo-pass",
-      sushii_nights: "sushii-nights",
-      ladies: "ladies-yoga",
-      strength: "strength-training",
-      kids: "kids-yoga",
-      ashtanga: "ashtanga-yoga",
-    };
-    const targetId = aliasMap[workshopId] || workshopId;
-
-    if (workshopId === "combo" || targetId === "combo-pass") {
-      const combo = workshops.find(
-        (w) => w.slug === "combo-pass" || w.id === "combo-pass" || w.slug === "combo"
-      ) || workshops[0];
-      if (combo) {
-        setSelectedSection(combo.section || "yoga");
-        setSelectedWorkshop(combo);
-        const slots = getSlotsForWorkshop(combo, batches);
-        setSelectedSlot(slots[0] || null);
-      }
-    } else if (workshopId) {
+    if (workshopId) {
       const found = workshops.find(
-        (w) =>
-          w.id === targetId ||
-          w.slug === targetId ||
-          w.id === workshopId ||
-          w.slug === workshopId ||
-          w.title === workshopId
+        (w) => w.slug === workshopId || w._id === workshopId || w.id === workshopId
       );
       if (found) {
-        setSelectedSection(found.section || "yoga");
+        setSelectedSection(
+          found.category === "combo" || found.slug === "combo-pass"
+            ? "combo"
+            : (found.section || "yoga")
+        );
         setSelectedWorkshop(found);
         const slots = getSlotsForWorkshop(found, batches);
         setSelectedSlot(slots[0] || null);
@@ -199,8 +178,7 @@ export const BookingProvider = ({ children }) => {
     setIsSubmitting(true);
     setBookingError(null);
     try {
-      const rawSlug = selectedWorkshop.slug || selectedWorkshop.id || selectedWorkshop._id;
-      const normalizedSlug = rawSlug === "combo" ? "combo-pass" : rawSlug;
+      const workshopIdentifier = selectedWorkshop.slug || selectedWorkshop._id || selectedWorkshop.id;
 
       const currentSlotString =
         selectedSlot?.time ||
@@ -212,7 +190,7 @@ export const BookingProvider = ({ children }) => {
         fullName: formData.fullName,
         whatsapp: formData.phone,
         email: formData.email,
-        workshopId: normalizedSlug,
+        workshopId: workshopIdentifier,
         workshopTitle: selectedWorkshop.title,
         slot: currentSlotString,
         amount: selectedWorkshop.price,

@@ -56,7 +56,7 @@ axiosInstance.interceptors.response.use(
       errors: error.response?.data?.errors || [],
     };
 
-    console.warn("⚠️ API Error Interceptor:", customError.message);
+    console.warn("[API Error Interceptor]:", customError.message);
     return Promise.reject(customError);
   }
 );

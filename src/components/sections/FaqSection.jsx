@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FAQS } from "../../data/faqs";
 import { useLanguage } from "../../context/LanguageContext";
+import { Plus, Minus } from "lucide-react";
 
 export const FaqSection = () => {
   const { lang, t } = useLanguage();
@@ -42,9 +43,11 @@ export const FaqSection = () => {
                   <span>
                     {lang === "kn" ? faq.question : faq.questionEn}
                   </span>
-                  <span className="material-symbols-outlined text-[22px] text-[#2D4A37] transition-transform duration-300">
-                    {isOpen ? "remove" : "add"}
-                  </span>
+                  {isOpen ? (
+                    <Minus className="w-5 h-5 text-[#2D4A37] shrink-0" />
+                  ) : (
+                    <Plus className="w-5 h-5 text-[#2D4A37] shrink-0" />
+                  )}
                 </button>
 
                 {isOpen && (

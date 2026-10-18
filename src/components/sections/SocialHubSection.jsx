@@ -1,6 +1,7 @@
 import React from "react";
 import { INSTAGRAM_POSTS, YOUTUBE_VIDEOS } from "../../data/social";
 import { useLanguage } from "../../context/LanguageContext";
+import { Instagram, Youtube, ExternalLink, Heart, ArrowRight, Play } from "lucide-react";
 
 export const SocialHubSection = () => {
   const { lang, t } = useLanguage();
@@ -30,7 +31,7 @@ export const SocialHubSection = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <span className="p-2 rounded-xl bg-[#D48C46]/15 text-[#D48C46]">
-                  <span className="material-symbols-outlined text-[22px]">photo_camera</span>
+                  <Instagram className="w-5 h-5" />
                 </span>
                 <div>
                   <h3 className="font-sans text-xl font-bold text-[#1C3325]">
@@ -48,7 +49,7 @@ export const SocialHubSection = () => {
                 className="hidden sm:inline-flex items-center gap-1 text-[13px] font-semibold text-[#2D4A37] hover:text-[#1C3325]"
               >
                 <span>Profile</span>
-                <span className="material-symbols-outlined text-[14px]">open_in_new</span>
+                <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
 
@@ -67,9 +68,7 @@ export const SocialHubSection = () => {
                       loading="lazy"
                     />
                     <div className="absolute bottom-2 right-2 px-2.5 py-1 rounded-full bg-[#FDFBF7]/90 backdrop-blur-sm flex items-center gap-1 text-[11px] font-bold text-[#1C3325]">
-                      <span className="material-symbols-outlined text-[13px] text-red-500 fill-current">
-                        favorite
-                      </span>
+                      <Heart className="w-3 h-3 text-red-500 fill-current" />
                       <span>{post.likes}</span>
                     </div>
                   </div>
@@ -87,7 +86,7 @@ export const SocialHubSection = () => {
               className="w-full py-3 rounded-full bg-[#F0EEE8] text-[#1C3325] font-semibold text-[14px] hover:bg-[#EDE8DE] transition-colors flex items-center justify-center gap-2"
             >
               <span>View Instagram Profile</span>
-              <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+              <ArrowRight className="w-4 h-4" />
             </a>
           </div>
 
@@ -96,7 +95,7 @@ export const SocialHubSection = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <span className="p-2 rounded-xl bg-red-100 text-red-600">
-                  <span className="material-symbols-outlined text-[22px]">smart_display</span>
+                  <Youtube className="w-5 h-5" />
                 </span>
                 <div>
                   <h3 className="font-sans text-xl font-bold text-[#1C3325]">
@@ -114,7 +113,7 @@ export const SocialHubSection = () => {
                 className="hidden sm:inline-flex items-center gap-1 text-[13px] font-semibold text-red-600 hover:underline"
               >
                 <span>Channel</span>
-                <span className="material-symbols-outlined text-[14px]">open_in_new</span>
+                <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
 
@@ -137,7 +136,7 @@ export const SocialHubSection = () => {
                     />
                     <div className="absolute inset-0 bg-[#1C3325]/20 flex items-center justify-center group-hover:bg-[#1C3325]/40 transition-colors">
                       <span className="w-8 h-8 rounded-full bg-[#FDFBF7]/90 flex items-center justify-center text-[#1C3325] shadow-xs">
-                        <span className="material-symbols-outlined text-[18px]">play_arrow</span>
+                        <Play className="w-4 h-4 fill-current ml-0.5" />
                       </span>
                     </div>
                     <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded bg-black/80 text-[10px] text-white font-mono font-medium">
@@ -163,7 +162,7 @@ export const SocialHubSection = () => {
               className="w-full py-3 rounded-full bg-[#1C3325] text-white font-semibold text-[14px] hover:bg-[#2D4A37] transition-colors flex items-center justify-center gap-2"
             >
               <span>Subscribe on YouTube</span>
-              <span className="material-symbols-outlined text-[16px]">smart_display</span>
+              <Youtube className="w-4 h-4 text-white" />
             </a>
           </div>
         </div>

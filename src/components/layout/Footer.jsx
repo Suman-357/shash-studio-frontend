@@ -1,7 +1,7 @@
 import React from "react";
 import { useLanguage } from "../../context/LanguageContext";
 import { useBooking } from "../../context/BookingContext";
-import { Instagram, Youtube, Phone, Mail, Clock, MapPin } from "lucide-react";
+import { Instagram, Youtube, Phone, Mail, Clock, MapPin, Flower2 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 
 export const Footer = () => {
@@ -15,7 +15,7 @@ export const Footer = () => {
           {/* Brand & Lineage */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <span className="text-3xl">🪷</span>
+              <Flower2 className="w-8 h-8 text-[#1C3325]" />
               <span className="font-sans text-2xl font-black text-[#1C3325] tracking-tight">
                 SHASH Studios
               </span>
@@ -27,11 +27,19 @@ export const Footer = () => {
               {t("footerDesc")}
             </p>
             <div className="pt-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EDE8DE] text-[#1C3325] text-[12px] font-semibold">
-                <MapPin className="w-3.5 h-3.5 text-[#D48C46]" />
-                <span>Mysuru, Karnataka, India</span>
-              </span>
+              <a
+                href="https://www.google.com/maps/dir/?api=1&destination=12.3162,76.6540"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-start gap-2 px-3 py-2 rounded-xl bg-[#EDE8DE] hover:bg-[#E3DDCF] text-[#1C3325] text-[12px] font-medium transition-colors"
+              >
+                <MapPin className="w-4 h-4 text-[#D48C46] shrink-0 mt-0.5" />
+                <span className="leading-tight">
+                  #1932, Akbar Rd, O.K. St, Mandi Mohalla, Mysuru - 570001
+                </span>
+              </a>
             </div>
+
           </div>
 
           {/* Holistic Workshops Quick Links */}
@@ -153,7 +161,7 @@ export const Footer = () => {
 
         {/* Bottom Legal bar */}
         <div className="pt-8 border-t border-neutral-300/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-[#5B635E]">
-          <p>© 2026 SHASH Studios (@sushiidays). Made with 🪷 in Mysuru, Karnataka.</p>
+          <p>© 2026 SHASH Studios (@sushiidays). Made in Mysuru, Karnataka.</p>
           <div className="flex items-center gap-4 flex-wrap">
             <a href="#" className="hover:text-[#1C3325]">Privacy Policy</a>
             <span>•</span>

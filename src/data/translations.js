@@ -1,6 +1,6 @@
 export const TRANSLATIONS = {
   en: {
-    announcement: "🌿 Taught in Kannada & English · Live Online Batches on Zoom ✦ Limited Seats per Shala",
+    announcement: "Taught in Kannada & English · Live Online Batches on Zoom ✦ Limited Seats per Shala",
     whatsappSupport: "WhatsApp Support",
     navWorkshops: "All Offerings",
     navYoga: "Yoga",
@@ -18,7 +18,7 @@ export const TRANSLATIONS = {
     heroTitleLine2: "Heal.",
     heroSub: "Live from Mysuru.",
     heroDesc: "Welcome to Shash Studios, Karnataka's dedicated online wellness community. We teach authentic yoga, bodyweight conditioning, and evening sleep habits in Kannada & English. Learn from anywhere and transform your body and mind.",
-    heroCta: "🌿 Explore Workshops",
+    heroCta: "Explore Workshops",
     heroBatchNotice: "Live Batches Open",
     heroBatchSub: "Live on Zoom • Limited seats",
     seeTimings: "See timings →",
@@ -53,7 +53,7 @@ export const TRANSLATIONS = {
     viewActivitiesUnder: "Activities under this section",
     
     monthlyInvestment: "Monthly Investment",
-    getAllAccess: "Get All-Access Pass →",
+    getAllAccess: "Get All-Access Pass",
     
     teacherTag: "ನಿಮ್ಮ ಗುರು — Your Teacher",
     teacherTitle: "Sushii",
@@ -82,15 +82,15 @@ export const TRANSLATIONS = {
     whatsappNum: "WhatsApp Number *",
     programInterest: "Program of Interest",
     yourMessage: "Your Message *",
-    sendMessageBtn: "🌿 Send Message",
-    eldersTitle: "🌿 Dedicated Support for Elders",
+    sendMessageBtn: "Send Message",
+    eldersTitle: "Dedicated Support for Elders",
     eldersDesc: "Need assistance setting up Zoom on an iPad or phone for your parents in Karnataka? Message us on WhatsApp for friendly Kannada setup guidance.",
     
     footerTagline: "“Breathe. Move. Heal.” Live from Mysuru.",
     footerDesc: "Karnataka's premier mindful yoga and wellness sanctuary connecting global seekers with authentic Mysore traditions."
   },
   kn: {
-    announcement: "🌿 ಕನ್ನಡ ಮತ್ತು ಇಂಗ್ಲಿಷ್‌ನಲ್ಲಿ ತರಬೇತಿ · ಜೂಮ್‌ನಲ್ಲಿ ಲೈವ್ ಆನ್‌ಲೈನ್ ಬ್ಯಾಚ್‌ಗಳು ✦ ಸೀಮಿತ ಸೀಟುಗಳು",
+    announcement: "ಕನ್ನಡ ಮತ್ತು ಇಂಗ್ಲಿಷ್‌ನಲ್ಲಿ ತರಬೇತಿ · ಜೂಮ್‌ನಲ್ಲಿ ಲೈವ್ ಆನ್‌ಲೈನ್ ಬ್ಯಾಚ್‌ಗಳು ✦ ಸೀಮಿತ ಸೀಟುಗಳು",
     whatsappSupport: "ವಾಟ್ಸಾಪ್ ಸಹಾಯವಾಣಿ",
     navWorkshops: "ಎಲ್ಲಾ ಚಟುವಟಿಕೆಗಳು",
     navYoga: "ಯೋಗ",
@@ -108,7 +108,7 @@ export const TRANSLATIONS = {
     heroTitleLine2: "ಗುಣಮುಖರಾಗಿ.",
     heroSub: "ಮೈಸೂರಿನಿಂದ ನೇರ ಪ್ರಸಾರ.",
     heroDesc: "ಶಶ್ ಸ್ಟುಡಿಯೋಸ್‌ಗೆ ಸುಸ್ವಾಗತ — ಕರ್ನಾಟಕದ ಜನಪ್ರಿಯ ಆನ್‌ಲೈನ್ ಯೋಗ ಕೇಂದ್ರ. ಸಾಂಪ್ರದಾಯಿಕ ಯೋಗ, ಶಕ್ತಿ ತರಬೇತಿ ಮತ್ತು ಉತ್ತಮ ನಿದ್ರೆಯ ಅಭ್ಯಾಸಗಳನ್ನು ಕನ್ನಡ ಹಾಗೂ ಇಂಗ್ಲಿಷ್‌ನಲ್ಲಿ ಕಲಿಯಿರಿ. ಮನೆಯಲ್ಲೇ ಕುಳಿತು ಆರೋಗ್ಯ ಪಡೆಯಿರಿ.",
-    heroCta: "🌿 ಕಾರ್ಯಕ್ರಮಗಳನ್ನು ವೀಕ್ಷಿಸಿ",
+    heroCta: "ಕಾರ್ಯಕ್ರಮಗಳನ್ನು ವೀಕ್ಷಿಸಿ",
     heroBatchNotice: "ಹೊಸ ಬ್ಯಾಚ್‌ಗಳು ಆರಂಭ",
     heroBatchSub: "ಜೂಮ್‌ನಲ್ಲಿ ನೇರ ತರಗತಿ • ಸೀಮಿತ ಸೀಟುಗಳು",
     seeTimings: "ಸಮಯ ನೋಡಿ →",
@@ -143,7 +143,7 @@ export const TRANSLATIONS = {
     viewActivitiesUnder: "ಈ ವಿಭಾಗದ ಚಟುವಟಿಕೆಗಳು",
     
     monthlyInvestment: "ಮಾಸಿಕ ಶುಲ್ಕ",
-    getAllAccess: "ಆಲ್-ಆಕ್ಸೆಸ್ ಪಾಸ್ ಪಡೆಯಿರಿ →",
+    getAllAccess: "ಆಲ್-ಆಕ್ಸೆಸ್ ಪಾಸ್ ಪಡೆಯಿರಿ",
     
     teacherTag: "ನಿಮ್ಮ ಗುರು — Your Teacher",
     teacherTitle: "ಸುಶಿ (Sushii)",
@@ -172,8 +172,8 @@ export const TRANSLATIONS = {
     whatsappNum: "ವಾಟ್ಸಾಪ್ ಸಂಖ್ಯೆ *",
     programInterest: "ಆಸಕ್ತಿಯ ಕಾರ್ಯಕ್ರಮ",
     yourMessage: "ನಿಮ್ಮ ಸಂದೇಶ *",
-    sendMessageBtn: "🌿 ಸಂದೇಶ ಕಳುಹಿಸಿ",
-    eldersTitle: "🌿 ಹಿರಿಯರಿಗೆ ವಿಶೇಷ ನೆರವು",
+    sendMessageBtn: "ಸಂದೇಶ ಕಳುಹಿಸಿ",
+    eldersTitle: "ಹಿರಿಯರಿಗೆ ವಿಶೇಷ ನೆರವು",
     eldersDesc: "ನಿಮ್ಮ ತಂದೆ-ತಾಯಿಯರಿಗೆ ಫೋನ್ ಅಥವಾ ಐಪ್ಯಾಡ್‌ನಲ್ಲಿ ಜೂಮ್ ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡಲು ಸಹಾಯ ಬೇಕೇ? ಕನ್ನಡದಲ್ಲೇ ಮಾರ್ಗದರ್ಶನ ಪಡೆಯಲು ವಾಟ್ಸಾಪ್ ಮಾಡಿ.",
     
     footerTagline: "“ಉಸಿರಾಡಿ. ಚಲಿಸಿ. ಗುಣಮುಖರಾಗಿ.” ಮೈಸೂರಿನಿಂದ ನೇರ ಪ್ರಸಾರ.",

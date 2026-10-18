@@ -1,7 +1,7 @@
 import React from "react";
 import { useLanguage } from "../../context/LanguageContext";
 import { useProductsQuery } from "../../hooks/useWorkshopsQuery";
-import { Check, ArrowRight } from "lucide-react";
+import { Check, ArrowRight, Leaf, Star } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 import { CardSpotlight } from "../ui/CardSpotlight";
 
@@ -22,7 +22,7 @@ export const ProductsSection = ({ onBuyProduct }) => {
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-2.5">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EDE8DE] border border-[#2D4A37]/10 shadow-xs">
-            <span className="text-sm">🌿</span>
+            <Leaf className="w-3.5 h-3.5 text-[#2D4A37]" />
             <span className="text-[11.5px] font-bold text-[#1C3325] uppercase tracking-[0.18em]">
               {isKn ? "ಪಾರಂಪರಿಕ ಯೋಗ ಪರಿಕರಗಳು" : "Sacred Studio Equipment"}
             </span>
@@ -71,7 +71,7 @@ export const ProductsSection = ({ onBuyProduct }) => {
 
                     {/* Rating Pill */}
                     <div className="absolute bottom-3 left-3 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[11.5px] font-semibold flex items-center gap-1.5 shadow-sm">
-                      <span className="text-[#FBBF24]">★</span>
+                      <Star className="w-3.5 h-3.5 text-[#FBBF24] fill-current" />
                       <span>{mat.rating || "4.9"}</span>
                       <span className="text-white/70 text-[10.5px]">({mat.reviewsCount || 48} verified reviews)</span>
                     </div>
@@ -150,7 +150,7 @@ export const ProductsSection = ({ onBuyProduct }) => {
                     </div>
 
                     <div className="text-right">
-                      <span className="text-[11px] text-[#0E6848] font-bold block">✓ Free Cotton Strap</span>
+                      <span className="text-[11px] text-[#0E6848] font-bold flex items-center justify-end gap-1"><Check className="w-3 h-3" /> Free Cotton Strap</span>
                       <span className="text-[11px] text-[#5B635E]">Includes carry sling</span>
                     </div>
                   </div>

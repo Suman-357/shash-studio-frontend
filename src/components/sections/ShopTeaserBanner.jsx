@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 import { useProductsQuery } from "../../hooks/useWorkshopsQuery";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Leaf } from "lucide-react";
 
 export const ShopTeaserBanner = () => {
   const { lang } = useLanguage();
@@ -19,7 +19,7 @@ export const ShopTeaserBanner = () => {
           {/* Left: Headline & Narrative */}
           <div className="lg:col-span-7 space-y-4">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EDE8DE] border border-[#2D4A37]/15 text-[#1C3325] text-[11px] font-bold uppercase tracking-wider shadow-2xs">
-              <span>🌿</span>
+              <Leaf className="w-3.5 h-3.5 text-[#2D4A37]" />
               <span>{isKn ? "ಪಾರಂಪರಿಕ ಯೋಗ ಮಳಿಗೆ" : "Sanctuary Store • Handcrafted Equipment"}</span>
             </div>
 

@@ -5,29 +5,29 @@ export const INSTAGRAM_POSTS = [
     id: "post1",
     image: ASSETS.challenge21DayBatch2,
     likes: "1.8k",
-    caption: "Batch 2 of our 21-Day Transformation is live! Daily discipline, asana alignment, and community energy 🌅.",
-    captionKn: "ನಮ್ಮ 21 ದಿನಗಳ ಪರಿವರ್ತನೆಯ ಬ್ಯಾಚ್ 2 ಶುರುವಾಗಿದೆ! ದೈನಂದಿನ ಶಿಸ್ತು, ಆಸನ ಶುದ್ಧತೆ ಮತ್ತು ಸಮುದಾಯದ ಶಕ್ತಿ 🌅."
+    caption: "Batch 2 of our 21-Day Transformation is live! Daily discipline, asana alignment, and community energy.",
+    captionKn: "ನಮ್ಮ 21 ದಿನಗಳ ಪರಿವರ್ತನೆಯ ಬ್ಯಾಚ್ 2 ಶುರುವಾಗಿದೆ! ದೈನಂದಿನ ಶಿಸ್ತು, ಆಸನ ಶುದ್ಧತೆ ಮತ್ತು ಸಮುದಾಯದ ಶಕ್ತಿ."
   },
   {
     id: "post2",
     image: ASSETS.poseHimalayaSnowMeditation,
     likes: "2.4k",
-    caption: "Why breathwork & bedtime sadhana matters 🌙. 30 minutes of conscious breathwork in high Himalayas unlocks stillness.",
-    captionKn: "ಪ್ರಾಣಾಯಾಮ ಮತ್ತು ಧ್ಯಾನ ಏಕೆ ಮುಖ್ಯ 🌙. ಹಿಮಾಲಯದ ಶಾಂತ ಪರಿಸರದಲ್ಲಿ ಉಸಿರಾಟದ ಅರಿವು ಮನಸ್ಸಿಗೆ ಅಗಾಧ ಶಾಂತಿ ನೀಡುತ್ತದೆ."
+    caption: "Why breathwork & bedtime sadhana matters. 30 minutes of conscious breathwork in high Himalayas unlocks stillness.",
+    captionKn: "ಪ್ರಾಣಾಯಾಮ ಮತ್ತು ಧ್ಯಾನ ಏಕೆ ಮುಖ್ಯ. ಹಿಮಾಲಯದ ಶಾಂತ ಪರಿಸರದಲ್ಲಿ ಉಸಿರಾಟದ ಅರಿವು ಮನಸ್ಸಿಗೆ ಅಗಾಧ ಶಾಂತಿ ನೀಡುತ್ತದೆ."
   },
   {
     id: "post3",
     image: ASSETS.poseBeachSplit,
     likes: "1.9k",
-    caption: "Strength meets flexibility at coastal sadhana. True calisthenics is mastery over bodyweight and spinal health 🌊.",
-    captionKn: "ಕರಾವಳಿಯ ಸಾಧನೆಯಲ್ಲಿ ಶಕ್ತಿ ಮತ್ತು ನಮ್ಯತೆ. ದೇಹದ ತೂಕದ ಮೇಲಿನ ಹಿಡಿತ ಮತ್ತು ಬೆನ್ನುಮೂಳೆಯ ಆರೋಗ್ಯವೇ ನಿಜವಾದ ಯೋಗ 🌊."
+    caption: "Strength meets flexibility at coastal sadhana. True calisthenics is mastery over bodyweight and spinal health.",
+    captionKn: "ಕರಾವಳಿಯ ಸಾಧನೆಯಲ್ಲಿ ಶಕ್ತಿ ಮತ್ತು ನಮ್ಯತೆ. ದೇಹದ ತೂಕದ ಮೇಲಿನ ಹಿಡಿತ ಮತ್ತು ಬೆನ್ನುಮೂಳೆಯ ಆರೋಗ್ಯವೇ ನಿಜವಾದ ಯೋಗ."
   },
   {
     id: "post4",
     image: ASSETS.poseTempleMeditation,
     likes: "3.1k",
-    caption: "Belur Temple sadhana 💚. Rooted in ancient architecture and mindful alignment. Safe, empowering spaces for women.",
-    captionKn: "ಬೇಲೂರು ದೇವಾಲಯದ ಸಾಧನೆ 💚. ಪ್ರಾಚೀನ ವಾಸ್ತುಶಿಲ್ಪದ ಸಾನಿಧ್ಯದಲ್ಲಿ ಮನಃಶಾಂತಿ ಮತ್ತು ಮಹಿಳೆಯರ ಸ್ವಾಸ್ಥ್ಯದ ಸಂರಕ್ಷಣೆ."
+    caption: "Belur Temple sadhana. Rooted in ancient architecture and mindful alignment. Safe, empowering spaces for women.",
+    captionKn: "ಬೇಲೂರು ದೇವಾಲಯದ ಸಾಧನೆ. ಪ್ರಾಚೀನ ವಾಸ್ತುಶಿಲ್ಪದ ಸಾನಿಧ್ಯದಲ್ಲಿ ಮನಃಶಾಂತಿ ಮತ್ತು ಮಹಿಳೆಯರ ಸ್ವಾಸ್ಥ್ಯದ ಸಂರಕ್ಷಣೆ."
   }
 ];
 

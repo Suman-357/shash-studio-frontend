@@ -103,7 +103,7 @@ export const useSectionsQuery = () => {
           name: s.name,
           nameKn: s.nameKn,
           icon: s.icon || "spa",
-          emoji: s.emoji || "✨",
+          emoji: "",
           tagline: s.tagline || "",
           taglineKn: s.taglineKn || "",
           badge: s.badge || "",

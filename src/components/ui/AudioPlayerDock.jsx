@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { Play, Pause, SkipForward } from "lucide-react";
 
 /**
  * Mindful Soundscape Vignette Player
@@ -32,9 +33,11 @@ export const AudioPlayerDock = () => {
           className="w-9 h-9 rounded-full bg-[#1C3325] text-[#FDFBF7] flex items-center justify-center hover:bg-[#2D4A37] transition-transform active:scale-95 shadow-sm"
           title={isPlaying ? "Pause Soundscape" : "Play Mysore Sanctuary Drone"}
         >
-          <span className="material-symbols-outlined text-[20px]">
-            {isPlaying ? "pause" : "play_arrow"}
-          </span>
+          {isPlaying ? (
+            <Pause className="w-4 h-4 fill-current" />
+          ) : (
+            <Play className="w-4 h-4 fill-current ml-0.5" />
+          )}
         </button>
 
         {/* Track Title */}
@@ -56,7 +59,7 @@ export const AudioPlayerDock = () => {
           className="text-[#5B635E] hover:text-[#1C3325] p-1 rounded-full hover:bg-[#EDE8DE] transition-colors"
           title="Next Soundscape"
         >
-          <span className="material-symbols-outlined text-[18px]">skip_next</span>
+          <SkipForward className="w-4 h-4" />
         </button>
       </div>
     </div>

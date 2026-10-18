@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLanguage } from "../../context/LanguageContext";
 import { ASSETS } from "../../assets";
-import { X } from "lucide-react";
+import { X, Instagram, CreditCard } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa6";
 
 export const TeacherSection = () => {
@@ -105,7 +105,7 @@ export const TeacherSection = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white text-[#1C3325] hover:bg-[#EDE8DE] transition-all text-[13px] font-semibold border border-[#2D4A37]/15 shadow-xs"
               >
-                <span>📸</span>
+                <Instagram className="w-4 h-4 text-[#C26D38]" />
                 <span>@sushiidays</span>
               </a>
 
@@ -114,7 +114,7 @@ export const TeacherSection = () => {
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#EDE8DE] text-[#1C3325] hover:bg-[#DCDAD4] transition-all text-[13px] font-semibold cursor-pointer"
                 type="button"
               >
-                <span>🪪</span>
+                <CreditCard className="w-4 h-4 text-[#1C3325]" />
                 <span>{isKn ? "ವಿಸಿಟಿಂಗ್ ಕಾರ್ಡ್ ನೋಡಿ" : "Visiting Card"}</span>
               </button>
             </div>

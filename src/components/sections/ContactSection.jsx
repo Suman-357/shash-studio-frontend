@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLanguage } from "../../context/LanguageContext";
 import { submitInquiry } from "../../services/api";
+import { Mail, MapPin, ExternalLink, MessageSquare, CheckCircle2, Send } from "lucide-react";
 
 export const ContactSection = () => {
   const { lang, t } = useLanguage();
@@ -65,7 +66,7 @@ export const ContactSection = () => {
               {/* Email */}
               <div className="flex items-start gap-4 p-4 rounded-2xl bg-[#FDFBF7] border border-[#2D4A37]/10 shadow-xs">
                 <span className="p-2.5 rounded-xl bg-[#EDE8DE] text-[#1C3325]">
-                  <span className="material-symbols-outlined text-[20px]">mail</span>
+                  <Mail className="w-5 h-5" />
                 </span>
                 <div>
                   <p className="text-[12px] text-[#5B635E]">Email Us</p>
@@ -79,22 +80,54 @@ export const ContactSection = () => {
               </div>
 
               {/* Location */}
-              <div className="flex items-start gap-4 p-4 rounded-2xl bg-[#FDFBF7] border border-[#2D4A37]/10 shadow-xs">
-                <span className="p-2.5 rounded-xl bg-[#EDE8DE] text-[#1C3325]">
-                  <span className="material-symbols-outlined text-[20px]">location_on</span>
-                </span>
-                <div>
-                  <p className="text-[12px] text-[#5B635E]">Location</p>
-                  <p className="font-semibold text-[#1C3325] text-[15px]">
-                    Mysuru, Karnataka, India
-                  </p>
+              {/* Location & Directions */}
+              <div className="p-4 rounded-2xl bg-[#FDFBF7] border border-[#2D4A37]/10 shadow-xs space-y-3">
+                <div className="flex items-start gap-3">
+                  <span className="p-2.5 rounded-xl bg-[#EDE8DE] text-[#1C3325] shrink-0">
+                    <MapPin className="w-5 h-5" />
+                  </span>
+                  <div>
+                    <p className="text-[12px] text-[#5B635E] font-medium">Studio Address</p>
+                    <p className="font-semibold text-[#1C3325] text-[14px] leading-snug">
+                      Shash Studios
+                    </p>
+                    <p className="text-[13px] text-[#424843] leading-relaxed mt-0.5">
+                      #1932, Akbar Road, O.K. Street, Mandi Mohalla, Mysore - 570001
+                    </p>
+
+                    {/* 1-Tap Google Maps Directions Button */}
+                    <a
+                      href="https://www.google.com/maps/dir/?api=1&destination=12.3162,76.6540"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 mt-2 text-[12px] font-bold text-[#D48C46] hover:text-[#C26D38] transition-colors"
+                    >
+                      <span>Open in Google Maps / Get Directions</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                </div>
+
+                {/* Embedded Interactive Map */}
+                <div className="w-full h-44 rounded-xl overflow-hidden border border-[#2D4A37]/10 shadow-inner">
+                  <iframe
+                    title="Shash Studios Google Maps"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    loading="lazy"
+                    allowFullScreen
+                    referrerPolicy="no-referrer-when-downgrade"
+                    src="https://maps.google.com/maps?q=12.3162,76.6540+(Shash+Studios)&z=17&output=embed"
+                  />
                 </div>
               </div>
+
 
               {/* Instagram */}
               <div className="flex items-start gap-4 p-4 rounded-2xl bg-[#FDFBF7] border border-[#2D4A37]/10 shadow-xs">
                 <span className="p-2.5 rounded-xl bg-[#EDE8DE] text-[#1C3325]">
-                  <span className="material-symbols-outlined text-[20px]">chat</span>
+                  <MessageSquare className="w-5 h-5" />
                 </span>
                 <div>
                   <p className="text-[12px] text-[#5B635E]">Instagram DM</p>
@@ -133,7 +166,7 @@ export const ContactSection = () => {
 
               {successMsg && (
                 <div className="p-4 rounded-xl bg-[#BEE8DC] text-[#082013] text-[13px] font-medium flex items-center gap-2">
-                  <span className="material-symbols-outlined text-green-700">check_circle</span>
+                  <CheckCircle2 className="w-5 h-5 text-green-700 shrink-0" />
                   <span>
                     ✦ ಧನ್ಯವಾದಗಳು! Thank you! Our Mysuru team has received your message and will reach out via WhatsApp shortly.
                   </span>
@@ -207,7 +240,7 @@ export const ContactSection = () => {
                   />
                 </div>
 
-                 {/* Consent Checkbox */}
+                {/* Consent Checkbox */}
                 <div className="p-3 rounded-xl bg-[#EDE8DE]/40 border border-[#2D4A37]/10">
                   <label className="flex items-start gap-3 cursor-pointer select-none">
                     <input
@@ -229,14 +262,13 @@ export const ContactSection = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting || !inquiryData.consentGiven}
-                  className={`w-full py-4 rounded-full font-bold text-[15px] shadow-md transition-all flex items-center justify-center gap-2 ${
-                    !inquiryData.consentGiven || isSubmitting
+                  className={`w-full py-4 rounded-full font-bold text-[15px] shadow-md transition-all flex items-center justify-center gap-2 ${!inquiryData.consentGiven || isSubmitting
                       ? "bg-neutral-300 text-neutral-500 cursor-not-allowed"
                       : "bg-[#D48C46] text-[#FDFBF7] hover:bg-[#C26D38] active:scale-95"
-                  }`}
+                    }`}
                 >
                   <span>{isSubmitting ? "Sending..." : t("sendMessageBtn")}</span>
-                  <span className="material-symbols-outlined text-[18px]">send</span>
+                  <Send className="w-4 h-4" />
                 </button>
               </form>
             </div>
