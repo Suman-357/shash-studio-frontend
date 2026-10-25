@@ -16,13 +16,13 @@ export const ComboPassBanner = () => {
     slug: "combo-pass",
     title: "All-Access Combo Pass",
     titleKn: "ಸಂಪೂರ್ಣ ಆರೋಗ್ಯ ಕಾಂಬೋ ಪಾಸ್",
-    description: "Ultimate daily wellness system. Get Zoom links to all our live batches. Join active Ashtanga & Strength in the morning and wind down with Sushii Nights bedtime breathwork before sleeping.",
-    descriptionKn: "ಸಂಪೂರ್ಣ ದೈನಂದಿನ ಆರೋಗ್ಯ ವ್ಯವಸ್ಥೆ. ನಮ್ಮ ಎಲ್ಲಾ ಲೈವ್ ತರಗತಿಗಳ ಜೂಮ್ ಲಿಂಕ್‌ಗಳನ್ನು ಪಡೆಯಿರಿ. ಮುಂಜಾನೆ ಅಷ್ಟಾಂಗ/ಶಕ್ತಿ ತರಬೇತಿ ಮತ್ತು ಮಲಗುವ ಮುನ್ನ ಸುಶಿ ನೈಟ್ಸ್ ಅಭ್ಯಾಸ ಮಾಡಿ.",
-    price: 599,
-    originalPrice: 899,
+    description: "Ultimate daily wellness system. Get Zoom links to all our live batches. Join active Ashtanga & Strength in the morning and wind down with music & sound sessions before sleeping.",
+    descriptionKn: "ಸಂಪೂರ್ಣ ದೈನಂದಿನ ಆರೋಗ್ಯ ವ್ಯವಸ್ಥೆ. ನಮ್ಮ ಎಲ್ಲಾ ಲೈವ್ ತರಗತಿಗಳ ಜೂಮ್ ಲಿಂಕ್‌ಗಳನ್ನು ಪಡೆಯಿರಿ.",
+    price: 999,
+    originalPrice: 1999,
     badge: "ALL-ACCESS PASS • BEST VALUE",
     badgeKn: "ಕಾಂಬೋ ಪಾಸ್ • ಅತ್ಯುತ್ತಮ ಕೊಡುಗೆ",
-    image: ASSETS.poseAdiyogiGraceStanding || ASSETS.poseAdiyogiNatarajasana
+    image: ASSETS.onlineClassesPoster || ASSETS.poseAdiyogiGraceStanding
   };
 
   const foundCombo = workshops.find(
@@ -32,6 +32,11 @@ export const ComboPassBanner = () => {
       w.slug === "combo" ||
       w.category === "combo"
   );
+
+  // If workshops have loaded from database and no combo pass exists, hide the banner gracefully
+  if (!foundCombo && workshops.length > 0) {
+    return null;
+  }
 
   const comboPass = foundCombo || fallbackCombo;
   const comboImage = comboPass.image || fallbackCombo.image;

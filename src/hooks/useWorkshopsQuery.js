@@ -6,6 +6,45 @@ import { ASSETS } from "../assets";
  * Authentic Shashirekha yoga images and framing configs
  */
 const WORKSHOP_IMAGE_MAP = {
+  // 8 Batches from the new poster
+  "hatha-yoga": {
+    image: ASSETS.poseAdiyogiSplitPrayer,
+    objectPosition: "center 88%"
+  },
+  "kids-yoga": {
+    image: ASSETS.poseHimalayaPeakClimb,
+    objectPosition: "center 60%"
+  },
+  "ashtanga-strength": {
+    image: ASSETS.poseBeachSplit,
+    objectPosition: "center 75%"
+  },
+  "ladies-batch": {
+    image: ASSETS.poseTempleMeditation,
+    objectPosition: "center 78%"
+  },
+  "ashtanga-strength-intensive": {
+    image: ASSETS.poseHeadstandSirsasana,
+    objectPosition: "center 70%"
+  },
+  "carnatic-music": {
+    image: ASSETS.studioGuitarsNeon,
+    objectPosition: "center center"
+  },
+  "light-music": {
+    image: ASSETS.studioGuitarsNeon,
+    objectPosition: "center center"
+  },
+  "postpartum-wellness": {
+    image: ASSETS.studioWallPilates,
+    objectPosition: "center 65%"
+  },
+  "combo-pass": {
+    image: ASSETS.onlineClassesPoster || ASSETS.poseAdiyogiGraceStanding,
+    objectPosition: "center top"
+  },
+
+  // Legacy mappings for backward compatibility
   "strength-training": {
     image: ASSETS.poseBeachSplit,
     objectPosition: "center 75%"
@@ -25,14 +64,6 @@ const WORKSHOP_IMAGE_MAP = {
   "sushii-nights": {
     image: ASSETS.studioGuitarsNeon,
     objectPosition: "center center"
-  },
-  "kids-yoga": {
-    image: ASSETS.poseHimalayaPeakClimb,
-    objectPosition: "center 60%"
-  },
-  "combo-pass": {
-    image: ASSETS.poseAdiyogiGraceStanding || ASSETS.poseAdiyogiNatarajasana,
-    objectPosition: "center 70%"
   }
 };
 

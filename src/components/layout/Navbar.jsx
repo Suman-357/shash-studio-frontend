@@ -10,7 +10,8 @@ import { ArrowRight, X, Menu, ShoppingCart } from "lucide-react";
 export const Navbar = () => {
   const { lang, setLang, t } = useLanguage();
   const isKn = lang === "kn";
-  const { openBookingModal } = useBooking();
+  const { openBookingModal, workshops = [] } = useBooking();
+  const hasCombo = workshops.length === 0 || workshops.some((w) => w.slug === "combo-pass" || w.category === "combo");
   const { data: products = [] } = useProductsQuery();
   const location = useLocation();
   const isShop = location.pathname === "/shop";
@@ -53,12 +54,14 @@ export const Navbar = () => {
           >
             {t("navWorkshops")}
           </a>
-          <a
-            href="/#combo-pass"
-            className="px-3.5 py-1.5 rounded-full text-[#5B635E] hover:text-[#1C3325] hover:bg-[#EDE8DE] text-[13px] font-medium transition-colors"
-          >
-            {t("navPrograms")}
-          </a>
+          {hasCombo && (
+            <a
+              href="/#combo-pass"
+              className="px-3.5 py-1.5 rounded-full text-[#5B635E] hover:text-[#1C3325] hover:bg-[#EDE8DE] text-[13px] font-medium transition-colors"
+            >
+              {t("navPrograms")}
+            </a>
+          )}
           <a
             href="/#teacher"
             className="px-3.5 py-1.5 rounded-full text-[#5B635E] hover:text-[#1C3325] hover:bg-[#EDE8DE] text-[13px] font-medium transition-colors"
@@ -189,13 +192,15 @@ export const Navbar = () => {
             >
               {t("navWorkshops")}
             </a>
-            <a
-              href="/#combo-pass"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-[#1A1F1C] hover:text-[#1C3325] py-1 border-b border-neutral-200/50"
-            >
-              {t("navPrograms")}
-            </a>
+            {hasCombo && (
+              <a
+                href="/#combo-pass"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-[#1A1F1C] hover:text-[#1C3325] py-1 border-b border-neutral-200/50"
+              >
+                {t("navPrograms")}
+              </a>
+            )}
             <Link
               to="/shop"
               onClick={() => setMobileMenuOpen(false)}

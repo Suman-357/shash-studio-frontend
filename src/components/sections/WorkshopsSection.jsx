@@ -93,24 +93,51 @@ const WorkshopCardItem = ({ workshop, sectionObj, isKn, t, onRegister }) => {
             <span className="font-medium truncate">{workshop.timingSlot}</span>
           </div>
           <div className="flex items-baseline gap-1.5 whitespace-nowrap shrink-0">
-            <span className="text-lg font-bold text-[#1C3325] whitespace-nowrap">
-              ₹{workshop.price}
-            </span>
-            {workshop.originalPrice > workshop.price && (
-              <span className="text-[11px] text-[#5B635E] line-through whitespace-nowrap">
-                ₹{workshop.originalPrice}
+            {workshop.price > 0 ? (
+              <>
+                <span className="text-lg font-bold text-[#1C3325] whitespace-nowrap">
+                  ₹{workshop.price}
+                </span>
+                {workshop.originalPrice > workshop.price && (
+                  <span className="text-[11px] text-[#5B635E] line-through whitespace-nowrap">
+                    ₹{workshop.originalPrice}
+                  </span>
+                )}
+              </>
+            ) : (
+              <span className="px-2.5 py-1 rounded-full bg-[#1C3325] text-white text-[10.5px] font-bold tracking-wide uppercase shadow-xs">
+                {isKn ? "ಶುಲ್ಕ ವಿಚಾರಿಸಿ" : "Enquire for Fees"}
               </span>
             )}
           </div>
         </div>
 
         <button
-          onClick={onRegister}
+          onClick={
+            workshop.price === 0
+              ? () =>
+                  window.open(
+                    `https://wa.me/917676405895?text=Namaskara%20Shash%20Studios%2C%20I%20would%20like%20to%20enquire%20about%20fees%20and%20timings%20for%20${encodeURIComponent(
+                      workshop.title
+                    )}.`,
+                    "_blank"
+                  )
+              : onRegister
+          }
           className="w-full py-2.5 rounded-full bg-[#1C3325] text-white font-semibold text-[13px] hover:bg-[#2D4A37] transition-all flex items-center justify-center gap-2 shadow-xs group cursor-pointer"
           type="button"
         >
-          <span>{t("registerBtn")}</span>
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          {workshop.price === 0 ? (
+            <>
+              <FaWhatsapp className="w-4 h-4 text-[#25D366]" />
+              <span>{isKn ? "ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ವಿಚಾರಿಸಿ" : "Enquire on WhatsApp"}</span>
+            </>
+          ) : (
+            <>
+              <span>{t("registerBtn")}</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </>
+          )}
         </button>
       </div>
     </CardSpotlight>

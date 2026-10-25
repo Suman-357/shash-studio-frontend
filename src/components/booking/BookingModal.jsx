@@ -133,7 +133,7 @@ export const BookingModal = () => {
       w.id === "combo-pass" ||
       w.slug === "combo" ||
       w.category === "combo"
-  ) || (workshops.length > 0 ? workshops[0] : null);
+  ) || null;
 
   const currentSectionWorkshops = workshops
     .filter((w) => w.section === selectedSection)
@@ -544,10 +544,18 @@ export const BookingModal = () => {
                         </p>
                       </div>
                       <div className="text-right shrink-0">
-                        <span className="font-sans text-xl font-extrabold text-[#1C3325] tabular-nums">
-                          ₹{selectedWorkshop?.price}
-                        </span>
-                        <span className="text-[10px] text-[#5B635E] font-medium ml-0.5">INR</span>
+                        {selectedWorkshop?.price > 0 ? (
+                          <>
+                            <span className="font-sans text-xl font-extrabold text-[#1C3325] tabular-nums">
+                              ₹{selectedWorkshop?.price}
+                            </span>
+                            <span className="text-[10px] text-[#5B635E] font-medium ml-0.5">INR</span>
+                          </>
+                        ) : (
+                          <span className="px-2.5 py-1 rounded-full bg-[#1C3325] text-white text-[11px] font-bold">
+                            {isKn ? "ಶುಲ್ಕ ವಿಚಾರಿಸಿ" : "Enquire for Fees"}
+                          </span>
+                        )}
                       </div>
                     </div>
 
@@ -728,7 +736,9 @@ export const BookingModal = () => {
                   </div>
                   {selectedWorkshop && (
                     <span className="text-xl font-sans font-bold text-[#1C3325] whitespace-nowrap tabular-nums">
-                      ₹{selectedWorkshop?.price}
+                      {selectedWorkshop?.price > 0
+                        ? `₹${selectedWorkshop?.price}`
+                        : (isKn ? "ಶುಲ್ಕ ವಿಚಾರಿಸಿ" : "Enquire for Fees")}
                     </span>
                   )}
                 </div>
@@ -770,26 +780,56 @@ export const BookingModal = () => {
                 {/* Price + Pay Button Row */}
                 <div className="flex items-center gap-3">
                   <div className="shrink-0 hidden sm:block">
-                    <span className="font-sans text-xl font-extrabold text-[#1C3325] tabular-nums">
-                      ₹{selectedWorkshop?.price}
-                    </span>
-                    <span className="text-[10px] text-[#5B635E] ml-0.5">INR</span>
+                    {selectedWorkshop?.price > 0 ? (
+                      <>
+                        <span className="font-sans text-xl font-extrabold text-[#1C3325] tabular-nums">
+                          ₹{selectedWorkshop?.price}
+                        </span>
+                        <span className="text-[10px] text-[#5B635E] ml-0.5">INR</span>
+                      </>
+                    ) : (
+                      <span className="px-2.5 py-1 rounded-full bg-[#1C3325] text-white text-[11px] font-bold">
+                        {isKn ? "ಶುಲ್ಕ ವಿಚಾರಿಸಿ" : "Enquire for Fees"}
+                      </span>
+                    )}
                   </div>
-                  <button
-                    onClick={completeBooking}
-                    disabled={!isFormValid || isSubmitting}
-                    className={`w-full py-3.5 px-6 rounded-full font-bold text-[14px] sm:text-[15px] shadow-lg flex items-center justify-center gap-2 transition-all min-h-[48px] ${
-                      isFormValid && !isSubmitting
-                        ? "bg-[#1C3325] text-white hover:bg-[#2D4A37] active:scale-[0.98] cursor-pointer"
-                        : "bg-neutral-300 text-neutral-500 cursor-not-allowed"
-                    }`}
-                    type="button"
-                  >
-                    <Lock className="w-4 h-4 shrink-0" />
-                    <span className="text-center truncate">
-                      {isSubmitting ? m.submittingText : m.payButtonText}
-                    </span>
-                  </button>
+                  {selectedWorkshop?.price > 0 ? (
+                    <button
+                      onClick={completeBooking}
+                      disabled={!isFormValid || isSubmitting}
+                      className={`w-full py-3.5 px-6 rounded-full font-bold text-[14px] sm:text-[15px] shadow-lg flex items-center justify-center gap-2 transition-all min-h-[48px] ${
+                        isFormValid && !isSubmitting
+                          ? "bg-[#1C3325] text-white hover:bg-[#2D4A37] active:scale-[0.98] cursor-pointer"
+                          : "bg-neutral-300 text-neutral-500 cursor-not-allowed"
+                      }`}
+                      type="button"
+                    >
+                      <Lock className="w-4 h-4 shrink-0" />
+                      <span className="text-center truncate">
+                        {isSubmitting ? m.submittingText : m.payButtonText}
+                      </span>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() =>
+                        window.open(
+                          `https://wa.me/917676405895?text=Namaskara%20Shash%20Studios%2C%20I%20would%20like%20to%20register%20for%20${encodeURIComponent(
+                            selectedWorkshop.title
+                          )}.%20Name%3A%20${encodeURIComponent(formData.fullName || "Student")}%2C%20Phone%3A%20${encodeURIComponent(
+                            formData.phone || ""
+                          )}.`,
+                          "_blank"
+                        )
+                      }
+                      className="w-full py-3.5 px-6 rounded-full font-bold text-[14px] sm:text-[15px] shadow-lg flex items-center justify-center gap-2 transition-all min-h-[48px] bg-[#25D366] text-white hover:bg-green-600 active:scale-[0.98] cursor-pointer"
+                      type="button"
+                    >
+                      <FaWhatsapp className="w-5 h-5 shrink-0" />
+                      <span className="text-center truncate">
+                        {isKn ? "ವಾಟ್ಸಾಪ್‌ನಲ್ಲಿ ನೋಂದಣಿ ವಿವರ ಪಡೆಯಿರಿ" : "Enquire & Register on WhatsApp"}
+                      </span>
+                    </button>
+                  )}
                 </div>
 
                 {/* Direct WhatsApp Alternative */}

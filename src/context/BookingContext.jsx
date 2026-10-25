@@ -209,7 +209,7 @@ export const BookingProvider = ({ children }) => {
       // Launch Razorpay checkout popup
       await launchRazorpay({
         type: "workshop",
-        workshopId: normalizedSlug,
+        workshopId: workshopIdentifier,
         bookingId: bookingData.bookingId,
         customerName: formData.fullName,
         customerEmail: formData.email,
