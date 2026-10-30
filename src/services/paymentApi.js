@@ -17,15 +17,15 @@ import axiosInstance from "./axiosInstance";
  * @param {string} [params.receipt]    – optional receipt tag
  * @param {Object} [params.notes]      – optional metadata
  */
-export async function createRazorpayOrder({ type, workshopId, productId, quantity, receipt, notes }) {
+export async function createRazorpayOrder({
+  type,
+  bookingId,
+  orderId,
+}) {
   return axiosInstance.post("/payments/create-order", {
     type,
-    workshopId,
-    productId,
-    quantity,
-    currency: "INR",
-    receipt,
-    notes,
+    ...(bookingId && { bookingId }),
+    ...(orderId && { orderId }),
   });
 }
 

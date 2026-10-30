@@ -26,6 +26,11 @@ import poseHimalayaPeakClimb from "./WhatsApp Image 2026-09-27 at 3.24.16 PM.jpe
 import poseBeachSplit from "./WhatsApp Image 2026-09-27 at 3.09.30 PM (1).jpeg";
 import poseHeadstandSirsasana from "./WhatsApp Image 2026-09-27 at 3.09.26 PM.jpeg";
 
+// Studio Store Product Images
+import mysuruCottonMat from "./mysuru_organic_cotton_mat.jpg";
+import progripRubberMat from "./progrip_rubber_yoga_mat.jpg";
+import corkPropsKit from "./cork_yoga_blocks_strap_set.jpg";
+
 export const ASSETS = {
   // Brand Logos
   logoGold3D,
@@ -33,6 +38,11 @@ export const ASSETS = {
   logoRoundSignboard,
   logoIllustratedRound,
   visitingCard,
+
+  // Store Products
+  mysuruCottonMat,
+  progripRubberMat,
+  corkPropsKit,
 
   // Posters & Flyers
   onlineClassesPoster,

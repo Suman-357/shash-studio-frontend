@@ -191,13 +191,10 @@ export const BookingProvider = ({ children }) => {
         whatsapp: formData.phone,
         email: formData.email,
         workshopId: workshopIdentifier,
-        workshopTitle: selectedWorkshop.title,
         slot: currentSlotString,
-        amount: selectedWorkshop.price,
         languagePref: formData.languagePref,
         healthNotes: formData.healthNotes,
-        consentGiven: formData.consentGiven,
-        paymentMethod: "razorpay"
+        consentGiven: formData.consentGiven
       };
 
       const result = await submitRegistration(payload);

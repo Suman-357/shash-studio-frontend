@@ -90,47 +90,52 @@ export function useRazorpay() {
         // 1. Load Razorpay SDK
         await loadRazorpayScript();
 
-        // 2. Create order on backend (price is resolved server-side from DB)
+        // 2. Create order on backend (price & item are resolved strictly server-side from bookingId/orderId)
         const orderRes = await createRazorpayOrder({
           type,
-          workshopId,
-          productId,
-          quantity,
-          receipt: receipt || `rcpt_${type}_${Date.now()}`,
-          notes: {
-            ...notes,
-            ...(bookingId && { bookingId }),
-            ...(orderId && { orderId }),
-          },
+          bookingId,
+          orderId,
         });
 
         const orderPayload = orderRes?.data || orderRes;
         const rzpOrderId = orderPayload?.orderId;
         const key = orderPayload?.key;
-        const amountInRupees = orderPayload?.amountInRupees;
+        const amountInPaise = orderPayload?.amount;
         const currency = orderPayload?.currency || "INR";
 
-        if (!rzpOrderId || !key) {
+        if (!rzpOrderId || !key || !amountInPaise) {
           throw new Error("Backend did not return a valid Razorpay order.");
         }
 
-        // 3. Open Razorpay Checkout modal
+        // 3. Open Razorpay Checkout modal (EMI & PayLater disabled)
         const options = {
           key,
-          amount: amountInRupees * 100, // Razorpay expects paise
+          amount: amountInPaise, // Razorpay expects paise
           currency: currency || "INR",
           name: "SHASH Studios",
           description,
           order_id: rzpOrderId,
-          notes: {
-            ...notes,
-            ...(bookingId && { bookingId }),
-            ...(orderId && { orderId }),
+          method: {
+            upi: true,
+            card: true,
+            netbanking: true,
+            wallet: true,
+            emi: false,
+            paylater: false,
+          },
+          config: {
+            display: {
+              hide: [{ method: "emi" }, { method: "paylater" }],
+            },
           },
           prefill: {
             name: customerName,
             email: customerEmail,
             contact: customerPhone,
+          },
+          readonly: {
+            contact: Boolean(customerPhone),
+            email: Boolean(customerEmail),
           },
           theme: {
             color: themePrimary,

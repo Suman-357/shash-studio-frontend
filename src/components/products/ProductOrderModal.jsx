@@ -63,11 +63,9 @@ export const ProductOrderModal = ({ product, isOpen, onClose }) => {
     setOrderError(null);
 
     try {
-      // 1. Create order in backend database
+      // 1. Create order in backend database (price & title resolved strictly server-side)
       const response = await axiosInstance.post("/products/orders", {
         productId: product.slug || product.id,
-        productTitle: product.title,
-        unitPrice: product.price,
         quantity,
         customerName: formData.name,
         phone: formData.whatsapp,
@@ -76,8 +74,7 @@ export const ProductOrderModal = ({ product, isOpen, onClose }) => {
           city: formData.city || "Mysuru",
           state: "Karnataka",
           pincode: formData.pincode
-        },
-        paymentMethod: "razorpay"
+        }
       });
 
       const orderPayload = response?.data || response;

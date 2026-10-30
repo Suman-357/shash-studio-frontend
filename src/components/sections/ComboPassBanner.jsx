@@ -12,20 +12,7 @@ export const ComboPassBanner = () => {
   const { openBookingModal } = useBooking();
   const { data: workshops = [] } = useWorkshopsQuery("all");
 
-  const fallbackCombo = {
-    slug: "combo-pass",
-    title: "All-Access Combo Pass",
-    titleKn: "ಸಂಪೂರ್ಣ ಆರೋಗ್ಯ ಕಾಂಬೋ ಪಾಸ್",
-    description: "Ultimate daily wellness system. Get Zoom links to all our live batches. Join active Ashtanga & Strength in the morning and wind down with music & sound sessions before sleeping.",
-    descriptionKn: "ಸಂಪೂರ್ಣ ದೈನಂದಿನ ಆರೋಗ್ಯ ವ್ಯವಸ್ಥೆ. ನಮ್ಮ ಎಲ್ಲಾ ಲೈವ್ ತರಗತಿಗಳ ಜೂಮ್ ಲಿಂಕ್‌ಗಳನ್ನು ಪಡೆಯಿರಿ.",
-    price: 999,
-    originalPrice: 1999,
-    badge: "ALL-ACCESS PASS • BEST VALUE",
-    badgeKn: "ಕಾಂಬೋ ಪಾಸ್ • ಅತ್ಯುತ್ತಮ ಕೊಡುಗೆ",
-    image: ASSETS.onlineClassesPoster || ASSETS.poseAdiyogiGraceStanding
-  };
-
-  const foundCombo = workshops.find(
+  const comboPass = workshops.find(
     (w) =>
       w.slug === "combo-pass" ||
       w.id === "combo-pass" ||
@@ -33,13 +20,12 @@ export const ComboPassBanner = () => {
       w.category === "combo"
   );
 
-  // If workshops have loaded from database and no combo pass exists, hide the banner gracefully
-  if (!foundCombo && workshops.length > 0) {
+  // Only render when an active combo pass exists in the database
+  if (!comboPass) {
     return null;
   }
 
-  const comboPass = foundCombo || fallbackCombo;
-  const comboImage = comboPass.image || fallbackCombo.image;
+  const comboImage = comboPass.image || ASSETS.onlineClassesPoster || ASSETS.poseAdiyogiGraceStanding;
 
   return (
     <section id="combo-pass" className="w-full py-6 sm:py-10 max-w-[1280px] mx-auto px-3 sm:px-6 md:px-8 scroll-mt-20 sm:scroll-mt-28">

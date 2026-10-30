@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { TRANSFORMATION_SLIDES } from "../../assets";
 import { useLanguage } from "../../context/LanguageContext";
@@ -46,27 +46,32 @@ export const HeroTransformationCard = () => {
       {/* Main Interactive Showcase Card */}
       <div className="relative overflow-hidden rounded-[2rem] bg-[#FDFBF7] shadow-2xl border border-white/80">
         <div className="relative h-[440px] sm:h-[490px] w-full bg-[#EDE8DE] overflow-hidden">
-          {/* Framer Motion Cross-fading Slide Images */}
-          <AnimatePresence mode="popLayout" initial={false}>
-            <motion.div
-              key={currentSlide.id}
-              initial={{ opacity: 0, scale: 1.05 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.6, ease: "easeInOut" }}
-              className="absolute inset-0"
-            >
-              <img
-                src={currentSlide.image}
-                alt={currentSlide.titleEn}
-                className="h-full w-full object-cover"
-                style={{ objectPosition: currentSlide.objectPosition || "center" }}
-                loading="eager"
-              />
-              {/* Soft Vignette Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1C3325]/90 via-[#1C3325]/25 to-transparent" />
-            </motion.div>
-          </AnimatePresence>
+          {/* Keep all slide images mounted so the browser loads each image once and never re-fetches */}
+          {slides.map((slide, idx) => {
+            const isActive = idx === currentIndex;
+            return (
+              <motion.div
+                key={slide.id}
+                initial={false}
+                animate={{
+                  opacity: isActive ? 1 : 0,
+                  scale: isActive ? 1 : 1.04,
+                }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+                className={`absolute inset-0 ${isActive ? "z-10" : "z-0 pointer-events-none"}`}
+              >
+                <img
+                  src={slide.image}
+                  alt={slide.titleEn}
+                  className="h-full w-full object-cover"
+                  style={{ objectPosition: slide.objectPosition || "center" }}
+                  loading={idx === 0 ? "eager" : "lazy"}
+                />
+                {/* Soft Vignette Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1C3325]/90 via-[#1C3325]/25 to-transparent" />
+              </motion.div>
+            );
+          })}
 
           {/* Top Overlapping Tag Badge with Spring Animation */}
           <div className="absolute top-4 inset-x-4 flex items-center justify-between z-20">

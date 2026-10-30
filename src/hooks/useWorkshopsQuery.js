@@ -149,6 +149,15 @@ export const useSectionsQuery = () => {
   });
 };
 
+const PRODUCT_IMAGE_MAP = {
+  "cotton-mat": ASSETS.mysuruCottonMat,
+  "progrip-mat": ASSETS.progripRubberMat,
+  "cork-props-kit": ASSETS.corkPropsKit,
+  "/src/assets/mysuru_organic_cotton_mat.jpg": ASSETS.mysuruCottonMat,
+  "/src/assets/progrip_rubber_yoga_mat.jpg": ASSETS.progripRubberMat,
+  "/src/assets/cork_yoga_blocks_strap_set.jpg": ASSETS.corkPropsKit,
+};
+
 /**
  * Custom hook to fetch store products directly from backend database
  */
@@ -158,7 +167,16 @@ export const useProductsQuery = (category = "all") => {
     queryFn: async () => {
       const response = await getProducts(category);
       const list = response?.data || response;
-      return Array.isArray(list) ? list : [];
+      if (Array.isArray(list)) {
+        return list.map((item) => ({
+          ...item,
+          image:
+            PRODUCT_IMAGE_MAP[item.image] ||
+            PRODUCT_IMAGE_MAP[item.slug] ||
+            item.image,
+        }));
+      }
+      return [];
     }
   });
 };

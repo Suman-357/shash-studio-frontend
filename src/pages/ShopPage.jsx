@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { getProducts } from "../services/api";
+import { useProductsQuery } from "../hooks/useWorkshopsQuery";
 import { useLanguage } from "../context/LanguageContext";
 import { ProductDetailModal } from "../components/products/ProductDetailModal";
 import { ArrowRight, Filter, Home, ChevronDown, Eye, Leaf, Star, Check, X } from "lucide-react";
@@ -12,27 +12,11 @@ export const ShopPage = ({ onBuyProduct }) => {
   const [filter, setFilter] = useState("all");
   const [filterMenuOpen, setFilterMenuOpen] = useState(false);
   const [selectedDetailMat, setSelectedDetailMat] = useState(null);
-  const [productsList, setProductsList] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { data: productsList = [] } = useProductsQuery();
   const [openFaq, setOpenFaq] = useState(null);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
-
-    // Fetch live products directly from backend database
-    getProducts()
-      .then((resData) => {
-        const list = resData?.data || resData;
-        if (Array.isArray(list)) {
-          setProductsList(list);
-        }
-      })
-      .catch((err) => {
-        console.error("Failed to load products from database:", err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
   }, []);
 
   useEffect(() => {
